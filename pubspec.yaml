@@ -4,12 +4,13 @@ version: 0.0.1
 homepage:
 
 environment:
-  sdk: '>=2.18.4 <3.0.0'
+  sdk: '>=2.19.0 <3.0.0'
   flutter: ">=1.17.0"
 
 dependencies:
   flutter:
     sdk: flutter
+  firebase_remote_config: ^3.0.9
 
 dev_dependencies:
   flutter_test:
