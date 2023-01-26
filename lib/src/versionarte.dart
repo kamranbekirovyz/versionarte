@@ -16,7 +16,7 @@ class Versionarte {
     CurrentAppServersideVersioningDetails currentAppServersideVersioningDetails,
   ) async {
     try {
-      final serversideVersioningDetails = await _versionarteProvider.getServersideVersioningDetails();
+      final serversideVersioningDetails = await _versionarteProvider.getVersioningDetails();
 
       final inactive = serversideVersioningDetails.inactive;
       if (inactive) {
