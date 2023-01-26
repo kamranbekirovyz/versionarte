@@ -1,4 +1,4 @@
-class ServerdideVersioningDetails {
+class ServersideVersioningDetails {
   final String? inactiveDescription;
   final int minAndroidVersion;
   final int minIosVersion;
@@ -6,7 +6,7 @@ class ServerdideVersioningDetails {
   final int latestIosVersion;
   final bool inactive;
 
-  const ServerdideVersioningDetails({
+  const ServersideVersioningDetails({
     required this.inactiveDescription,
     required this.minAndroidVersion,
     required this.latestAndroidVersion,
@@ -15,8 +15,8 @@ class ServerdideVersioningDetails {
     required this.inactive,
   });
 
-  factory ServerdideVersioningDetails.fromJson(Map<String, dynamic> json) {
-    return ServerdideVersioningDetails(
+  factory ServersideVersioningDetails.fromJson(Map<String, dynamic> json) {
+    return ServersideVersioningDetails(
       inactiveDescription: json['inactive_description'],
       minAndroidVersion: json['min_android_version'],
       minIosVersion: json['min_ios_version'],

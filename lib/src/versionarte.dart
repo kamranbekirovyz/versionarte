@@ -13,17 +13,17 @@ class Versionarte {
   }
 
   Future<VersionarteDecision> checkDecision(
-    CurrentAppServerdideVersioningDetails currentAppServerdideVersioningDetails,
+    CurrentAppServersideVersioningDetails currentAppServersideVersioningDetails,
   ) async {
     try {
-      final serversideVersioningDetails = await _versionarteProvider.getServerdideVersioningDetails();
+      final serversideVersioningDetails = await _versionarteProvider.getServersideVersioningDetails();
 
       final inactive = serversideVersioningDetails.inactive;
       if (inactive) {
         return VersionarteDecision.inactive;
       }
 
-      final currentPlatformVersion = Platform.isAndroid ? currentAppServerdideVersioningDetails.androidVersion : currentAppServerdideVersioningDetails.iosVersion;
+      final currentPlatformVersion = Platform.isAndroid ? currentAppServersideVersioningDetails.androidVersion : currentAppServersideVersioningDetails.iosVersion;
 
       final serversideMinPlatformVersion = Platform.isAndroid ? serversideVersioningDetails.minAndroidVersion : serversideVersioningDetails.minIosVersion;
       final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;

@@ -1,14 +1,14 @@
-class CurrentAppServerdideVersioningDetails {
+class CurrentAppServersideVersioningDetails {
   final int androidVersion;
   final int iosVersion;
 
-  const CurrentAppServerdideVersioningDetails({
+  const CurrentAppServersideVersioningDetails({
     required this.androidVersion,
     required this.iosVersion,
   });
 
-  factory CurrentAppServerdideVersioningDetails.fromPackageInfo() {
-    return const CurrentAppServerdideVersioningDetails(
+  factory CurrentAppServersideVersioningDetails.fromPackageInfo() {
+    return const CurrentAppServersideVersioningDetails(
       androidVersion: 0,
       iosVersion: 0,
     );

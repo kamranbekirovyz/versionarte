@@ -24,7 +24,7 @@
 //   }
 
 //   // @override
-//   // Future<ServerdideVersioningDetails> getServerdideVersioningDetails() {
-//   //   return Future.value(ServerdideVersioningDetails());
+//   // Future<ServersideVersioningDetails> getServersideVersioningDetails() {
+//   //   return Future.value(ServersideVersioningDetails());
 //   // }
 // }

@@ -1,5 +1,5 @@
-import 'package:versionarte/src/models/versioning_details.dart';
+import 'package:versionarte/src/models/serverside_versioning_details.dart';
 
 abstract class VersionarteProvider {
-  Future<ServerdideVersioningDetails> getServerdideVersioningDetails();
+  Future<ServersideVersioningDetails> getServersideVersioningDetails();
 }
