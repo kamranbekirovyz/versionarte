@@ -1,4 +1,4 @@
-class RemoteConfigModel {
+class ServerdideVersioningDetails {
   final String? inactiveDescription;
   final int minAndroidVersion;
   final int minIosVersion;
@@ -6,7 +6,7 @@ class RemoteConfigModel {
   final int latestIosVersion;
   final bool inactive;
 
-  const RemoteConfigModel({
+  const ServerdideVersioningDetails({
     required this.inactiveDescription,
     required this.minAndroidVersion,
     required this.latestAndroidVersion,
@@ -15,8 +15,8 @@ class RemoteConfigModel {
     required this.inactive,
   });
 
-  factory RemoteConfigModel.fromJson(Map<String, dynamic> json) {
-    return RemoteConfigModel(
+  factory ServerdideVersioningDetails.fromJson(Map<String, dynamic> json) {
+    return ServerdideVersioningDetails(
       inactiveDescription: json['inactive_description'],
       minAndroidVersion: json['min_android_version'],
       minIosVersion: json['min_ios_version'],

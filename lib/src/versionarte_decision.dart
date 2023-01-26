@@ -4,5 +4,6 @@ enum VersionarteDecision {
   shouldUpdate,
   mustUpdate,
   inactive,
+  upToDate,
   unknown,
 }

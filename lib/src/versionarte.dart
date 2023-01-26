@@ -1,30 +1,45 @@
-import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'dart:io';
+
+import 'package:versionarte/src/models/current_app_versioning_details.dart';
 import 'package:versionarte/src/versionarte_decision.dart';
+import 'package:versionarte/src/versionarte_provider.dart';
 
 class Versionarte {
-  FirebaseRemoteConfig? _remoteConfig;
+  // FirebaseRemoteConfig? _remoteConfig;
+  late final VersionarteProvider _versionarteProvider;
 
-  Future<VersionarteDecision> checkDecision() async {
+  void configure(VersionarteProvider versionarteProvider) {
+    _versionarteProvider = _versionarteProvider;
+  }
+
+  Future<VersionarteDecision> checkDecision(
+    CurrentAppServerdideVersioningDetails currentAppServerdideVersioningDetails,
+  ) async {
     try {
-      await _remoteConfig?.ensureInitialized();
+      final serversideVersioningDetails = await _versionarteProvider.getServerdideVersioningDetails();
 
-      return VersionarteDecision.unknown;
+      final inactive = serversideVersioningDetails.inactive;
+      if (inactive) {
+        return VersionarteDecision.inactive;
+      }
+
+      final currentPlatformVersion = Platform.isAndroid ? currentAppServerdideVersioningDetails.androidVersion : currentAppServerdideVersioningDetails.iosVersion;
+
+      final serversideMinPlatformVersion = Platform.isAndroid ? serversideVersioningDetails.minAndroidVersion : serversideVersioningDetails.minIosVersion;
+      final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;
+      if (mustUpdate) {
+        return VersionarteDecision.mustUpdate;
+      }
+
+      final serversideLatestPlatformVersion = Platform.isAndroid ? serversideVersioningDetails.latestAndroidVersion : serversideVersioningDetails.latestIosVersion;
+      final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
+      if (shouldUpdate) {
+        return VersionarteDecision.shouldUpdate;
+      }
+
+      return VersionarteDecision.upToDate;
     } catch (e, s) {
       return VersionarteDecision.unknown;
     }
-  }
-
-  Future<void> initializeRemoteConfig(
-    RemoteConfigSettings? remoteConfigSettings,
-    FirebaseRemoteConfig? remoteConfig,
-  ) async {
-    _remoteConfig = remoteConfig ?? FirebaseRemoteConfig.instance;
-
-    remoteConfigSettings = RemoteConfigSettings(
-      fetchTimeout: const Duration(seconds: 15),
-      minimumFetchInterval: Duration.zero,
-    );
-
-    await _remoteConfig?.setConfigSettings(remoteConfigSettings);
   }
 }
