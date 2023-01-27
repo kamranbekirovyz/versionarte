@@ -1,32 +1,47 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:versionarte/src/models/serverside_versioning_details.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
-  FirebaseRemoteConfig? _remoteConfig;
+  final _remoteConfig = FirebaseRemoteConfig.instance;
+  late final String _keyName;
 
   /// Initializes [FirebaseRemoteConfig] for this project, if not initialized.
   ///
   /// By default `fetchTimeout` is set to 15 seconds, minimumFetchInterval to
   /// Duration.zero.
-  Future<void> initialize(
+  RemoteConfigVersionarteProvider({
+    bool initializeRemoteConfig = true,
     RemoteConfigSettings? remoteConfigSettings,
-    FirebaseRemoteConfig? remoteConfig,
-  ) async {
-    _remoteConfig = remoteConfig ?? FirebaseRemoteConfig.instance;
+    String keyName = 'versionarte',
+  }) {
+    _keyName = keyName;
 
-    remoteConfigSettings = RemoteConfigSettings(
-      fetchTimeout: const Duration(seconds: 15),
-      minimumFetchInterval: Duration.zero,
-    );
+    if (initializeRemoteConfig) {
+      remoteConfigSettings = remoteConfigSettings ??
+          RemoteConfigSettings(
+            fetchTimeout: const Duration(seconds: 15),
+            minimumFetchInterval: Duration.zero,
+          );
 
-    await _remoteConfig?.setConfigSettings(remoteConfigSettings);
+      _initialize(remoteConfigSettings);
+    }
+  }
+
+  Future<void> _initialize(RemoteConfigSettings settings) async {
+    return _remoteConfig.setConfigSettings(settings);
   }
 
   @override
-  FutureOr<ServersideVersioningDetails?> getVersioningDetails() {
-    return null;
+  FutureOr<ServersideVersioningDetails?> getVersioningDetails() async {
+    await _remoteConfig.fetchAndActivate();
+
+    final versionarteString = _remoteConfig.getString(_keyName);
+    final versionarteDecoded = jsonDecode(versionarteString);
+
+    return ServersideVersioningDetails.fromJson(versionarteDecoded);
   }
 }

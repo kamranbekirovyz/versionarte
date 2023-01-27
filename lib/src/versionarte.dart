@@ -1,23 +1,17 @@
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:versionarte/src/models/current_app_versioning_details.dart';
+import 'package:versionarte/src/models/current_versioning_details.dart';
 import 'package:versionarte/src/models/versionarte_decision.dart';
 import 'package:versionarte/src/models/versionarte_result.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
 class Versionarte {
-  late final VersionarteProvider _versionarteProvider;
-
-  void configure(VersionarteProvider versionarteProvider) {
-    _versionarteProvider = _versionarteProvider;
-  }
-
-  Future<VersionarteResult> check(
-    CurrentAppVersioningDetails currentAppVersioningDetails,
-  ) async {
+  static Future<VersionarteResult> check({
+    required VersionarteProvider versionarteProvider,
+    required CurrentVersioningDetails currentVersioningDetails,
+  }) async {
     try {
-      final serversideVersioningDetails = await _versionarteProvider.getVersioningDetails();
+      final serversideVersioningDetails = await versionarteProvider.getVersioningDetails();
 
       if (serversideVersioningDetails == null) {
         return const VersionarteResult(
@@ -34,9 +28,9 @@ class Versionarte {
         );
       }
 
-      final currentPlatformVersion = Platform.isAndroid ? currentAppVersioningDetails.androidVersion : currentAppVersioningDetails.iosVersion;
+      final currentPlatformVersion = currentVersioningDetails.platformVersion;
 
-      final serversideMinPlatformVersion = Platform.isAndroid ? serversideVersioningDetails.minAndroidVersion : serversideVersioningDetails.minIosVersion;
+      final serversideMinPlatformVersion = serversideVersioningDetails.minPlatformVersion;
       final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;
       if (mustUpdate) {
         return VersionarteResult(
@@ -45,7 +39,7 @@ class Versionarte {
         );
       }
 
-      final serversideLatestPlatformVersion = Platform.isAndroid ? serversideVersioningDetails.latestAndroidVersion : serversideVersioningDetails.latestIosVersion;
+      final serversideLatestPlatformVersion = serversideVersioningDetails.latestPlatformVersion;
       final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
       if (shouldUpdate) {
         return VersionarteResult(
