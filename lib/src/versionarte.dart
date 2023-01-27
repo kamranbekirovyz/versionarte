@@ -1,45 +1,62 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:versionarte/src/models/current_app_versioning_details.dart';
-import 'package:versionarte/src/versionarte_decision.dart';
-import 'package:versionarte/src/versionarte_provider.dart';
+import 'package:versionarte/src/models/versionarte_decision.dart';
+import 'package:versionarte/src/models/versionarte_result.dart';
+import 'package:versionarte/src/providers/versionarte_provider.dart';
 
 class Versionarte {
-  // FirebaseRemoteConfig? _remoteConfig;
   late final VersionarteProvider _versionarteProvider;
 
   void configure(VersionarteProvider versionarteProvider) {
     _versionarteProvider = _versionarteProvider;
   }
 
-  Future<VersionarteDecision> checkDecision(
-    CurrentAppServersideVersioningDetails currentAppServersideVersioningDetails,
+  Future<VersionarteResult> check(
+    CurrentAppVersioningDetails currentAppVersioningDetails,
   ) async {
     try {
       final serversideVersioningDetails = await _versionarteProvider.getVersioningDetails();
 
       final inactive = serversideVersioningDetails.inactive;
       if (inactive) {
-        return VersionarteDecision.inactive;
+        return VersionarteResult(
+          VersionarteDecision.inactive,
+          message: serversideVersioningDetails.inactiveDescription,
+          details: serversideVersioningDetails,
+        );
       }
 
-      final currentPlatformVersion = Platform.isAndroid ? currentAppServersideVersioningDetails.androidVersion : currentAppServersideVersioningDetails.iosVersion;
+      final currentPlatformVersion = Platform.isAndroid ? currentAppVersioningDetails.androidVersion : currentAppVersioningDetails.iosVersion;
 
       final serversideMinPlatformVersion = Platform.isAndroid ? serversideVersioningDetails.minAndroidVersion : serversideVersioningDetails.minIosVersion;
       final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;
       if (mustUpdate) {
-        return VersionarteDecision.mustUpdate;
+        return VersionarteResult(
+          VersionarteDecision.mustUpdate,
+          details: serversideVersioningDetails,
+        );
       }
 
       final serversideLatestPlatformVersion = Platform.isAndroid ? serversideVersioningDetails.latestAndroidVersion : serversideVersioningDetails.latestIosVersion;
       final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
       if (shouldUpdate) {
-        return VersionarteDecision.shouldUpdate;
+        return VersionarteResult(
+          VersionarteDecision.shouldUpdate,
+          details: serversideVersioningDetails,
+        );
       }
 
-      return VersionarteDecision.upToDate;
+      return const VersionarteResult(VersionarteDecision.upToDate);
     } catch (e, s) {
-      return VersionarteDecision.unknown;
+      log('[VERSIONARTE] Exception: $e');
+      log('[VERSIONARTE] Stack Trace: $s');
+
+      return VersionarteResult(
+        VersionarteDecision.unknown,
+        message: e.toString(),
+      );
     }
   }
 }
