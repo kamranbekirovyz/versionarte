@@ -50,8 +50,8 @@ class Versionarte {
 
       return const VersionarteResult(VersionarteDecision.upToDate);
     } catch (e, s) {
-      log('[VERSIONARTE] Exception: $e');
-      log('[VERSIONARTE] Stack Trace: $s');
+      _log('Exception: $e');
+      _log('Stack Trace: $s');
 
       return VersionarteResult(
         VersionarteDecision.unknown,
@@ -59,4 +59,10 @@ class Versionarte {
       );
     }
   }
+}
+
+/// A simple logging utility function.
+void _log(String? s) {
+  // TODO: replace with logar..
+  log('[VERSIONARTE] $s');
 }
