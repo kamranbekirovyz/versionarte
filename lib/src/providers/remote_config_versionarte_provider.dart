@@ -1,30 +1,32 @@
-// import 'package:firebase_remote_config/firebase_remote_config.dart';
-// import 'package:versionarte/src/models/versioning_details.dart';
-// import 'package:versionarte/src/versionarte_provider.dart';
+import 'dart:async';
 
-// class RemoteConfigVersionarteProvider extends VersionarteProvider {
-//   FirebaseRemoteConfig? _remoteConfig;
+import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:versionarte/src/models/serverside_versioning_details.dart';
+import 'package:versionarte/src/providers/versionarte_provider.dart';
 
-//   /// Initializes [FirebaseRemoteConfig] for this project, if not initialized.
-//   ///
-//   /// By default `fetchTimeout` is set to 15 seconds, minimumFetchInterval to
-//   /// Duration.zero.
-//   Future<void> initialize(
-//     RemoteConfigSettings? remoteConfigSettings,
-//     FirebaseRemoteConfig? remoteConfig,
-//   ) async {
-//     _remoteConfig = remoteConfig ?? FirebaseRemoteConfig.instance;
+class RemoteConfigVersionarteProvider extends VersionarteProvider {
+  FirebaseRemoteConfig? _remoteConfig;
 
-//     remoteConfigSettings = RemoteConfigSettings(
-//       fetchTimeout: const Duration(seconds: 15),
-//       minimumFetchInterval: Duration.zero,
-//     );
+  /// Initializes [FirebaseRemoteConfig] for this project, if not initialized.
+  ///
+  /// By default `fetchTimeout` is set to 15 seconds, minimumFetchInterval to
+  /// Duration.zero.
+  Future<void> initialize(
+    RemoteConfigSettings? remoteConfigSettings,
+    FirebaseRemoteConfig? remoteConfig,
+  ) async {
+    _remoteConfig = remoteConfig ?? FirebaseRemoteConfig.instance;
 
-//     await _remoteConfig?.setConfigSettings(remoteConfigSettings);
-//   }
+    remoteConfigSettings = RemoteConfigSettings(
+      fetchTimeout: const Duration(seconds: 15),
+      minimumFetchInterval: Duration.zero,
+    );
 
-//   // @override
-//   // Future<ServersideVersioningDetails> getVersioningDetails() {
-//   //   return Future.value(ServersideVersioningDetails());
-//   // }
-// }
+    await _remoteConfig?.setConfigSettings(remoteConfigSettings);
+  }
+
+  @override
+  FutureOr<ServersideVersioningDetails?> getVersioningDetails() {
+    return null;
+  }
+}

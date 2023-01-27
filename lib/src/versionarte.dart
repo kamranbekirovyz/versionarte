@@ -19,6 +19,12 @@ class Versionarte {
     try {
       final serversideVersioningDetails = await _versionarteProvider.getVersioningDetails();
 
+      if (serversideVersioningDetails == null) {
+        return const VersionarteResult(
+          VersionarteDecision.unknown,
+        );
+      }
+
       final inactive = serversideVersioningDetails.inactive;
       if (inactive) {
         return VersionarteResult(

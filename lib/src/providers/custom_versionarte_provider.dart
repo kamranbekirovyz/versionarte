@@ -6,7 +6,9 @@ import 'package:versionarte/src/providers/versionarte_provider.dart';
 class CustomVersionarteProvider extends VersionarteProvider {
   final ServersideVersioningDetails _serversideVersioningDetails;
 
-  CustomVersionarteProvider(ServersideVersioningDetails versioningDetails) : _serversideVersioningDetails = versioningDetails;
+  CustomVersionarteProvider(
+    ServersideVersioningDetails versioningDetails,
+  ) : _serversideVersioningDetails = versioningDetails;
 
   @override
   FutureOr<ServersideVersioningDetails> getVersioningDetails() {
