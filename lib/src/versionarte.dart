@@ -20,29 +20,35 @@ class Versionarte {
   }) async {
     try {
       if (currentVersioningDetails == null) {
-        logV('A null CurrentVersioningDetails instance received :( terminating the process.');
+        logV(
+            'A null CurrentVersioningDetails instance received :( terminating the process.');
 
         return VersionarteResult(
           VersionarteDecision.nullCurrentVersioningDetails,
-          message: 'A null `CurrentVersioningDetails` received. If you\'ve used `CurrentVersioningDetails.fromPackageInfo`, package_info plugin might have failed.',
+          message:
+              'A null `CurrentVersioningDetails` received. If you\'ve used `CurrentVersioningDetails.fromPackageInfo`, package_info plugin might have failed.',
         );
       }
 
       logV('Received CurrentVersioningDetails: $currentVersioningDetails');
       logV('Checking versionarte using ${versionarteProvider.runtimeType}');
 
-      final serversideVersioningDetails = await versionarteProvider.getVersioningDetails();
+      final serversideVersioningDetails =
+          await versionarteProvider.getVersioningDetails();
 
       if (serversideVersioningDetails == null) {
-        logV('Some error(s) occured while fetching servers-side versioning details.');
+        logV(
+            'Some error(s) occured while fetching servers-side versioning details.');
 
         return VersionarteResult(
           VersionarteDecision.unknown,
-          message: 'For some unknown reasons ServersideVersioningDetails could not be fetched.',
+          message:
+              'For some unknown reasons ServersideVersioningDetails could not be fetched.',
         );
       }
 
-      logV('Received ServersideVersioningDetails: \n$serversideVersioningDetails');
+      logV(
+          'Received ServersideVersioningDetails: \n$serversideVersioningDetails');
 
       final inactive = serversideVersioningDetails.inactive;
       if (inactive) {
@@ -55,7 +61,8 @@ class Versionarte {
 
       final currentPlatformVersion = currentVersioningDetails.platformVersion;
 
-      final serversideMinPlatformVersion = serversideVersioningDetails.minPlatformVersion;
+      final serversideMinPlatformVersion =
+          serversideVersioningDetails.minPlatformVersion;
       final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;
       if (mustUpdate) {
         return VersionarteResult(
@@ -64,8 +71,10 @@ class Versionarte {
         );
       }
 
-      final serversideLatestPlatformVersion = serversideVersioningDetails.latestPlatformVersion;
-      final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
+      final serversideLatestPlatformVersion =
+          serversideVersioningDetails.latestPlatformVersion;
+      final shouldUpdate =
+          serversideLatestPlatformVersion > currentPlatformVersion;
       if (shouldUpdate) {
         return VersionarteResult(
           VersionarteDecision.shouldUpdate,
@@ -78,12 +87,14 @@ class Versionarte {
       if (versionarteProvider is RemoteConfigVersionarteProvider) {
         return VersionarteResult(
           VersionarteDecision.failedToParseJson,
-          message: 'Failed to parse json received from RemoteConfig. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a `keyName`.',
+          message:
+              'Failed to parse json received from RemoteConfig. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a `keyName`.',
         );
       } else if (versionarteProvider is RestfulVersionarteProvider) {
         return VersionarteResult(
           VersionarteDecision.failedToParseJson,
-          message: 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
+          message:
+              'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
         );
       } else {
         return VersionarteResult(

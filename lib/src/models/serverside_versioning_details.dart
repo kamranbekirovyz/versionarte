@@ -60,10 +60,12 @@ class ServersideVersioningDetails {
   }
 
   /// Returns minimum version of the currently running platform.
-  int get minPlatformVersion => Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
+  int get minPlatformVersion =>
+      Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
 
   /// Returns latest version of the currently running platform.
-  int get latestPlatformVersion => Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
+  int get latestPlatformVersion =>
+      Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
 
   /// Overriding for a readable String representation of its instance.
   @override
