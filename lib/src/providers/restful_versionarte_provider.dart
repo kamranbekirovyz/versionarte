@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:versionarte/src/helpers/logger.dart';
 import 'package:versionarte/src/models/serverside_versioning_details.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 import 'package:http/http.dart' as http;
@@ -29,10 +30,17 @@ class RestfulVersionarteProvider extends VersionarteProvider {
       headers.addEntries(_headers!.entries);
     }
 
+    logV('Getting serverside versioning details from RESTful API\nEndpoint: $_endpoint\nRequest headers: $_headers');
+
     final response = await client.get(
       Uri.parse(_endpoint),
       headers: headers,
     );
+
+    logV('Status code: ${response.statusCode}');
+    logV('Response body: ${response.body}');
+
+    // TODO: pretty print the response body
 
     final json = jsonDecode(response.body);
 
