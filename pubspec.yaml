@@ -1,7 +1,8 @@
 name: versionarte
-description: A new Flutter project.
+description: A Flutter package for determining update availability besides with some helpful features.
 version: 0.1.0
-homepage: 
+repository: https://github.com/kamranbekirovyz/versionarte
+home: https://github.com/kamranbekirovyz/versionarte
 
 environment:
   sdk: '>=2.12.2 <3.0.0'

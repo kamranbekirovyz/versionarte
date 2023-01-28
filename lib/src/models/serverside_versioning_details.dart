@@ -65,6 +65,7 @@ class ServersideVersioningDetails {
   /// Returns latest version of the currently running platform.
   int get latestPlatformVersion => Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
 
+  /// Overriding for a readable String representation of its instance.
   @override
   String toString() {
     return '''minAndroidVersionNumber: $minAndroidVersionNumber

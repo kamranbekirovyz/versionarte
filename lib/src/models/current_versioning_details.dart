@@ -23,6 +23,7 @@ class CurrentVersioningDetails {
 
   int get platformVersion => Platform.isAndroid ? androidVersion : iosVersion;
 
+  /// Overriding for a readable String representation of its instance.
   @override
   String toString() {
     return 'androidVersion: $androidVersion, iosVersion: $iosVersion';

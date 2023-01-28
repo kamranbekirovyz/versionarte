@@ -1,5 +1,4 @@
-import 'dart:developer';
-
+import 'package:versionarte/src/helpers/logger.dart';
 import 'package:versionarte/src/models/versionarte_decision.dart';
 import 'package:versionarte/src/models/versionarte_result.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
@@ -12,7 +11,7 @@ class Versionarte {
   }) async {
     try {
       if (currentVersioningDetails == null) {
-        _log('A null CurrentVersioningDetails instance received :( terminating the process.');
+        logV('A null CurrentVersioningDetails instance received :( terminating the process.');
 
         return VersionarteResult(
           VersionarteDecision.nullCurrentVersioningDetails,
@@ -20,21 +19,21 @@ class Versionarte {
         );
       }
 
-      _log('Received CurrentVersioningDetails: $currentVersioningDetails');
-      _log('Checking versionarte using ${versionarteProvider.runtimeType}');
+      logV('Received CurrentVersioningDetails: $currentVersioningDetails');
+      logV('Checking versionarte using ${versionarteProvider.runtimeType}');
 
       final serversideVersioningDetails = await versionarteProvider.getVersioningDetails();
 
       if (serversideVersioningDetails == null) {
-        _log('Some error(s) occured while fetching servers-side versioning details.');
+        logV('Some error(s) occured while fetching servers-side versioning details.');
 
         return VersionarteResult(
           VersionarteDecision.unknown,
-          // TODO: add message
+          message: 'For some unknown reasons ServersideVersioningDetails could not be fetched.',
         );
       }
 
-      _log('Received ServersideVersioningDetails: \n$serversideVersioningDetails');
+      logV('Received ServersideVersioningDetails: \n$serversideVersioningDetails');
 
       final inactive = serversideVersioningDetails.inactive;
       if (inactive) {
@@ -67,16 +66,25 @@ class Versionarte {
 
       return VersionarteResult(VersionarteDecision.upToDate);
     } on FormatException catch (e) {
-      // TODO: take RestfulVersionarteProvider into consideration.
-      // if (versionarteProvider is RemoteConfigVersionarteProvider) {
-      return VersionarteResult(
-        VersionarteDecision.failedToParseJson,
-        message: 'Failed to parse json received from RemoteConfig. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a `keyName`.',
-      );
-      // }
+      if (versionarteProvider is RemoteConfigVersionarteProvider) {
+        return VersionarteResult(
+          VersionarteDecision.failedToParseJson,
+          message: 'Failed to parse json received from RemoteConfig. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a `keyName`.',
+        );
+      } else if (versionarteProvider is RestfulVersionarteProvider) {
+        return VersionarteResult(
+          VersionarteDecision.failedToParseJson,
+          message: 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
+        );
+      } else {
+        return VersionarteResult(
+          VersionarteDecision.unknown,
+          message: e.toString(),
+        );
+      }
     } catch (e, s) {
-      _log('Exception: $e');
-      _log('Stack Trace: $s');
+      logV('Exception: $e');
+      logV('Stack Trace: $s');
 
       return VersionarteResult(
         VersionarteDecision.unknown,
@@ -84,10 +92,4 @@ class Versionarte {
       );
     }
   }
-}
-
-/// A simple logging utility function.
-void _log(String? s) {
-  // TODO: replace with logar..
-  log('[VERSIONARTE] $s');
 }
