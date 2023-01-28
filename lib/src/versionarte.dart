@@ -1,10 +1,19 @@
+import 'dart:async';
+
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:versionarte/src/helpers/logger.dart';
-import 'package:versionarte/src/models/versionarte_decision.dart';
 import 'package:versionarte/src/models/versionarte_result.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 import 'package:versionarte/versionarte.dart';
 
 class Versionarte {
+  static PackageInfo? _packageInfo;
+  static FutureOr<PackageInfo?> get packageInfo async {
+    _packageInfo ??= await PackageInfo.fromPlatform();
+
+    return _packageInfo;
+  }
+
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
     required CurrentVersioningDetails? currentVersioningDetails,
