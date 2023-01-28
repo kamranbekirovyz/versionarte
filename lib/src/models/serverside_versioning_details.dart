@@ -4,12 +4,6 @@ import 'dart:io';
 ///
 /// See example json file at path "/versionarte.json".
 class ServersideVersioningDetails {
-  /// Optional text to show to user when app is inactive.
-  final String? inactiveDescription;
-
-  /// Determining whether app is active or not.
-  final bool inactive;
-
   /// Minimum Android platform version that users can have installed.
   final int minAndroidVersionNumber;
 
@@ -32,15 +26,21 @@ class ServersideVersioningDetails {
   /// to the Apple App Store.
   final String latestReadableIosVersion;
 
+  /// Determining whether app is active or not.
+  final bool inactive;
+
+  /// Optional text to show to user when app is inactive.
+  final String? inactiveDescription;
+
   const ServersideVersioningDetails({
-    required this.inactiveDescription,
-    required this.inactive,
     required this.minAndroidVersionNumber,
     required this.latestAndroidVersionNumber,
     required this.minIosVersionNumber,
     required this.latestIosVersionNumber,
     required this.latestReadableAndroidVersion,
     required this.latestReadableIosVersion,
+    required this.inactive,
+    required this.inactiveDescription,
   });
 
   /// Instantiates a [ServersideVersioningDetails] instance from json.
@@ -48,14 +48,14 @@ class ServersideVersioningDetails {
   /// See example json file at path "/versionarte.json".
   factory ServersideVersioningDetails.fromJson(Map<String, dynamic> json) {
     return ServersideVersioningDetails(
-      inactiveDescription: json['inactive_description'],
-      inactive: json['inactive'] ?? false,
       minAndroidVersionNumber: json['min_android_version_number'],
       minIosVersionNumber: json['min_ios_version_number'],
       latestAndroidVersionNumber: json['latest_android_version_number'],
       latestIosVersionNumber: json['latest_ios_version_number'],
       latestReadableAndroidVersion: json['latest_readable_android_version'],
       latestReadableIosVersion: json['latest_readable_ios_version'],
+      inactive: json['inactive'] ?? false,
+      inactiveDescription: json['inactive_description'],
     );
   }
 
@@ -64,4 +64,17 @@ class ServersideVersioningDetails {
 
   /// Returns latest version of the currently running platform.
   int get latestPlatformVersion => Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
+
+  @override
+  String toString() {
+    return '''minAndroidVersionNumber: $minAndroidVersionNumber
+minIosVersionNumber: $minIosVersionNumber
+latestAndroidVersionNumber: $latestAndroidVersionNumber
+latestIosVersionNumber: $latestIosVersionNumber
+latestReadableAndroidVersion: $latestReadableAndroidVersion
+latestReadableIosVersion: $latestReadableIosVersion
+inactive: $inactive
+inactiveDescription: $inactiveDescription
+''';
+  }
 }

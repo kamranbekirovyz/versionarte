@@ -22,4 +22,9 @@ class CurrentVersioningDetails {
   }
 
   int get platformVersion => Platform.isAndroid ? androidVersion : iosVersion;
+
+  @override
+  String toString() {
+    return 'androidVersion: $androidVersion, iosVersion: $iosVersion';
+  }
 }

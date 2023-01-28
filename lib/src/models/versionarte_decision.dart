@@ -6,4 +6,6 @@ enum VersionarteDecision {
   inactive,
   upToDate,
   unknown,
+  failedToParseJson,
+  nullCurrentVersioningDetails,
 }
