@@ -3,3 +3,4 @@ README in progress..
 - Launch App Store on iOS, Play Store on Android.
 - Implement in app upgrade on Android.
 + Version indicator Widget.
++ Making it testable.
