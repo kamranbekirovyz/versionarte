@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:package_info_plus/package_info_plus.dart';
+import 'package:versionarte/versionarte.dart';
 
 class CurrentVersioning {
   /// Current version number of the running Android app.
@@ -17,7 +17,12 @@ class CurrentVersioning {
   /// Returns [CurrentVersioning] object from current platform's package
   /// info.
   static Future<CurrentVersioning?> fromPackageInfo() async {
-    final packageInfo = await PackageInfo.fromPlatform();
+    final packageInfo = await Versionarte.packageInfo;
+
+    if (packageInfo == null) {
+      throw 'Failed to get versioning details from PackageInfo';
+    }
+
     final number = int.parse(packageInfo.buildNumber);
 
     return CurrentVersioning(
