@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:versionarte/src/helpers/logger.dart';
-import 'package:versionarte/src/models/serverside_versioning_details.dart';
+import 'package:versionarte/src/models/serverside_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,7 +18,7 @@ class RestfulVersionarteProvider extends VersionarteProvider {
         _headers = headers;
 
   @override
-  FutureOr<ServersideVersioningDetails?> getVersioningDetails() async {
+  FutureOr<ServersideVersioning?> getVersioningDetails() async {
     final client = http.Client();
 
     final headers = {
@@ -44,6 +44,6 @@ class RestfulVersionarteProvider extends VersionarteProvider {
 
     final json = jsonDecode(response.body);
 
-    return ServersideVersioningDetails.fromJson(json);
+    return ServersideVersioning.fromJson(json);
   }
 }

@@ -1,5 +1,5 @@
 import 'package:versionarte/src/helpers/logger.dart';
-import 'package:versionarte/src/models/serverside_versioning_details.dart';
+import 'package:versionarte/src/models/serverside_versioning.dart';
 import 'package:versionarte/src/models/versionarte_decision.dart';
 
 class VersionarteResult {
@@ -8,18 +8,18 @@ class VersionarteResult {
   /// Values: shouldUpdate, mustUpdate, upToDate, inactive, failedToCheck.
   final VersionarteDecision decision;
 
-  /// [ServersideVersioningDetails] for the app.
+  /// [ServersideVersioning] for the app.
   ///
   /// Useful if you want to manipulate those values, especially for getting
   /// [inactiveDescription] text.
-  final ServersideVersioningDetails? details;
+  final ServersideVersioning? serversideVersioning;
 
   /// Possible error message.
   final String? message;
 
   VersionarteResult(
     this.decision, {
-    this.details,
+    this.serversideVersioning,
     this.message,
   }) {
     logV(toString());
@@ -32,7 +32,7 @@ class VersionarteResult {
   bool get success => [
         VersionarteDecision.inactive,
         VersionarteDecision.mustUpdate,
-        VersionarteDecision.shouldUpdate,
+        VersionarteDecision.couldUpdate,
         VersionarteDecision.upToDate,
       ].contains(decision);
 

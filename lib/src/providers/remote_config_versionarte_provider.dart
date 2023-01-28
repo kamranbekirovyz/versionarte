@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:versionarte/src/models/serverside_versioning_details.dart';
+import 'package:versionarte/src/models/serverside_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
@@ -36,12 +36,12 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   }
 
   @override
-  FutureOr<ServersideVersioningDetails?> getVersioningDetails() async {
+  FutureOr<ServersideVersioning?> getVersioningDetails() async {
     await _remoteConfig.fetchAndActivate();
 
     final versionarteString = _remoteConfig.getString(_keyName);
     final versionarteDecoded = jsonDecode(versionarteString);
 
-    return ServersideVersioningDetails.fromJson(versionarteDecoded);
+    return ServersideVersioning.fromJson(versionarteDecoded);
   }
 }

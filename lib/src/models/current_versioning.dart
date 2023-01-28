@@ -2,25 +2,25 @@ import 'dart:io';
 
 import 'package:package_info_plus/package_info_plus.dart';
 
-class CurrentVersioningDetails {
+class CurrentVersioning {
   /// Current version number of the running Android app.
   final int androidVersion;
 
   /// Current version number of the running iOS app.
   final int iosVersion;
 
-  const CurrentVersioningDetails({
+  const CurrentVersioning({
     required this.androidVersion,
     required this.iosVersion,
   });
 
-  /// Returns [CurrentVersioningDetails] object from current platform's package
+  /// Returns [CurrentVersioning] object from current platform's package
   /// info.
-  static Future<CurrentVersioningDetails?> fromPackageInfo() async {
+  static Future<CurrentVersioning?> fromPackageInfo() async {
     final packageInfo = await PackageInfo.fromPlatform();
     final number = int.parse(packageInfo.buildNumber);
 
-    return CurrentVersioningDetails(
+    return CurrentVersioning(
       androidVersion: Platform.isAndroid ? number : -1,
       iosVersion: Platform.isIOS ? number : -1,
     );

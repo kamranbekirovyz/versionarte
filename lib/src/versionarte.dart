@@ -20,60 +20,60 @@ class Versionarte {
 
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
-    required CurrentVersioningDetails? currentVersioningDetails,
+    required CurrentVersioning? currentVersioning,
   }) async {
     try {
-      if (currentVersioningDetails == null) {
-        logV('A null CurrentVersioningDetails instance received :( terminating the process.');
+      if (currentVersioning == null) {
+        logV('A null CurrentVersioning instance received :( terminating the process.');
 
         return VersionarteResult(
           VersionarteDecision.failedToCheck,
-          message: 'A null `CurrentVersioningDetails` received. If you\'ve used `CurrentVersioningDetails.fromPackageInfo`, package_info plugin might have failed.',
+          message: 'A null `CurrentVersioning` received. If you\'ve used `CurrentVersioning.fromPackageInfo`, package_info plugin might have failed.',
         );
       }
 
-      logV('Received CurrentVersioningDetails: $currentVersioningDetails');
+      logV('Received CurrentVersioning: $currentVersioning');
       logV('Checking versionarte using ${versionarteProvider.runtimeType}');
 
-      final serversideVersioningDetails = await versionarteProvider.getVersioningDetails();
+      final serversideVersioning = await versionarteProvider.getVersioningDetails();
 
-      if (serversideVersioningDetails == null) {
+      if (serversideVersioning == null) {
         logV('Some error(s) occured while fetching servers-side versioning details.');
 
         return VersionarteResult(
           VersionarteDecision.failedToCheck,
-          message: 'For some unknown reasons ServersideVersioningDetails could not be fetched.',
+          message: 'For some unknown reasons ServersideVersioning could not be fetched.',
         );
       }
 
-      logV('Received ServersideVersioningDetails: \n$serversideVersioningDetails');
+      logV('Received ServersideVersioning: \n$serversideVersioning');
 
-      final inactive = serversideVersioningDetails.inactive;
+      final inactive = serversideVersioning.inactive;
       if (inactive) {
         return VersionarteResult(
           VersionarteDecision.inactive,
-          message: serversideVersioningDetails.inactiveDescription,
-          details: serversideVersioningDetails,
+          message: serversideVersioning.inactiveDescription,
+          serversideVersioning: serversideVersioning,
         );
       }
 
-      final currentPlatformVersion = currentVersioningDetails.platformVersion;
+      final currentPlatformVersion = currentVersioning.platformVersion;
 
-      final serversideMinPlatformVersion = serversideVersioningDetails.minPlatformVersion;
+      final serversideMinPlatformVersion = serversideVersioning.minPlatformVersion;
       final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;
       if (mustUpdate) {
         return VersionarteResult(
           VersionarteDecision.mustUpdate,
-          details: serversideVersioningDetails,
+          serversideVersioning: serversideVersioning,
         );
       }
 
-      final serversideLatestPlatformVersion = serversideVersioningDetails.latestPlatformVersion;
+      final serversideLatestPlatformVersion = serversideVersioning.latestPlatformVersion;
       final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
       if (shouldUpdate) {
         return VersionarteResult(
-          VersionarteDecision.shouldUpdate,
-          details: serversideVersioningDetails,
+          VersionarteDecision.couldUpdate,
+          serversideVersioning: serversideVersioning,
         );
       }
 

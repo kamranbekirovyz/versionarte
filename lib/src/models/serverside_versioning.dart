@@ -3,7 +3,7 @@ import 'dart:io';
 /// Dart class representing server-side versioning details.
 ///
 /// See example json file at path "/versionarte.json".
-class ServersideVersioningDetails {
+class ServersideVersioning {
   /// Minimum Android platform version that users can have installed.
   final int minAndroidVersionNumber;
 
@@ -32,7 +32,7 @@ class ServersideVersioningDetails {
   /// Optional text to show to user when app is inactive.
   final String? inactiveDescription;
 
-  const ServersideVersioningDetails({
+  const ServersideVersioning({
     required this.minAndroidVersionNumber,
     required this.latestAndroidVersionNumber,
     required this.minIosVersionNumber,
@@ -43,11 +43,11 @@ class ServersideVersioningDetails {
     required this.inactiveDescription,
   });
 
-  /// Instantiates a [ServersideVersioningDetails] instance from json.
+  /// Instantiates a [ServersideVersioning] instance from json.
   ///
   /// See example json file at path "/versionarte.json".
-  factory ServersideVersioningDetails.fromJson(Map<String, dynamic> json) {
-    return ServersideVersioningDetails(
+  factory ServersideVersioning.fromJson(Map<String, dynamic> json) {
+    return ServersideVersioning(
       minAndroidVersionNumber: json['min_android_version_number'],
       minIosVersionNumber: json['min_ios_version_number'],
       latestAndroidVersionNumber: json['latest_android_version_number'],
@@ -60,12 +60,10 @@ class ServersideVersioningDetails {
   }
 
   /// Returns minimum version of the currently running platform.
-  int get minPlatformVersion =>
-      Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
+  int get minPlatformVersion => Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
 
   /// Returns latest version of the currently running platform.
-  int get latestPlatformVersion =>
-      Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
+  int get latestPlatformVersion => Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
 
   /// Overriding for a readable String representation of its instance.
   @override

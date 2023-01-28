@@ -1,7 +1,7 @@
 /// Enum representing decision for app and its update availability.
 enum VersionarteDecision {
   /// "There is a new version available"
-  shouldUpdate,
+  couldUpdate,
 
   /// "There is a new version available and user must update the app to continue"
   mustUpdate,
