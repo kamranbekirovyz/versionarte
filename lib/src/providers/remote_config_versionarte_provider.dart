@@ -11,7 +11,7 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
 
   /// Initializes [FirebaseRemoteConfig] for this project, if not initialized.
   ///
-  /// By default `fetchTimeout` is set to 15 seconds, minimumFetchInterval to
+  /// By default [fetchTimeout] is set to 7 seconds, [minimumFetchInterval] to
   /// Duration.zero.
   RemoteConfigVersionarteProvider({
     bool initializeRemoteConfig = true,
@@ -23,7 +23,7 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     if (initializeRemoteConfig) {
       remoteConfigSettings = remoteConfigSettings ??
           RemoteConfigSettings(
-            fetchTimeout: const Duration(seconds: 15),
+            fetchTimeout: const Duration(seconds: 7),
             minimumFetchInterval: Duration.zero,
           );
 

@@ -3,8 +3,18 @@ import 'package:versionarte/src/models/serverside_versioning_details.dart';
 import 'package:versionarte/src/models/versionarte_decision.dart';
 
 class VersionarteResult {
+  /// Enum representing decision for app and its update availability.
+  ///
+  /// Values: shouldUpdate, mustUpdate, upToDate, inactive, failedToCheck.
   final VersionarteDecision decision;
+
+  /// [ServersideVersioningDetails] for the app.
+  ///
+  /// Useful if you want to manipulate those values, especially for getting
+  /// [inactiveDescription] text.
   final ServersideVersioningDetails? details;
+
+  /// Possible error message.
   final String? message;
 
   VersionarteResult(
