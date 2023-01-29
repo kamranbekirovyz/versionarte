@@ -6,3 +6,4 @@ README in progress..
 - Making it testable.
 - Add example project.
 - Add UI kit for it.
++ Create your own VersionarteProvider

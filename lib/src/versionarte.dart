@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:versionarte/src/helpers/logger.dart';
 import 'package:versionarte/src/models/versionarte_result.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
@@ -102,6 +104,31 @@ class Versionarte {
       return VersionarteResult(
         VersionarteDecision.failedToCheck,
         message: e.toString(),
+      );
+    }
+  }
+
+  static Future<bool> openAppInStore({
+    String? packageName,
+    required int appleAppId,
+  }) async {
+    if (Platform.isAndroid) {
+      packageName ??= (await packageInfo)?.packageName;
+
+      if (packageName != null) {
+        return launchUrl(
+          Uri.parse(
+            'https://play.google.com/store/apps/details?id=$packageName',
+          ),
+        );
+      } else {
+        return false;
+      }
+    } else {
+      return launchUrl(
+        Uri.parse(
+          'https://apps.apple.com/app/id$appleAppId',
+        ),
       );
     }
   }
