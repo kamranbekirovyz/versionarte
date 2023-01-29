@@ -108,8 +108,16 @@ class Versionarte {
     }
   }
 
+  /// Opens App Store on iOS, Play Store on Android.
+  ///
+  /// Play Store app URL is generated automatically by the help of the package
+  /// info, so no need to specify [packageName] manually. But, for App Store
+  /// you must specify your app ID as an [int], meaning no need for "id" prefix.
   static Future<bool> openAppInStore({
+    /// Package name of the app (Android)
     String? packageName,
+
+    /// App ID of the app on App Store (iOS)
     required int appleAppId,
   }) async {
     if (Platform.isAndroid) {
@@ -124,12 +132,16 @@ class Versionarte {
       } else {
         return false;
       }
-    } else {
+    } else if (Platform.isIOS) {
       return launchUrl(
         Uri.parse(
           'https://apps.apple.com/app/id$appleAppId',
         ),
       );
+    } else {
+      logV('${Platform.operatingSystem} is not supported.');
+
+      return false;
     }
   }
 }
