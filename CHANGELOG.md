@@ -1,3 +1,8 @@
+## 0.1.3
+
+- (BETA) Implemented `openAppInStore` method to launch Play Store on Android, App Store on iOS.
+- Improved documentation comments.
+
 ## 0.1.2
 
 - Updated namings of ServersideVersioning and CurrentVersioning.
