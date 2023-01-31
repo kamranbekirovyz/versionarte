@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 
 /// A simple logging utility function.
 void logV(String? s) {
-  if (kDebugMode) {
+  if (kReleaseMode) {
     log('[VERSIONARTE] $s');
   }
 }

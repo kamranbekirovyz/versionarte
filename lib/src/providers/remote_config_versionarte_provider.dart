@@ -5,6 +5,13 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:versionarte/src/models/serverside_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
+/// Built-in `VersionarteProvider` working with `Firebase Remote Config`
+///
+/// `ServersideVersioning` is obtained from a value specified in Remote Config
+/// with a key name "versionarte" unless specifed differently using `keyName`
+/// constructor property.
+///
+/// To see example json file, check /versionarte.json file.
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
   final _remoteConfig = FirebaseRemoteConfig.instance;
   late final String _keyName;
@@ -12,7 +19,7 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   /// Initializes [FirebaseRemoteConfig] for this project, if not initialized.
   ///
   /// By default [fetchTimeout] is set to 7 seconds, [minimumFetchInterval] to
-  /// Duration.zero.
+  /// `Duration.zero`.
   RemoteConfigVersionarteProvider({
     bool initializeRemoteConfig = true,
     RemoteConfigSettings? remoteConfigSettings,
