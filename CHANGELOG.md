@@ -1,6 +1,6 @@
-## 0.1.3
+## 0.1.4
 
-- (BETA) Implemented `openAppInStore` method to launch Play Store on Android, App Store on iOS.
+- Added `VersionarteInactiveView` as a UI kit component to display to your users when the app is inactive.
 - Improved documentation comments.
 
 ## 0.1.2
