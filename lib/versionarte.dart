@@ -1,7 +1,10 @@
 library versionarte;
 
-export 'package:versionarte/src/widgets/versionarte_indicator.dart';
+// UI Kit
+export 'src/widgets/versionarte_indicator.dart';
+export 'src/widgets/versionarte_inactive_view.dart';
 
+// Logic
 export 'src/versionarte.dart';
 export 'src/providers/custom_versionarte_provider.dart';
 export 'src/providers/remote_config_versionarte_provider.dart';
