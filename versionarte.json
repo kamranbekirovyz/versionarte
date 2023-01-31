@@ -7,5 +7,15 @@
     "latest_readable_ios_version": "2.7.5+hotfix",
     "inactive_title": "App Unavailable.",
     "inactive_description": "App is in maintanence mode, please come back later.",
-    "inactive": false
+    "inactive": false,
+    "changelog": {
+        "en": [
+            "Minor improvements.",
+            "Fixed login issue."
+        ],
+        "es": [
+            "Pequeñas mejoras.",
+            "Solucionado el problema de inicio de sesión."
+        ]
+    }
 }

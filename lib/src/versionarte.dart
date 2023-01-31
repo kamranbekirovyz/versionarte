@@ -28,8 +28,6 @@ class Versionarte {
       currentVersioning = await CurrentVersioning.fromPackageInfo();
 
       if (currentVersioning == null) {
-        logV('A null CurrentVersioning instance received :( terminating the process.');
-
         return VersionarteResult(
           VersionarteDecision.failedToCheck,
           message: 'A null `CurrentVersioning` received. If you\'ve used `CurrentVersioning.fromPackageInfo`, package_info plugin might have failed.',
@@ -42,8 +40,6 @@ class Versionarte {
       final serversideVersioning = await versionarteProvider.getVersioningDetails();
 
       if (serversideVersioning == null) {
-        logV('Some error(s) occured while fetching servers-side versioning details.');
-
         return VersionarteResult(
           VersionarteDecision.failedToCheck,
           message: 'For some unknown reasons ServersideVersioning could not be fetched.',

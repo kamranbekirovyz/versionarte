@@ -35,6 +35,12 @@ class ServersideVersioning {
   /// Optional description text to show to user when the app is inactive.
   final String? inactiveDescription;
 
+  /// Changelog of the latest release for multiple languages.
+  ///
+  /// Key of the `MapEntry` is language key and its values as a list of
+  /// `List<String>`
+  final Map<String?, List<String?>?>? changelog;
+
   const ServersideVersioning({
     required this.minAndroidVersionNumber,
     required this.latestAndroidVersionNumber,
@@ -45,6 +51,7 @@ class ServersideVersioning {
     required this.inactive,
     required this.inactiveTitle,
     required this.inactiveDescription,
+    required this.changelog,
   });
 
   /// Instantiates a `ServersideVersioning` instance from json.
@@ -61,6 +68,7 @@ class ServersideVersioning {
       inactive: json['inactive'] ?? false,
       inactiveTitle: json['inactive_title'],
       inactiveDescription: json['inactive_description'],
+      changelog: json['changelog'],
     );
   }
 
@@ -82,6 +90,7 @@ latestReadableIosVersion: $latestReadableIosVersion
 inactive: $inactive
 inactiveTitle: $inactiveTitle
 inactiveDescription: $inactiveDescription
+changelog: $changelog
 ''';
   }
 }
