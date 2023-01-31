@@ -14,7 +14,7 @@ class CurrentVersioning {
     required this.iosVersion,
   });
 
-  /// Returns [CurrentVersioning] object from current platform's package
+  /// Returns `CurrentVersioning` object from current platform's package
   /// info.
   static Future<CurrentVersioning?> fromPackageInfo() async {
     final packageInfo = await Versionarte.packageInfo;

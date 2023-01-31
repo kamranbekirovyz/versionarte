@@ -13,7 +13,7 @@ class Versionarte {
 
   /// Returns current platform package info.
   ///
-  /// To see properties, check [PackageInfo] class.
+  /// To see properties, check `PackageInfo` class.
   static Future<PackageInfo?> get packageInfo async {
     _packageInfo ??= await PackageInfo.fromPlatform();
 
@@ -112,11 +112,12 @@ class Versionarte {
 
   /// Using `url_launcher`, opens App Store on iOS, Play Store on Android.
   ///
-  /// Play Store app URL is generated automatically by the help of the package
-  /// info, so no need to specify `androidPackageName` manually. But, for the App Store
-  /// you must specify your app ID as an `int`, meaning no need for "id" prefix.
+  /// App URL for Play Store is generated automatically by the help of the
+  /// package info, so no need to specify `androidPackageName` manually.
+  /// But, for the App Store you must specify your app ID as an `int`, meaning n
+  /// o need for "id" prefix.
   ///
-  /// `androidPackageName`: Package name of the app (Android),
+  /// `androidPackageName`: Package name of the app (Android)
   ///
   /// `appleAppId`: App ID of the app on App Store (iOS)
   static Future<bool> openAppInStore({

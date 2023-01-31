@@ -1,10 +1,11 @@
 {
-    "inactive_description": "App is in maintanence mode, please come back later.",
-    "inactive": false,
     "min_android_version_number": 12,
     "min_ios_version_number": 12,
     "latest_android_version_number": 16,
     "latest_ios_version_number": 17,
     "latest_readable_android_version": "2.7.4",
-    "latest_readable_ios_version": "2.7.5+hotfix"
+    "latest_readable_ios_version": "2.7.5+hotfix",
+    "inactive_title": "App Unavailable.",
+    "inactive_description": "App is in maintanence mode, please come back later.",
+    "inactive": false
 }

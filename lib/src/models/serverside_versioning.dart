@@ -29,7 +29,10 @@ class ServersideVersioning {
   /// Determining whether app is active or not.
   final bool inactive;
 
-  /// Optional text to show to user when app is inactive.
+  /// Optional title text to show to user when the app is inactive.
+  final String? inactiveTitle;
+
+  /// Optional description text to show to user when the app is inactive.
   final String? inactiveDescription;
 
   const ServersideVersioning({
@@ -40,10 +43,11 @@ class ServersideVersioning {
     required this.latestReadableAndroidVersion,
     required this.latestReadableIosVersion,
     required this.inactive,
+    required this.inactiveTitle,
     required this.inactiveDescription,
   });
 
-  /// Instantiates a [ServersideVersioning] instance from json.
+  /// Instantiates a `ServersideVersioning` instance from json.
   ///
   /// See example json file at path "/versionarte.json".
   factory ServersideVersioning.fromJson(Map<String, dynamic> json) {
@@ -55,17 +59,16 @@ class ServersideVersioning {
       latestReadableAndroidVersion: json['latest_readable_android_version'],
       latestReadableIosVersion: json['latest_readable_ios_version'],
       inactive: json['inactive'] ?? false,
+      inactiveTitle: json['inactive_title'],
       inactiveDescription: json['inactive_description'],
     );
   }
 
   /// Returns minimum version of the currently running platform.
-  int get minPlatformVersion =>
-      Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
+  int get minPlatformVersion => Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
 
   /// Returns latest version of the currently running platform.
-  int get latestPlatformVersion =>
-      Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
+  int get latestPlatformVersion => Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
 
   /// Overriding for a readable String representation of its instance.
   @override
@@ -77,6 +80,7 @@ latestIosVersionNumber: $latestIosVersionNumber
 latestReadableAndroidVersion: $latestReadableAndroidVersion
 latestReadableIosVersion: $latestReadableIosVersion
 inactive: $inactive
+inactiveTitle: $inactiveTitle
 inactiveDescription: $inactiveDescription
 ''';
   }

@@ -10,3 +10,4 @@ ROADMAP:
 - Add UI kit for it.
 - Add support for release notes.
 - Implement in app upgrade on Android.
+- Track app count time.
