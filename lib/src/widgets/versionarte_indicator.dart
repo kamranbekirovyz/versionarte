@@ -3,7 +3,16 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:versionarte/versionarte.dart';
 
 class VersionarteIndicator extends StatelessWidget {
-  const VersionarteIndicator({Key? key}) : super(key: key);
+  final TextStyle textStyle;
+
+  const VersionarteIndicator({
+    Key? key,
+    this.textStyle = const TextStyle(
+      fontSize: 14.0,
+      height: 16.0 / 14.0,
+      color: Colors.grey,
+    ),
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +26,7 @@ class VersionarteIndicator extends StatelessWidget {
         // TODO: add null checks
         return Text(
           '${snapshot.data?.appName} v${snapshot.data?.version}+${snapshot.data?.buildNumber}',
-          style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.outline,
-              ),
+          style: textStyle,
         );
       },
     );

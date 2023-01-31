@@ -1,5 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_artkit/flutter_artkit.dart';
+import 'package:flutter/services.dart';
 import 'package:versionarte/versionarte.dart';
 
 class VersionarteInactiveView extends StatelessWidget {
@@ -16,7 +18,8 @@ class VersionarteInactiveView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DarkStatusbar(
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.dark,
       child: Scaffold(
         backgroundColor: Colors.white,
         body: _buildBody(context),
@@ -25,32 +28,52 @@ class VersionarteInactiveView extends StatelessWidget {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Container(
-      width: double.maxFinite,
-      padding: const EdgeInsets.all(24.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Spacer(),
-          if (header != null) ...[
-            header!,
-            const Hoxy(64.0),
+    return SafeArea(
+      top: false,
+      child: Container(
+        width: double.maxFinite,
+        padding: const EdgeInsets.symmetric(horizontal: 32.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  if (header != null) ...[
+                    header!,
+                    const SizedBox(height: 32.0),
+                  ],
+                  if (title != null) ...[
+                    Text(
+                      title!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 24.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w500,
+                        height: 32.0 / 24.0,
+                      ),
+                    ),
+                    const SizedBox(height: 16.0),
+                  ],
+                  if (description != null) ...[
+                    Text(
+                      description!,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 16.0,
+                        height: 22.0 / 16.0,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+            const VersionarteIndicator(),
+            if (!Platform.isIOS) const SizedBox(height: 24.0),
           ],
-          Text(
-            title.asValidString(),
-            textAlign: TextAlign.center,
-            style: context.textTheme.headlineMedium?.withColor(Colors.black),
-          ),
-          const Hoxy(24.0),
-          Text(
-            description.asValidString(),
-            textAlign: TextAlign.center,
-            style: context.textTheme.bodyLarge?.withColor(Colors.black87),
-          ),
-          const Spacer(),
-          const VersionarteIndicator(),
-          const BottomPadding(),
-        ],
+        ),
       ),
     );
   }
