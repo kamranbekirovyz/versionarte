@@ -10,4 +10,6 @@ ROADMAP:
 - Add UI kit for it.
 - Add support for release notes.
 - Implement in app upgrade on Android.
-- Track app count time.
+- Int indicating how much user opened the app.
+- Execute function when user installs new version.
+- Booelan indicating user opening this build/version for the first time.

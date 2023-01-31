@@ -16,9 +16,9 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   final _remoteConfig = FirebaseRemoteConfig.instance;
   late final String _keyName;
 
-  /// Initializes [FirebaseRemoteConfig] for this project, if not initialized.
+  /// Initializes `FirebaseRemoteConfig` for this project, if not initialized.
   ///
-  /// By default [fetchTimeout] is set to 7 seconds, [minimumFetchInterval] to
+  /// By default `fetchTimeout` is set to 7 seconds, `minimumFetchInterval` to
   /// `Duration.zero`.
   RemoteConfigVersionarteProvider({
     bool initializeRemoteConfig = true,
@@ -38,10 +38,13 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     }
   }
 
+  /// Initializes (sets configurations) for `Firebase Remote Config`
   Future<void> _initialize(RemoteConfigSettings settings) async {
     return _remoteConfig.setConfigSettings(settings);
   }
 
+  /// Fetches json uploaded to the `Firebase Remote Config`, parses it into an
+  /// instance of `ServersideVersioning`
   @override
   FutureOr<ServersideVersioning?> getVersioningDetails() async {
     await _remoteConfig.fetchAndActivate();
