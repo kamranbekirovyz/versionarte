@@ -1,3 +1,13 @@
+## 0.1.5
+(not published)
+- when extension for VersionarteDecision
+- Fixed minor bugs.
+
+## 0.1.5
+
+- Added documentation comments and customization properties for `VersionarteInactiveView`, improved its UI components.
+- Fixed minor bugs.
+
 ## 0.1.4
 
 - Added `VersionarteInactiveView` as a UI kit component to display to your users when the app is inactive.
