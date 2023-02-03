@@ -10,7 +10,7 @@ class VersionarteResult {
 
   /// [ServersideVersioning] for the app.
   ///
-  /// Useful if you want to manipulate those values, especially for getting
+  /// Useful if you want to use those values, especially for getting
   /// [inactiveDescription] text.
   final ServersideVersioning? serversideVersioning;
 
