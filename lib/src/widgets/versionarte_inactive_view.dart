@@ -4,24 +4,67 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:versionarte/versionarte.dart';
 
+/// Built-in view to display when app is inactive.
+///
+/// `title`, `description` and a header `Widget` can be specified. Also,
+/// `scaffoldBackgroundColor`, `titleStyle`, `descriptionStyle` and
+/// `systemUiOverlayStyle` properties let you customize the components.
 class VersionarteInactiveView extends StatelessWidget {
+  /// (Optional) Title to be displayed at the top of the page.
   final String? title;
+
+  /// (Optional) Description to be displayed at the top of the page.
   final String? description;
+
+  /// (Optional) Widget to be displayed at the top of the page.
   final Widget? header;
+
+  /// The background color of the view that underlies the entire page.
+  ///
+  /// The theme's [ThemeData.scaffoldBackgroundColor] by default.
+  final Color? scaffoldBackgroundColor;
+
+  /// [TextStyle] to be used for title.
+  ///
+  /// Defaults to TextStyle( fontSize: 24.0, color: Colors.black, fontWeight:
+  /// FontWeight.w500, height: 32.0 / 24.0)
+  final TextStyle? titleStyle;
+
+  /// [TextStyle] to be used for description.
+  ///
+  /// Defaults to TextStyle( fontSize: 16.0, height: 22.0 / 16.0)
+  final TextStyle? descriptionStyle;
+
+  /// Specifies a preference for the style of the system overlays for the view.
+  ///
+  /// Defaults to [SystemUiOverlayStyle.dark]
+  final SystemUiOverlayStyle systemUiOverlayStyle;
 
   const VersionarteInactiveView({
     Key? key,
     this.title,
     this.description,
     this.header,
+    this.scaffoldBackgroundColor,
+    this.titleStyle = const TextStyle(
+      fontSize: 24.0,
+      color: Colors.black,
+      fontWeight: FontWeight.w500,
+      height: 32.0 / 24.0,
+    ),
+    this.descriptionStyle = const TextStyle(
+      fontSize: 16.0,
+      height: 22.0 / 16.0,
+    ),
+    this.systemUiOverlayStyle = SystemUiOverlayStyle.dark,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark,
+      value: systemUiOverlayStyle,
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: scaffoldBackgroundColor,
         body: _buildBody(context),
       ),
     );
@@ -48,12 +91,7 @@ class VersionarteInactiveView extends StatelessWidget {
                     Text(
                       title!,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 24.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.w500,
-                        height: 32.0 / 24.0,
-                      ),
+                      style: titleStyle,
                     ),
                     const SizedBox(height: 16.0),
                   ],
@@ -61,10 +99,7 @@ class VersionarteInactiveView extends StatelessWidget {
                     Text(
                       description!,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        height: 22.0 / 16.0,
-                      ),
+                      style: descriptionStyle,
                     ),
                   ],
                 ],

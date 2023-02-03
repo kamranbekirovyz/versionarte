@@ -10,6 +10,7 @@ ROADMAP:
 - Detailed examples for every usecase.
 - Documentation website: https://versionarte.dev
 - (ongoing) Built-in UI-kit and components support: `VersionarteInactiveView`, `VersionarteMustUpdateView`, `VersionarteIndicator`.
+- Enable debugging logging.
 - Add support for providing the latest release notes/changelog.
 - Implement in-app upgrade on Android.
 - Int indicating how much user opened the app.
