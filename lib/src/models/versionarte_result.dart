@@ -3,10 +3,10 @@ import 'package:versionarte/src/models/serverside_versioning.dart';
 import 'package:versionarte/src/models/versionarte_decision.dart';
 
 class VersionarteResult {
-  /// Enum representing decision for app and its update availability.
+  /// [Enum] representing decision for app and its update availability.
   ///
-  /// Values: shouldUpdate, mustUpdate, upToDate, inactive, failedToCheck.
-  final VersionarteDecision decision;
+  /// Values: shouldUpdate, mustUpdate, upToDate, inactive, unavailable.
+  final VersionarteStatus status;
 
   /// [ServersideVersioning] for the app.
   ///
@@ -18,7 +18,7 @@ class VersionarteResult {
   final String? message;
 
   VersionarteResult(
-    this.decision, {
+    this.status, {
     this.serversideVersioning,
     this.message,
   }) {
@@ -30,15 +30,15 @@ class VersionarteResult {
   /// Before using decision property, it is better to check if (result.success)
   /// so that errorous decisions does not impact your conditions.
   bool get success => [
-        VersionarteDecision.inactive,
-        VersionarteDecision.mustUpdate,
-        VersionarteDecision.couldUpdate,
-        VersionarteDecision.upToDate,
-      ].contains(decision);
+        VersionarteStatus.inactive,
+        VersionarteStatus.mustUpdate,
+        VersionarteStatus.couldUpdate,
+        VersionarteStatus.upToDate,
+      ].contains(status);
 
   /// Overriding for a readable String representation of its instance.
   @override
   String toString() {
-    return 'Result: \n- Decision: $decision, \n- message: $message';
+    return 'Result: \n- Status: $status, \n- message: $message';
   }
 }

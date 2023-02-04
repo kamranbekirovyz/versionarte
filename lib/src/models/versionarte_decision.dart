@@ -1,11 +1,12 @@
 import 'package:flutter/foundation.dart';
 
 /// Enum representing decision for app and its update availability.
-enum VersionarteDecision {
+enum VersionarteStatus {
   /// "There is a new version available"
   couldUpdate,
 
-  /// "There is a new version available and user must update the app to continue"
+  /// "There is a new version available and user must update the app to
+  /// be able to continue"
   mustUpdate,
 
   /// "All good, user has the latest version of the app"
@@ -14,11 +15,12 @@ enum VersionarteDecision {
   /// "App is inactive for usage"
   inactive,
 
-  /// "Some kind of error occured (check [message] propery of [VersionarteResult]"
-  failedToCheck,
+  /// "Some kind of error occured (detailed at `message` property of
+  /// [VersionarteResult]"
+  unavailable,
 }
 
-extension VersionarteDecisionX on VersionarteDecision {
+extension VersionarteStatusX on VersionarteStatus {
   void when({
     required VoidCallback couldUpdate,
     required VoidCallback mustUpdate,
@@ -27,19 +29,19 @@ extension VersionarteDecisionX on VersionarteDecision {
     VoidCallback? failedToCheck,
   }) {
     switch (this) {
-      case VersionarteDecision.couldUpdate:
+      case VersionarteStatus.couldUpdate:
         return couldUpdate.call();
 
-      case VersionarteDecision.mustUpdate:
+      case VersionarteStatus.mustUpdate:
         return mustUpdate.call();
 
-      case VersionarteDecision.upToDate:
+      case VersionarteStatus.upToDate:
         return upToDate?.call();
 
-      case VersionarteDecision.inactive:
+      case VersionarteStatus.inactive:
         return couldUpdate.call();
 
-      case VersionarteDecision.failedToCheck:
+      case VersionarteStatus.unavailable:
       default:
         return couldUpdate.call();
     }

@@ -33,7 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
     Versionarte.check(
       versionarteProvider: RemoteConfigVersionarteProvider(),
     ).then((value) {
-      value.decision.when(
+      value.status.when(
         couldUpdate: () {},
         mustUpdate: () {},
         inactive: () {},
@@ -46,8 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return const VersionarteInactiveView(
       header: FlutterLogo(size: 96.0),
       title: 'App is not available',
-      description:
-          'We\'re doing some maintainance work on our services. Please, come back later.',
+      description: 'We\'re doing some maintainance work on our services. Please, come back later.',
     );
   }
 }
