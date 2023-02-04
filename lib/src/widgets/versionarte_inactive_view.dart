@@ -38,7 +38,7 @@ class VersionarteInactiveView extends StatelessWidget {
   /// Specifies a preference for the style of the system overlays for the view.
   ///
   /// Defaults to [SystemUiOverlayStyle.dark]
-  final SystemUiOverlayStyle systemUiOverlayStyle;
+  final SystemUiOverlayStyle? systemUiOverlayStyle;
 
   const VersionarteInactiveView({
     Key? key,
@@ -48,7 +48,6 @@ class VersionarteInactiveView extends StatelessWidget {
     this.scaffoldBackgroundColor,
     this.titleStyle = const TextStyle(
       fontSize: 24.0,
-      color: Colors.black,
       fontWeight: FontWeight.w500,
       height: 32.0 / 24.0,
     ),
@@ -56,13 +55,15 @@ class VersionarteInactiveView extends StatelessWidget {
       fontSize: 16.0,
       height: 22.0 / 16.0,
     ),
-    this.systemUiOverlayStyle = SystemUiOverlayStyle.dark,
+    this.systemUiOverlayStyle,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final systemUiOverlayStyle_ = systemUiOverlayStyle ?? (Theme.of(context).brightness == Brightness.dark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.light);
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: systemUiOverlayStyle,
+      value: systemUiOverlayStyle_,
       child: Scaffold(
         backgroundColor: scaffoldBackgroundColor,
         body: _buildBody(context),
@@ -105,7 +106,9 @@ class VersionarteInactiveView extends StatelessWidget {
                 ],
               ),
             ),
-            const VersionarteIndicator(),
+            VersionarteIndicator(
+              textStyle: Theme.of(context).textTheme.bodySmall,
+            ),
             if (!Platform.isIOS) const SizedBox(height: 24.0),
           ],
         ),

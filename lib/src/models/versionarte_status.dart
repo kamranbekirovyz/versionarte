@@ -22,15 +22,15 @@ enum VersionarteStatus {
 
 extension VersionarteStatusX on VersionarteStatus {
   void when({
-    required VoidCallback couldUpdate,
     required VoidCallback mustUpdate,
     required VoidCallback inactive,
+    VoidCallback? couldUpdate,
     VoidCallback? upToDate,
     VoidCallback? failedToCheck,
   }) {
     switch (this) {
       case VersionarteStatus.couldUpdate:
-        return couldUpdate.call();
+        return couldUpdate?.call();
 
       case VersionarteStatus.mustUpdate:
         return mustUpdate.call();
@@ -39,11 +39,10 @@ extension VersionarteStatusX on VersionarteStatus {
         return upToDate?.call();
 
       case VersionarteStatus.inactive:
-        return couldUpdate.call();
+        return inactive.call();
 
       case VersionarteStatus.unavailable:
       default:
-        return couldUpdate.call();
     }
   }
 }

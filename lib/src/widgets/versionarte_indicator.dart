@@ -3,7 +3,7 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:versionarte/versionarte.dart';
 
 class VersionarteIndicator extends StatelessWidget {
-  final TextStyle textStyle;
+  final TextStyle? textStyle;
 
   const VersionarteIndicator({
     Key? key,
