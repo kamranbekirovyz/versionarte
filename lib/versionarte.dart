@@ -2,8 +2,7 @@ library versionarte;
 
 // UI Kit
 export 'src/widgets/versionarte_indicator.dart';
-export 'src/widgets/versionarte_inactive_view.dart';
-export 'src/widgets/versionarte_must_update_view.dart';
+export 'src/widgets/versionarte_view.dart';
 
 // Logic
 export 'src/versionarte.dart';

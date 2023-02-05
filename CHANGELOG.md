@@ -1,7 +1,6 @@
-## 0.1.5
-(not published)
-- when extension for VersionarteDecision
-- Fixed minor bugs.
+## 0.2.0
+- when utility extension for `VersionarteDecision`.
+- Built-in components: `VersionarteView.mustUpdate` and `VersionarteView.inactive`.
 
 ## 0.1.5
 

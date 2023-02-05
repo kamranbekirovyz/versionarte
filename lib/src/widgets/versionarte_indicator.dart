@@ -23,9 +23,8 @@ class VersionarteIndicator extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        // TODO: add null checks
         return Text(
-          '${snapshot.data?.appName} v${snapshot.data?.version}+${snapshot.data?.buildNumber}',
+          '${snapshot.data?.appName ?? ''} v${snapshot.data?.version}+${snapshot.data?.buildNumber}',
           style: textStyle,
         );
       },
