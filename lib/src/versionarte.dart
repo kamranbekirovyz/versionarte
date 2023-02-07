@@ -29,7 +29,7 @@ class Versionarte {
 
       if (currentVersioning == null) {
         return VersionarteResult(
-          VersionarteStatus.unavailable,
+          VersionarteStatus.failedToCheck,
           message:
               'A null `CurrentVersioning` received. If you\'ve used `CurrentVersioning.fromPackageInfo`, package_info plugin might have failed.',
         );
@@ -43,7 +43,7 @@ class Versionarte {
 
       if (serversideVersioning == null) {
         return VersionarteResult(
-          VersionarteStatus.unavailable,
+          VersionarteStatus.failedToCheck,
           message:
               'For some unknown reasons ServersideVersioning could not be fetched.',
         );
@@ -87,19 +87,19 @@ class Versionarte {
     } on FormatException catch (e) {
       if (versionarteProvider is RemoteConfigVersionarteProvider) {
         return VersionarteResult(
-          VersionarteStatus.unavailable,
+          VersionarteStatus.failedToCheck,
           message:
               'Failed to parse json received from RemoteConfig. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a `keyName`.',
         );
       } else if (versionarteProvider is RestfulVersionarteProvider) {
         return VersionarteResult(
-          VersionarteStatus.unavailable,
+          VersionarteStatus.failedToCheck,
           message:
               'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
         );
       } else {
         return VersionarteResult(
-          VersionarteStatus.unavailable,
+          VersionarteStatus.failedToCheck,
           message: e.toString(),
         );
       }
@@ -108,7 +108,7 @@ class Versionarte {
       logV('Stack Trace: $s');
 
       return VersionarteResult(
-        VersionarteStatus.unavailable,
+        VersionarteStatus.failedToCheck,
         message: e.toString(),
       );
     }

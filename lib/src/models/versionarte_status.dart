@@ -17,7 +17,7 @@ enum VersionarteStatus {
 
   /// "Some kind of error occured (detailed at `message` property of
   /// [VersionarteResult]"
-  unavailable,
+  failedToCheck,
 }
 
 extension VersionarteStatusX on VersionarteStatus {
@@ -41,7 +41,7 @@ extension VersionarteStatusX on VersionarteStatus {
       case VersionarteStatus.inactive:
         return inactive.call();
 
-      case VersionarteStatus.unavailable:
+      case VersionarteStatus.failedToCheck:
       default:
     }
   }

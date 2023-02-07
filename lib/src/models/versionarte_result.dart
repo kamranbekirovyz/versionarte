@@ -2,9 +2,9 @@ import 'package:versionarte/src/helpers/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
 class VersionarteResult {
-  /// [Enum] representing decision for app and its update availability.
+  /// [Enum] representing status of the app.
   ///
-  /// Values: shouldUpdate, mustUpdate, upToDate, inactive, unavailable.
+  /// Values: `shouldUpdate`, `mustUpdate`, `upToDate`, `inactive`, `failedToCheck`
   final VersionarteStatus status;
 
   /// [ServersideVersioning] for the app.
