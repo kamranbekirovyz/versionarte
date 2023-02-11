@@ -54,10 +54,22 @@ class ServersideVersioning {
     required this.changelog,
   });
 
+  List<String?>? getChangelogForLanguage(String languageCode) {
+    return changelog?[languageCode];
+  }
+
   /// Instantiates a `ServersideVersioning` instance from json.
   ///
   /// See example json file at path "/versionarte.json".
   factory ServersideVersioning.fromJson(Map<String, dynamic> json) {
+    final Map<String?, List<String?>?> changelog_ = {};
+
+    json['changelog']?.forEach(
+      (String? key, dynamic value) {
+        changelog_[key] = value.cast<String?>();
+      },
+    );
+
     return ServersideVersioning(
       minAndroidVersionNumber: json['min_android_version_number'],
       minIosVersionNumber: json['min_ios_version_number'],
@@ -68,17 +80,18 @@ class ServersideVersioning {
       inactive: json['inactive'] ?? false,
       inactiveTitle: json['inactive_title'],
       inactiveDescription: json['inactive_description'],
-      changelog: json['changelog'],
+      changelog: changelog_,
     );
   }
 
   /// Returns minimum version of the currently running platform.
-  int get minPlatformVersion =>
-      Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
+  int get minPlatformVersion => Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
 
   /// Returns latest version of the currently running platform.
-  int get latestPlatformVersion =>
-      Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
+  int get latestPlatformVersion => Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
+
+  /// Returns latest version of the currently running platform.
+  String get latestPlatformReadableVersion => Platform.isAndroid ? latestReadableAndroidVersion : latestReadableIosVersion;
 
   /// Overriding for a readable String representation of its instance.
   @override

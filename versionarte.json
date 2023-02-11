@@ -5,9 +5,9 @@
     "latest_ios_version_number": 17,
     "latest_readable_android_version": "2.7.4",
     "latest_readable_ios_version": "2.7.5+hotfix",
+    "inactive": false,
     "inactive_title": "App Unavailable.",
     "inactive_description": "App is in maintanence mode, please come back later.",
-    "inactive": false,
     "changelog": {
         "en": [
             "Minor improvements.",
