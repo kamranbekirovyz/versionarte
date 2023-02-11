@@ -15,6 +15,8 @@ import 'package:versionarte/src/providers/versionarte_provider.dart';
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
   final _remoteConfig = FirebaseRemoteConfig.instance;
   late final String _keyName;
+  late final RemoteConfigSettings _remoteConfigSettings;
+  late final bool _initializeRemoteConfig;
 
   /// Initializes `FirebaseRemoteConfig` for this project, if not initialized.
   ///
@@ -26,15 +28,14 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     String keyName = 'versionarte',
   }) {
     _keyName = keyName;
+    _initializeRemoteConfig = initializeRemoteConfig;
 
     if (initializeRemoteConfig) {
-      remoteConfigSettings = remoteConfigSettings ??
+      _remoteConfigSettings = remoteConfigSettings ??
           RemoteConfigSettings(
             fetchTimeout: const Duration(seconds: 7),
             minimumFetchInterval: Duration.zero,
           );
-
-      _initialize(remoteConfigSettings);
     }
   }
 
@@ -47,6 +48,10 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   /// instance of `ServersideVersioning`
   @override
   FutureOr<ServersideVersioning?> getVersioningDetails() async {
+    if (_initializeRemoteConfig) {
+      await _initialize(_remoteConfigSettings);
+    }
+
     await _remoteConfig.fetchAndActivate();
 
     final versionarteString = _remoteConfig.getString(_keyName);

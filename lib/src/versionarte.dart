@@ -25,7 +25,7 @@ class Versionarte {
     CurrentVersioning? currentVersioning,
   }) async {
     try {
-      currentVersioning = await CurrentVersioning.fromPackageInfo();
+      currentVersioning ??= await CurrentVersioning.fromPackageInfo();
 
       if (currentVersioning == null) {
         return VersionarteResult(
@@ -70,6 +70,7 @@ class Versionarte {
 
       final serversideLatestPlatformVersion = serversideVersioning.latestPlatformVersion;
       final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
+
       if (shouldUpdate) {
         return VersionarteResult(
           VersionarteStatus.couldUpdate,
