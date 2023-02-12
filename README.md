@@ -23,22 +23,20 @@ See the <a href="#">example</a> directory for a complete sample app.
 ## 🛣️ Roadmap
 ROADMAP:
 
-[x] RemoteConfig, RESTful API, and custom validation support (respectively: `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, `CustomVersionarteProvider`).
-
-[x] Ability to write your own `VersionarteProvider`
-[x] Version indicator `Widget`: "App name v1.0.0+1" (`VersionarteIndicator`).
-[x] Launch the App Store on iOS and the Play Store on Android.
-[] Ability to launch AppGallery on Huawei devices.
-[] Making it testable.
-[] Detailed examples for every use case.
-[] Documentation website: https://versionarte.dev
-[] (ongoing) Built-in UI-kit and components support: `VersionarteInactiveView`, `VersionarteMustUpdateView`, `VersionarteIndicator`.
-[] Enable debugging logging.
-[] Add support for providing the latest release notes/changelog.
-[] Implement in-app upgrade on Android.
-[] Int indicating how many times the user opened the app.
-[] Execute function when the user installs the new version.
-[] Boolean indicating the user opening this build/version for the first time.
+✅ RemoteConfig, RESTful API, and custom validation support (respectively: `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, `CustomVersionarteProvider`).<br/>
+✅ Ability to write your own `VersionarteProvider`<br/>
+✅ Version indicator `Widget`: "App name v1.0.0+1" (`VersionarteIndicator`).<br/>
+✅ Built-in UI-kit and components: `VersionarteView.mustUpdate()`, `VersionarteView.inactive()`, `VersionarteIndicator`.<br/>
+✅ Launch the App Store on iOS and the Play Store on Android.<br/>
+✅ Add support for providing the latest release notes/changelog.<br/>
+⏳ Documentation website: https://versionarte.dev<br/>
+⏳ Ability to launch AppGallery on Huawei devices.<br/>
+⏳ Making it testable.<br/>
+⏳ Detailed examples for every use case.<br/>
+⏳ Implement in-app upgrade on Android.<br/>
+🤔 Int indicating how many times the user opened the app.<br/>
+🤔 Execute function when the user installs the new version.<br/>
+🤔 Boolean indicating the user opening this build/version for the first time.<br/>
 
 [I believe that the app's all screens should have the same design patterns. But, anyways, I've created some simple and almost customizable UI components that might be useful to developers.]
 
