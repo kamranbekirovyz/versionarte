@@ -36,7 +36,7 @@ class _MyHomePageState extends State<MyHomePage> {
       value.status.when(
         couldUpdate: () {},
         mustUpdate: () {},
-        inactive: () {},
+        unavailable: () {},
       );
     });
   }

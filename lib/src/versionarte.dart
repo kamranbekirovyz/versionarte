@@ -48,33 +48,34 @@ class Versionarte {
 
       logV('Received ServersideVersioning: \n$serversideVersioning');
 
-      final inactive = serversideVersioning.inactive;
-      if (inactive) {
+      final platformVersionarte = serversideVersioning.platform;
+
+      final available = platformVersionarte.availability.available;
+      if (!available) {
         return VersionarteResult(
-          VersionarteStatus.inactive,
-          message: serversideVersioning.inactiveDescription,
-          details: serversideVersioning,
+          VersionarteStatus.unavailable,
+          platformVersionarte: platformVersionarte,
         );
       }
 
       final currentPlatformVersion = currentVersioning.platformVersion;
 
-      final serversideMinPlatformVersion = serversideVersioning.minPlatformVersion;
+      final serversideMinPlatformVersion = platformVersionarte.minimum.number;
       final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;
       if (mustUpdate) {
         return VersionarteResult(
           VersionarteStatus.mustUpdate,
-          details: serversideVersioning,
+          platformVersionarte: platformVersionarte,
         );
       }
 
-      final serversideLatestPlatformVersion = serversideVersioning.latestPlatformVersion;
+      final serversideLatestPlatformVersion = platformVersionarte.latest.number;
       final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
 
       if (shouldUpdate) {
         return VersionarteResult(
           VersionarteStatus.couldUpdate,
-          details: serversideVersioning,
+          platformVersionarte: platformVersionarte,
         );
       }
 

@@ -31,6 +31,7 @@ ROADMAP:
 ✅ Add support for providing the latest release notes/changelog.<br/>
 ⏳ Documentation website: https://versionarte.dev<br/>
 ⏳ Ability to launch AppGallery on Huawei devices.<br/>
+⏳ Support separate web, macOS, windows, linux platform configurations.<br/>
 ⏳ Making it testable.<br/>
 ⏳ Detailed examples for every use case.<br/>
 ⏳ Implement in-app upgrade on Android.<br/>

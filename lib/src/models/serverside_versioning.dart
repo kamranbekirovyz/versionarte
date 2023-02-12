@@ -1,67 +1,53 @@
-import 'dart:io';
+import 'package:flutter/foundation.dart';
 
-/// Dart class representing server-side versioning details.
-///
-/// See example json file at path "/versionarte.json".
 class ServersideVersioning {
-  /// Minimum Android platform version that users can have installed.
-  final int minAndroidVersionNumber;
+  const ServersideVersioning({
+    required this.android,
+    required this.ios,
+  });
 
-  /// Minimum iOS platform version that users can have installed.
-  final int minIosVersionNumber;
+  final PlatformVersionarte android;
+  final PlatformVersionarte ios;
 
-  /// Latest Android (not minumum) version of the app released
-  /// to the Google Play Store.
-  final int latestAndroidVersionNumber;
+  factory ServersideVersioning.fromJson(Map<String, dynamic> json) {
+    return ServersideVersioning(
+      android: PlatformVersionarte.fromJson(json["android"]),
+      ios: PlatformVersionarte.fromJson(json["ios"]),
+    );
+  }
 
-  /// Latest iOS (not minumum) version of the app released
-  /// to the Apple App Store.
-  final int latestIosVersionNumber;
+  PlatformVersionarte get platform {
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+        return android;
+      case TargetPlatform.iOS:
+        return android;
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.linux:
+      case TargetPlatform.macOS:
+      case TargetPlatform.windows:
+      default:
+        throw UnimplementedError(
+          '$defaultTargetPlatform not implemented in this package',
+        );
+    }
+  }
+}
 
-  /// Readable representation for the latest Android version of the app released
-  /// to the Google Play Store.
-  final String latestReadableAndroidVersion;
-
-  /// Readable representation for the latest iOS version of the app released
-  /// to the Apple App Store.
-  final String latestReadableIosVersion;
-
-  /// Determining whether app is active or not.
-  final bool inactive;
-
-  /// Optional title text to show to user when the app is inactive.
-  final String? inactiveTitle;
-
-  /// Optional description text to show to user when the app is inactive.
-  final String? inactiveDescription;
-
-  /// Changelog of the latest release for multiple languages.
-  ///
-  /// Key of the `MapEntry` is language key and its values as a list of
-  /// `List<String>`
+class PlatformVersionarte {
+  final ReleaseDetails minimum;
+  final ReleaseDetails latest;
+  final Availability availability;
   final Map<String?, List<String?>?>? changelog;
 
-  const ServersideVersioning({
-    required this.minAndroidVersionNumber,
-    required this.latestAndroidVersionNumber,
-    required this.minIosVersionNumber,
-    required this.latestIosVersionNumber,
-    required this.latestReadableAndroidVersion,
-    required this.latestReadableIosVersion,
-    required this.inactive,
-    required this.inactiveTitle,
-    required this.inactiveDescription,
+  const PlatformVersionarte({
+    required this.minimum,
+    required this.latest,
+    required this.availability,
     required this.changelog,
   });
 
-  List<String?>? getChangelogForLanguage(String languageCode) {
-    return changelog?[languageCode];
-  }
-
-  /// Instantiates a `ServersideVersioning` instance from json.
-  ///
-  /// See example json file at path "/versionarte.json".
-  factory ServersideVersioning.fromJson(Map<String, dynamic> json) {
+  factory PlatformVersionarte.fromJson(Map<String, dynamic> json) {
     final Map<String?, List<String?>?> changelog_ = {};
 
     json['changelog']?.forEach(
@@ -69,46 +55,48 @@ class ServersideVersioning {
         changelog_[key] = value.cast<String?>();
       },
     );
-
-    return ServersideVersioning(
-      minAndroidVersionNumber: json['min_android_version_number'],
-      minIosVersionNumber: json['min_ios_version_number'],
-      latestAndroidVersionNumber: json['latest_android_version_number'],
-      latestIosVersionNumber: json['latest_ios_version_number'],
-      latestReadableAndroidVersion: json['latest_readable_android_version'],
-      latestReadableIosVersion: json['latest_readable_ios_version'],
-      inactive: json['inactive'] ?? false,
-      inactiveTitle: json['inactive_title'],
-      inactiveDescription: json['inactive_description'],
+    return PlatformVersionarte(
+      minimum: ReleaseDetails.fromJson(json["minimum"]),
+      latest: ReleaseDetails.fromJson(json["latest"]),
+      availability: Availability.fromJson(json["availability"]),
       changelog: changelog_,
     );
   }
+}
 
-  /// Returns minimum version of the currently running platform.
-  int get minPlatformVersion => Platform.isAndroid ? minAndroidVersionNumber : minIosVersionNumber;
+class Availability {
+  final bool available;
+  final String? unavailableMessage;
+  final String? unavailableDetails;
 
-  /// Returns latest version of the currently running platform.
-  int get latestPlatformVersion => Platform.isAndroid ? latestAndroidVersionNumber : latestIosVersionNumber;
+  const Availability({
+    required this.available,
+    required this.unavailableMessage,
+    required this.unavailableDetails,
+  });
 
-  /// Returns latest version of the currently running platform.
-  String get latestPlatformReadableVersion => Platform.isAndroid ? latestReadableAndroidVersion : latestReadableIosVersion;
+  factory Availability.fromJson(Map<String, dynamic> json) {
+    return Availability(
+      available: json["available"],
+      unavailableMessage: json["unavailable_message"],
+      unavailableDetails: json["unavailable_details"],
+    );
+  }
+}
 
-  // TODO: implement getAttribute
-  String? getAttribute(String key) => throw UnimplementedError();
+class ReleaseDetails {
+  final int number;
+  final String name;
 
-  /// Overriding for a readable String representation of its instance.
-  @override
-  String toString() {
-    return '''minAndroidVersionNumber: $minAndroidVersionNumber
-minIosVersionNumber: $minIosVersionNumber
-latestAndroidVersionNumber: $latestAndroidVersionNumber
-latestIosVersionNumber: $latestIosVersionNumber
-latestReadableAndroidVersion: $latestReadableAndroidVersion
-latestReadableIosVersion: $latestReadableIosVersion
-inactive: $inactive
-inactiveTitle: $inactiveTitle
-inactiveDescription: $inactiveDescription
-changelog: $changelog
-''';
+  const ReleaseDetails({
+    required this.number,
+    required this.name,
+  });
+
+  factory ReleaseDetails.fromJson(Map<String, dynamic> json) {
+    return ReleaseDetails(
+      number: json["number"],
+      name: json["name"],
+    );
   }
 }

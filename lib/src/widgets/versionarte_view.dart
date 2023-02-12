@@ -41,7 +41,7 @@ class VersionarteView extends StatelessWidget {
     required this.title,
     required this.description,
     this.header,
-  })  : _status = VersionarteStatus.inactive,
+  })  : _status = VersionarteStatus.unavailable,
         buttonLabel = 'N/A',
         appleAppId = 0,
         super(key: key);
