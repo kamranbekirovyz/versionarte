@@ -93,6 +93,9 @@ class ServersideVersioning {
   /// Returns latest version of the currently running platform.
   String get latestPlatformReadableVersion => Platform.isAndroid ? latestReadableAndroidVersion : latestReadableIosVersion;
 
+  // TODO: implement getAttribute
+  String? getAttribute(String key) => throw UnimplementedError();
+
   /// Overriding for a readable String representation of its instance.
   @override
   String toString() {

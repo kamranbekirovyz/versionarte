@@ -23,7 +23,7 @@ See the <a href="#">example</a> directory for a complete sample app.
 ## 🛣️ Roadmap
 ROADMAP:
 
-✅ RemoteConfig, RESTful API, and custom validation support (respectively: `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, `CustomVersionarteProvider`).<br/>
+✅ Firebase Remote Config, RESTful API, and custom server-side versioning support (respectively: `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, `CustomVersionarteProvider`).<br/>
 ✅ Ability to write your own `VersionarteProvider`<br/>
 ✅ Version indicator `Widget`: "App name v1.0.0+1" (`VersionarteIndicator`).<br/>
 ✅ Built-in UI-kit and components: `VersionarteView.mustUpdate()`, `VersionarteView.inactive()`, `VersionarteIndicator`.<br/>
@@ -34,9 +34,9 @@ ROADMAP:
 ⏳ Making it testable.<br/>
 ⏳ Detailed examples for every use case.<br/>
 ⏳ Implement in-app upgrade on Android.<br/>
-🤔 Int indicating how many times the user opened the app.<br/>
+🤔 Am int indicating how many times the user opened the app.<br/>
 🤔 Execute function when the user installs the new version.<br/>
-🤔 Boolean indicating the user opening this build/version for the first time.<br/>
+🤔 A bool indicating the user opening this build/version for the first time.<br/>
 
 [I believe that the app's all screens should have the same design patterns. But, anyways, I've created some simple and almost customizable UI components that might be useful to developers.]
 
