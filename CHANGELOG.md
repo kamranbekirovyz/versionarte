@@ -1,3 +1,10 @@
+## 0.3.0
+- More intuitive, more platform specific and customizable `ServersideVersioning` (new json format).
+- `VersionarteStatus.inactive` changed to `VersionarteStatus.unavailable`.
+- Added changelog property to provide latest release's changelog in multiple languages.
+- Fixed some critical bugs encountered while testing.
+- Initial version of README with roadmap in it.
+
 ## 0.2.0
 - when utility extension for `VersionarteDecision`.
 - Built-in components: `VersionarteView.mustUpdate` and `VersionarteView.inactive`.
