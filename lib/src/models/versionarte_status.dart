@@ -13,7 +13,7 @@ enum VersionarteStatus {
   upToDate,
 
   /// "App is inactive for usage"
-  inactive,
+  unavailable,
 
   /// "Some kind of error occured (detailed at `message` property of
   /// [VersionarteResult]"
@@ -23,7 +23,7 @@ enum VersionarteStatus {
 extension VersionarteStatusX on VersionarteStatus {
   void when({
     required VoidCallback mustUpdate,
-    required VoidCallback inactive,
+    required VoidCallback unavailable,
     VoidCallback? couldUpdate,
     VoidCallback? upToDate,
     VoidCallback? failedToCheck,
@@ -38,8 +38,8 @@ extension VersionarteStatusX on VersionarteStatus {
       case VersionarteStatus.upToDate:
         return upToDate?.call();
 
-      case VersionarteStatus.inactive:
-        return inactive.call();
+      case VersionarteStatus.unavailable:
+        return unavailable.call();
 
       case VersionarteStatus.failedToCheck:
       default:

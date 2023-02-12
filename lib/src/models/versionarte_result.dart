@@ -1,4 +1,5 @@
 import 'package:versionarte/src/helpers/logger.dart';
+import 'package:versionarte/src/models/serverside_versioning.dart';
 import 'package:versionarte/versionarte.dart';
 
 class VersionarteResult {
@@ -11,14 +12,14 @@ class VersionarteResult {
   ///
   /// Useful if you want to use those values, especially for getting
   /// [inactiveDescription] text.
-  final ServersideVersioning? details;
+  final PlatformVersionarte? platformVersionarte;
 
   /// Possible error message.
   final String? message;
 
   VersionarteResult(
     this.status, {
-    this.details,
+    this.platformVersionarte,
     this.message,
   }) {
     logV(toString());
@@ -29,7 +30,7 @@ class VersionarteResult {
   /// Before using decision property, it is better to check if (result.success)
   /// so that errorous decisions does not impact your conditions.
   bool get success => [
-        VersionarteStatus.inactive,
+        VersionarteStatus.unavailable,
         VersionarteStatus.mustUpdate,
         VersionarteStatus.couldUpdate,
         VersionarteStatus.upToDate,
