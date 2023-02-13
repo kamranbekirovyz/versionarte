@@ -1,22 +1,23 @@
 import 'package:flutter/foundation.dart';
 
-/// Enum representing decision for app and its update availability.
+/// Enum representing status of the app for the platform.
 enum VersionarteStatus {
   /// "There is a new version available"
   couldUpdate,
 
-  /// "There is a new version available and user must update the app to
-  /// be able to continue"
+  /// "There is a new version available and user must update"
   mustUpdate,
 
-  /// "All good, user has the latest version of the app"
+  /// "User has the latest version"
   upToDate,
 
-  /// "App is inactive for usage"
+  /// "App is not available for the time being"
   unavailable,
 
-  /// "Some kind of error occured (detailed at `message` property of
-  /// [VersionarteResult]"
+  /// "Error occured while checking status for the platform."
+  ///
+  ///  Check `message` property of `VersionarteResult` to see the possible
+  /// error caused it.
   failedToCheck,
 }
 

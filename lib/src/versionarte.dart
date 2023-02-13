@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:versionarte/src/helpers/logger.dart';
@@ -48,7 +49,7 @@ class Versionarte {
 
       logV('Received ServersideVersioning: \n$serversideVersioning');
 
-      final platformVersionarte = serversideVersioning.platform;
+      final platformVersionarte = serversideVersioning.platformVersionarte;
 
       final available = platformVersionarte.availability.available;
       if (!available) {
@@ -58,7 +59,13 @@ class Versionarte {
         );
       }
 
-      final currentPlatformVersion = localVersioning.platformVersion;
+      final currentPlatformVersion = localVersioning.platformValue;
+      if (currentPlatformVersion == null) {
+        return VersionarteResult(
+          VersionarteStatus.failedToCheck,
+          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform, make sure you\'ve specified version for it.',
+        );
+      }
 
       final serversideMinPlatformVersion = platformVersionarte.minimum.number;
       final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;

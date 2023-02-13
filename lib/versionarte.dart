@@ -12,5 +12,4 @@ export 'src/providers/restful_versionarte_provider.dart';
 
 // Models
 export 'src/models/local_versioning.dart';
-export 'src/models/_serverside_versioning.dart';
 export 'src/models/versionarte_status.dart';

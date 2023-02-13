@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 
+/// Serverside representation model of the app versioning.
 class ServersideVersioning {
   const ServersideVersioning({
     required this.android,
@@ -16,7 +17,14 @@ class ServersideVersioning {
     );
   }
 
-  PlatformVersionarte get platform {
+  Map<String, dynamic> toJson() {
+    return {
+      'android': android.toJson(),
+      'ios': ios.toJson(),
+    };
+  }
+
+  PlatformVersionarte get platformVersionarte {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -62,6 +70,19 @@ class PlatformVersionarte {
       changelog: changelog_,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'minimum': minimum.toJson(),
+      'latest': minimum.toJson(),
+      'availability': availability.toJson(),
+      'changelog': changelog,
+    };
+  }
+
+  List<String?>? getChangelogForLanguage(String languageCode) {
+    return changelog?[languageCode];
+  }
 }
 
 class Availability {
@@ -82,6 +103,14 @@ class Availability {
       details: json["details"],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'available': available,
+      'message': message,
+      'details': details,
+    };
+  }
 }
 
 class ReleaseDetails {
@@ -98,5 +127,12 @@ class ReleaseDetails {
       number: json["number"],
       name: json["name"],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'number': number,
+      'name': name,
+    };
   }
 }
