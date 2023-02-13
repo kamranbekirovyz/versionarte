@@ -21,7 +21,7 @@ class ServersideVersioning {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        return android;
+        return ios;
       case TargetPlatform.fuchsia:
       case TargetPlatform.linux:
       case TargetPlatform.macOS:
@@ -66,20 +66,20 @@ class PlatformVersionarte {
 
 class Availability {
   final bool available;
-  final String? unavailableMessage;
-  final String? unavailableDetails;
+  final String? message;
+  final String? details;
 
   const Availability({
     required this.available,
-    required this.unavailableMessage,
-    required this.unavailableDetails,
+    required this.message,
+    required this.details,
   });
 
   factory Availability.fromJson(Map<String, dynamic> json) {
     return Availability(
       available: json["available"],
-      unavailableMessage: json["unavailable_message"],
-      unavailableDetails: json["unavailable_details"],
+      message: json["message"],
+      details: json["details"],
     );
   }
 }
