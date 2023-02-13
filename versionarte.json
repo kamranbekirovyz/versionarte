@@ -10,8 +10,8 @@
         },
         "availability": {
             "available": true,
-            "unavailable_message": "App Unavailable.",
-            "unavailable_details": "App is in maintanence mode, please come back later."
+            "message": "App Unavailable.",
+            "details": "App is in maintanence mode, please come back later."
         },
         "changelog": {
             "en": [
@@ -30,13 +30,13 @@
             "name": "2.7.4"
         },
         "latest": {
-            "number": 14,
-            "name": "2.8.0"
+            "number": 15,
+            "name": "2.8.1+hotfix"
         },
         "availability": {
             "available": true,
-            "unavailable_message": "App Unavailable.",
-            "unavailable_details": "App is in maintanence mode, please come back later."
+            "message": "App Unavailable.",
+            "details": "App is in maintanence mode, please come back later."
         },
         "changelog": {
             "en": [
