@@ -22,19 +22,19 @@ class Versionarte {
 
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
-    CurrentVersioning? currentVersioning,
+    LocalVersioning? localVersioning,
   }) async {
     try {
-      currentVersioning ??= await CurrentVersioning.fromPackageInfo();
+      localVersioning ??= await LocalVersioning.fromPackageInfo();
 
-      if (currentVersioning == null) {
+      if (localVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message: 'A null `CurrentVersioning` received. If you\'ve used `CurrentVersioning.fromPackageInfo`, package_info plugin might have failed.',
+          message: 'A null `LocalVersioning` received. If you\'ve used `LocalVersioning.fromPackageInfo`, package_info plugin might have failed.',
         );
       }
 
-      logV('Received CurrentVersioning: $currentVersioning');
+      logV('Received LocalVersioning: $localVersioning');
       logV('Checking versionarte using ${versionarteProvider.runtimeType}');
 
       final serversideVersioning = await versionarteProvider.getVersioningDetails();
@@ -58,7 +58,7 @@ class Versionarte {
         );
       }
 
-      final currentPlatformVersion = currentVersioning.platformVersion;
+      final currentPlatformVersion = localVersioning.platformVersion;
 
       final serversideMinPlatformVersion = platformVersionarte.minimum.number;
       final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;
