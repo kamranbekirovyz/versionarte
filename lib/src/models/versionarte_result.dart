@@ -12,14 +12,14 @@ class VersionarteResult {
   ///
   /// Useful if you want to use those values, especially for getting
   /// [inactiveDescription] text.
-  final PlatformVersionarte? platformVersionarte;
+  final PlatformVersionarte? details;
 
   /// Possible error message.
   final String? message;
 
   VersionarteResult(
     this.status, {
-    this.platformVersionarte,
+    this.details,
     this.message,
   }) {
     logV(toString());

@@ -30,22 +30,19 @@ class Versionarte {
       if (currentVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'A null `CurrentVersioning` received. If you\'ve used `CurrentVersioning.fromPackageInfo`, package_info plugin might have failed.',
+          message: 'A null `CurrentVersioning` received. If you\'ve used `CurrentVersioning.fromPackageInfo`, package_info plugin might have failed.',
         );
       }
 
       logV('Received CurrentVersioning: $currentVersioning');
       logV('Checking versionarte using ${versionarteProvider.runtimeType}');
 
-      final serversideVersioning =
-          await versionarteProvider.getVersioningDetails();
+      final serversideVersioning = await versionarteProvider.getVersioningDetails();
 
       if (serversideVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'For some unknown reasons ServersideVersioning could not be fetched.',
+          message: 'For some unknown reasons ServersideVersioning could not be fetched.',
         );
       }
 
@@ -57,7 +54,7 @@ class Versionarte {
       if (!available) {
         return VersionarteResult(
           VersionarteStatus.unavailable,
-          platformVersionarte: platformVersionarte,
+          details: platformVersionarte,
         );
       }
 
@@ -68,18 +65,17 @@ class Versionarte {
       if (mustUpdate) {
         return VersionarteResult(
           VersionarteStatus.mustUpdate,
-          platformVersionarte: platformVersionarte,
+          details: platformVersionarte,
         );
       }
 
       final serversideLatestPlatformVersion = platformVersionarte.latest.number;
-      final shouldUpdate =
-          serversideLatestPlatformVersion > currentPlatformVersion;
+      final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
 
       if (shouldUpdate) {
         return VersionarteResult(
           VersionarteStatus.couldUpdate,
-          platformVersionarte: platformVersionarte,
+          details: platformVersionarte,
         );
       }
 
@@ -88,14 +84,12 @@ class Versionarte {
       if (versionarteProvider is RemoteConfigVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to parse json received from RemoteConfig. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a `keyName`.',
+          message: 'Failed to parse json received from RemoteConfig. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a `keyName`.',
         );
       } else if (versionarteProvider is RestfulVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
+          message: 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
         );
       } else {
         return VersionarteResult(
