@@ -5,11 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:versionarte/versionarte.dart';
 
-/// Built-in view to display when app is inactive.
-///
-/// `title`, `description` and a header `Widget` can be specified. Also,
-/// `scaffoldBackgroundColor`, `titleStyle`, `descriptionStyle` and
-/// `systemUiOverlayStyle` properties let you customize the components.
 class VersionarteView extends StatelessWidget {
   /// Title to be displayed at the top of the page.
   final String? title;
@@ -36,7 +31,7 @@ class VersionarteView extends StatelessWidget {
   })  : _status = VersionarteStatus.mustUpdate,
         super(key: key);
 
-  const VersionarteView.inactive({
+  const VersionarteView.unavailable({
     Key? key,
     required this.title,
     required this.description,
