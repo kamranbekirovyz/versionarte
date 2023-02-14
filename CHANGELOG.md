@@ -1,3 +1,8 @@
+## 0.3.3
+- Small changes to versionarte.json file structure to make it more readable and compact.
+- `ServersideVersioning` is rewritten to be compatible with new versionarte.json format.
+- Renamed `CurrentVersioning` as `LocalVersioning`.
+
 ## 0.3.0
 - More intuitive, more platform specific and customizable `ServersideVersioning` (new json format).
 - `VersionarteStatus.inactive` changed to `VersionarteStatus.unavailable`.
@@ -21,12 +26,12 @@
 
 ## 0.1.2
 
-- Updated namings of ServersideVersioning and CurrentVersioning.
+- Updated namings of `ServersideVersioning` and `CurrentVersioning`.
 - Added some documentation as a comment.
 
 ## 0.1.1
 
-- VersionarteIndicator utility widget for displaying current platform version name and number alongside with app name.
+- `VersionarteIndicator` utility widget for displaying current platform version name and number alongside with app name.
 
 ## 0.1.0
 
