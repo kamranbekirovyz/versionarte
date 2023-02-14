@@ -33,7 +33,8 @@ class RestfulVersionarteProvider extends VersionarteProvider {
       headers.addEntries(_headers!.entries);
     }
 
-    logV('Getting serverside versioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
+    logV(
+        'Getting serverside versioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
 
     final response = await client.get(
       Uri.parse(_url),
