@@ -16,8 +16,8 @@ class LocalVersioning {
   })  : _androidVersion = androidVersion,
         _iosVersion = iosVersion;
 
-  /// Returns `LocalVersioning` object from current platform's package
-  /// info.
+  /// Creates `LocalVersioning` instance from package information retrieved
+  /// from the platform.
   static Future<LocalVersioning?> fromPackageInfo() async {
     final packageInfo = await Versionarte.packageInfo;
 
@@ -34,7 +34,7 @@ class LocalVersioning {
   }
 
   /// Version number of current platform.
-  int? get platformValue {
+  int? get platformVersion {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return _androidVersion;

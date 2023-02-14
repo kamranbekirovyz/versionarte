@@ -12,9 +12,7 @@ import 'package:versionarte/versionarte.dart';
 class Versionarte {
   static PackageInfo? _packageInfo;
 
-  /// Returns current platform package info.
-  ///
-  /// To see properties, check `PackageInfo` class.
+  /// Retrieves package information from the platform.
   static Future<PackageInfo?> get packageInfo async {
     _packageInfo ??= await PackageInfo.fromPlatform();
 
@@ -59,8 +57,8 @@ class Versionarte {
         );
       }
 
-      final currentPlatformVersion = localVersioning.platformValue;
-      if (currentPlatformVersion == null) {
+      final localPlatformVersion = localVersioning.platformVersion;
+      if (localPlatformVersion == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
           message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform, make sure you\'ve specified version for it.',
@@ -68,7 +66,7 @@ class Versionarte {
       }
 
       final serversideMinPlatformVersion = platformVersionarte.minimum.number;
-      final mustUpdate = serversideMinPlatformVersion > currentPlatformVersion;
+      final mustUpdate = serversideMinPlatformVersion > localPlatformVersion;
       if (mustUpdate) {
         return VersionarteResult(
           VersionarteStatus.mustUpdate,
@@ -77,7 +75,7 @@ class Versionarte {
       }
 
       final serversideLatestPlatformVersion = platformVersionarte.latest.number;
-      final shouldUpdate = serversideLatestPlatformVersion > currentPlatformVersion;
+      final shouldUpdate = serversideLatestPlatformVersion > localPlatformVersion;
 
       if (shouldUpdate) {
         return VersionarteResult(

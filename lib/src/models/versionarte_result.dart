@@ -1,5 +1,4 @@
 import 'package:versionarte/src/helpers/logger.dart';
-import 'package:versionarte/src/models/serverside_versioning.dart';
 import 'package:versionarte/versionarte.dart';
 
 class VersionarteResult {
