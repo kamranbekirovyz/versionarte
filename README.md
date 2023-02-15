@@ -43,7 +43,7 @@ ROADMAP:
 
 ## 🤓 Contributors
 
-<a  href="https://github.com/al-ventures/telpo-flutter-sdk/graphs/contributors"> <img  src="https://github.com/kamranbekirovyz.png" height="100">
+<a  href="https://github.com/kamranbekirovyz/versionarte/graphs/contributors"> <img  src="https://github.com/kamranbekirovyz.png" height="100">
 
 ## 💡 Inspired from/by
 
@@ -55,4 +55,4 @@ If you encounter any problems please open an issue. If you feel the library is m
 
 ## 📃 License
 
-MIT License
+<a href="https://github.com/kamranbekirovyz/versionarte/blob/main/LICENSE">MIT License</a>
