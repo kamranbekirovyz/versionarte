@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 
 /// Serverside representation model of the app versioning.
-class ServersideVersioning {
-  const ServersideVersioning({
+class StoreVersioning {
+  const StoreVersioning({
     required this.android,
     required this.ios,
   });
@@ -10,8 +10,8 @@ class ServersideVersioning {
   final PlatformVersionarte android;
   final PlatformVersionarte ios;
 
-  factory ServersideVersioning.fromJson(Map<String, dynamic> json) {
-    return ServersideVersioning(
+  factory StoreVersioning.fromJson(Map<String, dynamic> json) {
+    return StoreVersioning(
       android: PlatformVersionarte.fromJson(json["android"]),
       ios: PlatformVersionarte.fromJson(json["ios"]),
     );

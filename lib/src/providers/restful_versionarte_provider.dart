@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:versionarte/src/helpers/logger.dart';
-import 'package:versionarte/src/models/serverside_versioning.dart';
+import 'package:versionarte/src/models/store_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 import 'package:http/http.dart' as http;
 
@@ -11,7 +11,7 @@ class RestfulVersionarteProvider extends VersionarteProvider {
   final String _url;
   final Map<String, String>? _headers;
 
-  /// A `VersionarteProvider` that helps retrieve `ServersideVersioning`
+  /// A `VersionarteProvider` that helps retrieve `StoreVersioning`
   /// information via sending an HTTP GET request with the given headers to the
   /// given URL.
   const RestfulVersionarteProvider(
@@ -21,7 +21,7 @@ class RestfulVersionarteProvider extends VersionarteProvider {
         _headers = headers;
 
   @override
-  FutureOr<ServersideVersioning?> getVersioningDetails() async {
+  FutureOr<StoreVersioning?> getStoreVersioning() async {
     final client = http.Client();
 
     final headers = {
@@ -33,8 +33,7 @@ class RestfulVersionarteProvider extends VersionarteProvider {
       headers.addEntries(_headers!.entries);
     }
 
-    logV(
-        'Getting serverside versioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
+    logV('Getting serverside versioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
 
     final response = await client.get(
       Uri.parse(_url),
@@ -48,6 +47,6 @@ class RestfulVersionarteProvider extends VersionarteProvider {
 
     final json = jsonDecode(response.body);
 
-    return ServersideVersioning.fromJson(json);
+    return StoreVersioning.fromJson(json);
   }
 }

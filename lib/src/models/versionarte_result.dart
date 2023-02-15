@@ -7,7 +7,8 @@ class VersionarteResult {
   /// Values: `shouldUpdate`, `mustUpdate`, `upToDate`, `inactive`, `failedToCheck`
   final VersionarteStatus status;
 
-  /// [ServersideVersioning] for the app.
+  // TODO: here
+  /// [PlatformVersionarte] for the app.
   ///
   /// Useful if you want to use those values, especially for getting
   /// [inactiveDescription] text.

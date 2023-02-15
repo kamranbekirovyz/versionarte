@@ -29,28 +29,25 @@ class Versionarte {
       if (localVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'A null `LocalVersioning` received. If you\'ve used `LocalVersioning.fromPackageInfo`, package_info plugin might have failed.',
+          message: 'A null LocalVersioning received.',
         );
       }
 
       logV('Received LocalVersioning: $localVersioning');
       logV('Checking versionarte using ${versionarteProvider.runtimeType}');
 
-      final serversideVersioning =
-          await versionarteProvider.getVersioningDetails();
+      final storeVersioning = await versionarteProvider.getStoreVersioning();
 
-      if (serversideVersioning == null) {
+      if (storeVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'For some unknown reasons ServersideVersioning could not be fetched.',
+          message: 'StoreVersioning could not be fetched.',
         );
       }
 
-      logV('Received ServersideVersioning: \n$serversideVersioning');
+      logV('Received StoreVersioning: \n$storeVersioning');
 
-      final platformVersionarte = serversideVersioning.platformVersionarte;
+      final platformVersionarte = storeVersioning.platformVersionarte;
 
       final available = platformVersionarte.availability.available;
       if (!available) {
@@ -64,13 +61,12 @@ class Versionarte {
       if (localPlatformVersion == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform, make sure you\'ve specified version for it.',
+          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
         );
       }
 
-      final serversideMinPlatformVersion = platformVersionarte.minimum.number;
-      final mustUpdate = serversideMinPlatformVersion > localPlatformVersion;
+      final storeMinPlatformVersion = platformVersionarte.minimum.number;
+      final mustUpdate = storeMinPlatformVersion > localPlatformVersion;
       if (mustUpdate) {
         return VersionarteResult(
           VersionarteStatus.mustUpdate,
@@ -78,9 +74,8 @@ class Versionarte {
         );
       }
 
-      final serversideLatestPlatformVersion = platformVersionarte.latest.number;
-      final shouldUpdate =
-          serversideLatestPlatformVersion > localPlatformVersion;
+      final storeLatestPlatformVersion = platformVersionarte.latest.number;
+      final shouldUpdate = storeLatestPlatformVersion > localPlatformVersion;
 
       if (shouldUpdate) {
         return VersionarteResult(
@@ -94,14 +89,12 @@ class Versionarte {
       if (versionarteProvider is RemoteConfigVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to parse json received from RemoteConfig. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a `keyName`.',
+          message: 'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a keyName to Firebase Remote Config.',
         );
       } else if (versionarteProvider is RestfulVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
+          message: 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
         );
       } else {
         return VersionarteResult(

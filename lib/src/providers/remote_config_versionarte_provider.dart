@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:versionarte/src/models/serverside_versioning.dart';
+import 'package:versionarte/src/models/store_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
@@ -11,7 +11,7 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   late final RemoteConfigSettings _remoteConfigSettings;
   late final bool _initializeRemoteConfig;
 
-  /// A `VersionarteProvider` that helps retrieve `ServersideVersioning`
+  /// A `VersionarteProvider` that helps retrieve `StoreVersioning`
   /// information stored in `Firebase Remote Config` with a key name
   /// "versionarte" unless specified differently using `keyName` constructor
   /// property.
@@ -43,9 +43,9 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   }
 
   /// Fetches json uploaded to the `Firebase Remote Config`, parses it into an
-  /// instance of `ServersideVersioning`
+  /// instance of `StoreVersioning`
   @override
-  FutureOr<ServersideVersioning?> getVersioningDetails() async {
+  FutureOr<StoreVersioning?> getStoreVersioning() async {
     if (_initializeRemoteConfig) {
       await _initialize(_remoteConfigSettings);
     }
@@ -55,6 +55,6 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     final versionarteString = _remoteConfig.getString(_keyName);
     final versionarteDecoded = jsonDecode(versionarteString);
 
-    return ServersideVersioning.fromJson(versionarteDecoded);
+    return StoreVersioning.fromJson(versionarteDecoded);
   }
 }

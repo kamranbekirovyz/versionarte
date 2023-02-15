@@ -1,10 +1,10 @@
 import 'dart:async';
 
-import 'package:versionarte/src/models/serverside_versioning.dart';
+import 'package:versionarte/src/models/store_versioning.dart';
 
-/// Interface for serverside versioning information providers.
+/// Interface for serverside store versioning information providers.
 abstract class VersionarteProvider {
   const VersionarteProvider();
 
-  FutureOr<ServersideVersioning?> getVersioningDetails();
+  FutureOr<StoreVersioning?> getStoreVersioning();
 }
