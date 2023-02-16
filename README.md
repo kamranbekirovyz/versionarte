@@ -21,25 +21,21 @@ final int a = 1;
 See the <a href="#">example</a> directory for a complete sample app.
 
 ## 🛣️ Roadmap
-ROADMAP:
 
-✅ Firebase Remote Config, RESTful API, and custom server-side versioning support (respectively: `RemoteConfigVersionarteProvider`,  `RestfulVersionarteProvider`, `CustomVersionarteProvider`).  
-✅ Ability to write your own `VersionarteProvider`  
-✅ Version indicator `Widget`: "App name v1.0.0+1" (`VersionarteIndicator`).  
-✅ Built-in UI-kit and components: `VersionarteView.mustUpdate()`, `VersionarteView.inactive()`, `VersionarteIndicator`.  
+✅ Firebase Remote Config, RESTful API, and custom server-side versioning support.  
+✅ Ability to write your own `VersionarteProvider`   
+✅ Built-in views and components.
 ✅ Launch the App Store on iOS and the Play Store on Android.  
 ✅ Add support for providing the latest release notes/changelog.  
-⏳ Documentation website: https://versionarte.dev  
 ⏳ Ability to launch AppGallery on Huawei devices.  
+⏳ Documentation website: https://versionarte.dev  
 ⏳ Support separate web, macOS, windows, linux platform configurations.  
-⏳ Making it testable.  
+⏳ 50%+ Test coverage.  
 ⏳ Detailed examples for every use case.  
 ⏳ Implement in-app upgrade on Android.  
-🤔 Am int indicating how many times the user opened the app.  
+🤔 An int indicating how many times the user opened the app.  
 🤔 Execute function when the user installs the new version.  
 🤔 A bool indicating the user opening this build/version for the first time.  
-
-[I believe that the app's all screens should have the same design patterns. But, anyways, I've created some simple and almost customizable UI components that might be useful to developers.]
 
 ## 🤓 Contributors
 
