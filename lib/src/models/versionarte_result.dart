@@ -2,12 +2,11 @@ import 'package:versionarte/src/helpers/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
 class VersionarteResult {
-  /// [Enum] representing status of the app.
+  /// An [Enum] representing status of the app.
   ///
   /// Values: `shouldUpdate`, `mustUpdate`, `upToDate`, `inactive`, `failedToCheck`
   final VersionarteStatus status;
 
-  // TODO: here
   /// [PlatformVersionarte] for the app.
   ///
   /// Useful if you want to use those values, especially for getting

@@ -51,9 +51,9 @@ class LocalVersioning {
     }
   }
 
-  /// Overriding for a readable String representation of its instance.
+  /// Overriding for a readable `String` representation of its instance.
   @override
   String toString() {
-    return 'androidVersion: $_androidVersion, iosVersion: $_iosVersion';
+    return 'current platform version: $platformVersion';
   }
 }
