@@ -3,16 +3,17 @@ import 'dart:async';
 import 'package:versionarte/src/models/store_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
-/// This package has 2 type of remote `VersionarteProvider` to fetch serverside
-/// versioning details of your app: [RemoteConfigVersionarteProvider] and
-/// [RestfulVersionarteProvider].
-///
-/// If for some reason this does not satisfy your needs, you can always populate
-/// `StoreVersioning` manually and get from any kind of provider.
-/// (graphql, firestore etc.)
 class CustomVersionarteProvider extends VersionarteProvider {
   final StoreVersioning _storeVersioning;
 
+  /// A [VersionarteProvider] using which you can populate the data for
+  /// [StoreVersioning] manually by hand.
+  ///
+  /// In most cases you would use prebuilt [VersionarteProvider]s that comes
+  /// with this package: [RemoteConfigVersionarteProvider],
+  /// [RestfulVersionarteProvider] or create your own [VersionarteProvider] by
+  /// extending that class. But, if for some reason you would like to manually
+  /// create [StoreVersioning], [CustomVersionarteProvider] will be helpful.
   CustomVersionarteProvider(
     StoreVersioning storeVersioning,
   ) : _storeVersioning = storeVersioning;

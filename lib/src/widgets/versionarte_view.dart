@@ -6,20 +6,24 @@ import 'package:flutter/services.dart';
 import 'package:versionarte/versionarte.dart';
 
 class VersionarteView extends StatelessWidget {
-  /// Title to be displayed at the top of the page.
-  final String? title;
-
-  /// Description to be displayed at the top of the page.
-  final String? description;
-
   /// Widget to be displayed at the top of the page.
   final Widget? header;
 
-  /// Widget to be displayed at the top of the page.
+  /// Title to be displayed at the top of the page.
+  final String? title;
+
+  /// Description to be displayed at the center of the page, below title.
+  final String? description;
+
+  /// Label for the button which opens app in the relative store for the
+  /// platform
   final String buttonLabel;
 
-  /// Widget to be displayed at the top of the page.
-  final int appleAppId;
+  /// `appleAppId`: App ID of the app on App Store (iOS). Used to open app in
+  /// the Apple App Store.
+  ///
+  /// If your app is not published on the App Store, pass `appleAppId` as `null`
+  final int? appleAppId;
 
   const VersionarteView.mustUpdate({
     Key? key,
@@ -38,7 +42,7 @@ class VersionarteView extends StatelessWidget {
     this.header,
   })  : _status = VersionarteStatus.unavailable,
         buttonLabel = 'N/A',
-        appleAppId = 0,
+        appleAppId = null,
         super(key: key);
 
   final VersionarteStatus _status;

@@ -11,7 +11,7 @@ class RestfulVersionarteProvider extends VersionarteProvider {
   final String _url;
   final Map<String, String>? _headers;
 
-  /// A `VersionarteProvider` that helps retrieve `StoreVersioning`
+  /// A [VersionarteProvider] that helps retrieve `StoreVersioning`
   /// information via sending an HTTP GET request with the given headers to the
   /// given URL.
   const RestfulVersionarteProvider(
@@ -33,8 +33,7 @@ class RestfulVersionarteProvider extends VersionarteProvider {
       headers.addEntries(_headers!.entries);
     }
 
-    logV(
-        'Getting serverside versioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
+    logV('Getting StoreVersioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
 
     final response = await client.get(
       Uri.parse(_url),

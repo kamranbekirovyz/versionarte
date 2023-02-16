@@ -126,9 +126,10 @@ class Versionarte {
   ///
   /// `androidPackageName`: Package name of the app (Android)
   ///
-  /// `appleAppId`: App ID of the app on App Store (iOS)
+  /// `appleAppId`: App ID of the app on App Store (iOS). If your app is not
+  /// published on the App Store, pass `appleAppId` as `null`
   static Future<bool> openAppInStore({
-    required int appleAppId,
+    required int? appleAppId,
     String? androidPackageName,
   }) async {
     if (Platform.isAndroid) {
