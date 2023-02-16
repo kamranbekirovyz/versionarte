@@ -44,7 +44,8 @@ class VersionarteIndicator extends StatelessWidget {
         final info = snapshot.requireData!;
         final appName = info.appName;
         final versionName = info.version;
-        final versionNumber = Versionarte.localVersioning?.platformVersion ?? info.buildNumber;
+        final versionNumber =
+            Versionarte.localVersioning?.platformVersion ?? info.buildNumber;
 
         return Text(
           '$appName v$versionName+$versionNumber',

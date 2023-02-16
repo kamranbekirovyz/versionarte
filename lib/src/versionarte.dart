@@ -65,7 +65,8 @@ class Versionarte {
       if (localPlatformVersion == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
+          message:
+              'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
         );
       }
 
@@ -93,12 +94,14 @@ class Versionarte {
       if (versionarteProvider is RemoteConfigVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message: 'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a keyName to Firebase Remote Config.',
+          message:
+              'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a keyName to Firebase Remote Config.',
         );
       } else if (versionarteProvider is RestfulVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message: 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
+          message:
+              'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
         );
       } else {
         return VersionarteResult(

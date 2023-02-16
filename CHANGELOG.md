@@ -1,5 +1,9 @@
+## 0.4.1
+- Now, `VersionarteIndicator` besides `PackageInfo` also uses cached value of `LocalVersioning` that used to check the app status.
+- Improved documentation comments.
+
 ## 0.4.0
-- Renamed `ServersideVersioning` as `StoreVersioning` to be more intuitive with `LocalVersioning.
+- Renamed `ServersideVersioning` as `StoreVersioning` to be more intuitive with `LocalVersioning`.
 
 ## 0.3.3
 - Small changes to versionarte.json file structure to make it more readable and compact.
