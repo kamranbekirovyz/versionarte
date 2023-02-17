@@ -11,8 +11,8 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   late final RemoteConfigSettings _remoteConfigSettings;
   late final bool _initializeRemoteConfig;
 
-  /// A `VersionarteProvider` that helps retrieve `StoreVersioning`
-  /// information stored in `Firebase Remote Config` with a key name
+  /// A [VersionarteProvider] that helps retrieve [StoreVersioning]
+  /// information stored in Firebase Remote Config with a key name
   /// "versionarte" unless specified differently using `keyName` constructor
   /// property.
   ///
@@ -37,13 +37,13 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     }
   }
 
-  /// Initializes (sets configurations) for `Firebase Remote Config`
+  /// Initializes (sets configurations) for Firebase Remote Config
   Future<void> _initialize(RemoteConfigSettings settings) async {
     return _remoteConfig.setConfigSettings(settings);
   }
 
-  /// Fetches json uploaded to the `Firebase Remote Config`, parses it into an
-  /// instance of `StoreVersioning`
+  /// Fetches json uploaded to the Firebase Remote Config, parses it into an
+  /// instance of [StoreVersioning]
   @override
   FutureOr<StoreVersioning?> getStoreVersioning() async {
     if (_initializeRemoteConfig) {

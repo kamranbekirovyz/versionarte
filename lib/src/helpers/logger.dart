@@ -1,8 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-/// Common logging function: prints if !kReleaseMode
+/// Common logging function.
 void logV(String? s) {
-  if (!kReleaseMode) {
-    debugPrint('[VERSIONARTE] $s');
-  }
+  debugPrint('[VERSIONARTE] $s');
 }

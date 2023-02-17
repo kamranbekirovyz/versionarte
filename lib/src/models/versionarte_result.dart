@@ -24,17 +24,6 @@ class VersionarteResult {
     logV(toString());
   }
 
-  /// Returns true if current decision result is valid.
-  ///
-  /// Before using decision property, it is better to check if (result.success)
-  /// so that errorous decisions does not impact your conditions.
-  bool get success => [
-        VersionarteStatus.unavailable,
-        VersionarteStatus.mustUpdate,
-        VersionarteStatus.couldUpdate,
-        VersionarteStatus.upToDate,
-      ].contains(status);
-
   /// Overriding for a readable String representation of its instance.
   @override
   String toString() {
