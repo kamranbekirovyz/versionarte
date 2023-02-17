@@ -20,8 +20,20 @@ class Versionarte {
     return _packageInfo;
   }
 
+  /// Cached verison of [LocalVersioning] used when called calling
+  /// `Versionarte.check(...)` method.
+  ///
+  /// Used internally for [VersionarteIndicator] widget.
   static LocalVersioning? get localVersioning => _localVersioning;
 
+  /// Main method to check app versioning status. Takes two parameters:
+  ///
+  /// `versionarteProvider`: a [VersionarteProvider] to retrieve
+  /// [StoreVersioning] stored remotly most probably.
+  ///
+  /// `localVersioning`: [LocalVersioning] of the currently running app. If not
+  /// specified it retrieved using [PackageInfo]. If you keep your current
+  /// app version somewhere in your dart codes, set a [LocalVersioning] manually.
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
     LocalVersioning? localVersioning,
@@ -65,8 +77,7 @@ class Versionarte {
       if (localPlatformVersion == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
+          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
         );
       }
 
@@ -80,28 +91,29 @@ class Versionarte {
       }
 
       final storeLatestPlatformVersion = platformVersionarte.latest.number;
-      final shouldUpdate = storeLatestPlatformVersion > localPlatformVersion;
+      final couldUpdate = storeLatestPlatformVersion > localPlatformVersion;
 
-      if (shouldUpdate) {
+      if (couldUpdate) {
         return VersionarteResult(
           VersionarteStatus.couldUpdate,
           details: platformVersionarte,
         );
       }
 
-      return VersionarteResult(VersionarteStatus.upToDate);
+      return VersionarteResult(
+        VersionarteStatus.upToDate,
+        details: platformVersionarte,
+      );
     } on FormatException catch (e) {
       if (versionarteProvider is RemoteConfigVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a keyName to Firebase Remote Config.',
+          message: 'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded to RemoteConfig matches the pattern. If you have uploaded it with a custom key name  make sure you specify as a keyName to Firebase Remote Config.',
         );
       } else if (versionarteProvider is RestfulVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
+          message: 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
         );
       } else {
         return VersionarteResult(

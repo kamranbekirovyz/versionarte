@@ -16,7 +16,7 @@ class LocalVersioning {
   })  : _androidVersion = androidVersion,
         _iosVersion = iosVersion;
 
-  /// Creates `LocalVersioning` instance from package information retrieved
+  /// Creates [LocalVersioning] instance from package information retrieved
   /// from the platform.
   static Future<LocalVersioning?> fromPackageInfo() async {
     final packageInfo = await Versionarte.packageInfo;
@@ -51,7 +51,7 @@ class LocalVersioning {
     }
   }
 
-  /// Overriding for a readable `String` representation of its instance.
+  /// Overriding for a readable [String] representation of its instance.
   @override
   String toString() {
     return 'current platform version: $platformVersion';
