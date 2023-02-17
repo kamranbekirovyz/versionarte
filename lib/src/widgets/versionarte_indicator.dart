@@ -21,7 +21,7 @@ class VersionarteIndicator extends StatelessWidget {
   /// you've provided to `Versionarte.check` method.
   ///
   /// Make sure you call `Versionarte.check` throughout the lifecycle of your
-  /// app (probably at start-up of the app),  since `LocalVersioning` is cached
+  /// app (probably at start-up of the app),  since [LocalVersioning] is cached
   /// and re-used for building this widget.
   const VersionarteIndicator({
     Key? key,
@@ -44,8 +44,7 @@ class VersionarteIndicator extends StatelessWidget {
         final info = snapshot.requireData!;
         final appName = info.appName;
         final versionName = info.version;
-        final versionNumber =
-            Versionarte.localVersioning?.platformVersion ?? info.buildNumber;
+        final versionNumber = Versionarte.localVersioning?.platformVersion ?? info.buildNumber;
 
         return Text(
           '$appName v$versionName+$versionNumber',

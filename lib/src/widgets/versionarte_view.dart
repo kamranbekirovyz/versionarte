@@ -25,16 +25,18 @@ class VersionarteView extends StatelessWidget {
   /// If your app is not published on the App Store, pass `appleAppId` as `null`
   final int? appleAppId;
 
+  /// View can be used to show user when status is [VersionarteStatus.mustUpdate]
   const VersionarteView.mustUpdate({
     Key? key,
-    required this.appleAppId,
     required this.title,
     required this.description,
-    required this.header,
     required this.buttonLabel,
+    required this.appleAppId,
+    this.header,
   })  : _status = VersionarteStatus.mustUpdate,
         super(key: key);
 
+  /// View can be used to show user when status is [VersionarteStatus.unavailable]
   const VersionarteView.unavailable({
     Key? key,
     required this.title,
