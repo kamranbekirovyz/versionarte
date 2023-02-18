@@ -10,7 +10,7 @@
         },
         "availability": {
             "available": true,
-            "message": "App Unavailable.",
+            "message": "Versionarte is unavailable.",
             "details": "App is in maintanence mode, please come back later."
         },
         "changelog": {
@@ -35,7 +35,7 @@
         },
         "availability": {
             "available": true,
-            "message": "App Unavailable.",
+            "message": "Versionarte is unavailable.",
             "details": "App is in maintanence mode, please come back later."
         },
         "changelog": {

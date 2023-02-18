@@ -12,7 +12,7 @@ There seems to be a some kind of a way to remotely do this.
 
 ## 🖋️JSON format
 
-`Versionarte` has a specific json format, which you must use to provide the versioning details remotely.
+`Versionarte` has a specific json format, which you must use to provide the versioning details remotely. Remember that whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider` or any custom `VersionarteProvider` you must always use the structured json below:
 
 ```js
 {
@@ -27,7 +27,7 @@ There seems to be a some kind of a way to remotely do this.
         },
         "availability": {
             "available": true,
-            "message": "App Unavailable.",
+            "message": "Versionarte is unavailable.",
             "details": "App is in maintanence mode, please come back later."
         },
         "changelog": {
@@ -42,29 +42,7 @@ There seems to be a some kind of a way to remotely do this.
         }
     },
     "ios": {
-        "minimum": {
-            "number": 12,
-            "name": "2.7.4"
-        },
-        "latest": {
-            "number": 15,
-            "name": "2.8.1+hotfix"
-        },
-        "availability": {
-            "available": true,
-            "message": "App Unavailable.",
-            "details": "App is in maintanence mode, please come back later."
-        },
-        "changelog": {
-            "en": [
-                "Minor improvements.",
-                "Fixed login issue."
-            ],
-            "es": [
-                "Pequeñas mejoras.",
-                "Solucionado el problema de inicio de sesión."
-            ]
-        }
+        // same data we used for "android"
     }
 }
 ```
@@ -72,11 +50,12 @@ There seems to be a some kind of a way to remotely do this.
 ## 🕹️ Usage
 
 ### A basic example
-Below here is an example of how to use `Versionarte` with Firebase Remote Config to retrieve a `VersionarteResult`:
+Below here is minimal example of `Versionarte` with Firebase Remote Config to retrieve a `VersionarteResult`:
 
 ```dart
 final result = await Versionarte.check(
     versionarteProvider: RemoteConfigVersionarteProvider(),
+    localVersioning: await LocalVersioning.fromPackageInfo(),
 );
 ```
 
@@ -84,21 +63,30 @@ Then using `result` we can decide what we want to do with:
 
 ```dart
 if (result == VersionarteResult.unavailable) {
-    // TODO: 
+// TODO: 
 } else if (result == VersionarteResult.mustUpdate) {
-    // TODO: 
+// TODO: 
 } else if (result == VersionarteResult.couldUpdate) {
-    // TODO: 
+// TODO: 
 } 
 ```
 
 Here you don't need to try-catch the function: called function catches all the erros inside, if anything goes wrong, still an instance of `VersionarteResult` is returned with a `message` property containing error message. Also, be sure to check debug console to see the debug-only prints that package prints.
 
-To get started..
+You want to use your own RESTful API instead of FirebaseRemoteConfig? Use `RestfulVersionarteProvider`:
 
 ```dart
-final int a = 1;
+final result = await Versionarte.check(
+    versionarteProvider: RestfulVersionarteProvider(
+        url: 'https://myapi.com/getVersioning',
+    ),
+    localVersioning: await LocalVersioning.fromPackageInfo(),
+);
 ```
+
+Maybe you want to use Firestore, Graphql or any other service to provider `StoreVersioning`? Extend `VersionarteProvider`, override `getStoreVersioning`, fetch serverside data, parse it into a `StoreVersioning` instance using `StoreVersioning.fromJson` factory constructor:
+
+
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
 
