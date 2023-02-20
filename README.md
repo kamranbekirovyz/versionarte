@@ -50,13 +50,15 @@ versionarte has a specific JSON format, which you must use to provide the versio
 
 ## 👀 Before usage: terminology
 
-`StoreVersioning`: a model representation of the JSON above containing versioning details of the app, such as the latest version number, minimum version number, changelog, etc.
-`VersionarteProvider`: a delegate for fetching an instance of `StoreVersioning`.  
-`RemoteConfigVersionarteProvider`: a `VersionarteProvider` fetching `StoreVersioning` based on the Firebase Remote Config.  
-`RestfulVersionarteProvider`: a `VersionarteProvider` fetching `StoreVersioning` information via sending an HTTP GET request to the given URL.  
-`LocalVersioning`: a model containing versioning details of the currently running app. Has two field and one getter: 
-1. androidVersion: current version number of the running Android app.
-1. iosVersion: current version number of the running iOS app.
+StoreVersioning: A model that represents the JSON structure mentioned earlier. It contains versioning details of the app, such as the latest version number, minimum version number, changelog, and so on.
+
+VersionarteProvider: A delegate that fetches an instance of StoreVersioning. It can be implemented to create other sources of VersionarteProviders such as Firestore, GraphQL, and so on.
+
+RemoteConfigVersionarteProvider: A VersionarteProvider that fetches StoreVersioning based on the Firebase Remote Config.
+
+RestfulVersionarteProvider: A VersionarteProvider that fetches StoreVersioning information by sending an HTTP GET request to the given URL.
+
+LocalVersioning: A model that contains versioning details of the currently running app. It has three fields: androidVersion for the current version number of the running Android app, iosVersion for the current version number of the running iOS app, and platformVersion for the version number of the current platform. The platformVersion property is a getter that returns the version number depending on the target platform of the app.
 
 ## 🕹️ Usage
 
