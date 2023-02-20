@@ -1,18 +1,19 @@
 # versionarte
 
-A package for Flutter that lets you remotly manage your versioning and its availability. Meaning that you can disable the app for usage with custom remotly stored information texts..
+A package for Flutter that allows you to remotely manage your app's versioning and availability. With versionarte, you can easily disable your app for usage with custom remotely stored information texts, show a forced update screen, show an update available screen, and provide a changelog.
+
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/cupertino-refresh/master/.docs/cover.png" alt="cover_picture" />
 
 ## 🚀 Motivation
 
-There is one fundamental characteristic that makes mobile application development distinct from other development domains (such as web or back-end): while developing a mobile application, as soon as you add a new module/functionality, fix a critical or non-critical bug, or just want to make the app unavailable for some short or long period of time (maybe because of maintenance you’re doing on your server) you have to go through the procedure of submitting the new version of the app to the relative stores, wait for them to hopefully approve (not reject) and after all that, although your app is live on the store, there will be some users those who have to manually choose to update your app to the latest version.
+Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or taking the app offline for maintenance, requires submitting a new version to the app store and waiting for approval. Even after approval, users may still need to manually update their app to access the latest version. This process can be time-consuming and frustrating for both developers and users.
 
-There seems to be a some kind of a way to remotely do this.
+To simplify the app versioning process, versionarte offers remote management of app versioning. With versionarte, you can easily manage app versioning and updates without the need for app store submissions or manual user updates. This makes the app development process more efficient and seamless, benefiting both developers and users alike.
 
 ## 🖋️JSON format
 
-`Versionarte` has a specific json format, which you must use to provide the versioning details remotely. Remember that whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider` or any custom `VersionarteProvider` you must always use the structured json below:
+versionarte has a specific JSON format, which you must use to provide the versioning details remotely. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, you must always use the structured JSON below:
 
 ```js
 {
@@ -46,6 +47,16 @@ There seems to be a some kind of a way to remotely do this.
     }
 }
 ```
+
+## 👀 Before usage: terminology
+
+`StoreVersioning`: a model representation of the JSON above containing versioning details of the app, such as the latest version number, minimum version number, changelog, etc.
+`VersionarteProvider`: a delegate for fetching an instance of `StoreVersioning`.  
+`RemoteConfigVersionarteProvider`: a `VersionarteProvider` fetching `StoreVersioning` based on the Firebase Remote Config.  
+`RestfulVersionarteProvider`: a `VersionarteProvider` fetching `StoreVersioning` information via sending an HTTP GET request to the given URL.  
+`LocalVersioning`: a model containing versioning details of the currently running app. Has two field and one getter: 
+1. androidVersion: current version number of the running Android app.
+1. iosVersion: current version number of the running iOS app.
 
 ## 🕹️ Usage
 
