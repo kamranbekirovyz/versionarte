@@ -1,15 +1,15 @@
 # versionarte
 
-A package for Flutter that allows you to remotely manage your app's versioning and availability. With versionarte, you can easily disable your app for usage with custom remotely stored information texts, show a forced update screen, show an update available screen, and provide a changelog.
+A package for Flutter that allows you to remotely manage your app's versioning and availability. Using versionarte, you can easily disable your app for usage with custom remotely stored information texts, show a forced update screen, show an update available screen, and provide a changelog to the user about latest changes on the app.
 
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/cupertino-refresh/master/.docs/cover.png" alt="cover_picture" />
 
 ## 🚀 Motivation
 
-Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or taking the app offline for maintenance, requires submitting a new version to the app store and waiting for approval. Even after approval, users may still need to manually update their app to access the latest version. This process can be time-consuming and frustrating for both developers and users.
+Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or disabling the app for maintenance, requires submitting a new version to the app store and waiting for approval. Even after approval, users may still need to manually update their app to access the latest version. 
 
-To simplify the app versioning process, versionarte offers remote management of app versioning. With versionarte, you can easily manage app versioning and updates without the need for app store submissions or manual user updates. This makes the app development process more efficient and seamless, benefiting both developers and users alike.
+To simplify the app versioning process, versionarte offers remote management of app versioning and availability. This makes the app development process more efficient and seamless, benefiting both developers and users alike.
 
 ## 🖋️JSON format
 
@@ -50,20 +50,25 @@ versionarte has a specific JSON format, which you must use to provide the versio
 
 ## 👀 Before usage: terminology
 
-StoreVersioning: A model that represents the JSON structure mentioned earlier. It contains versioning details of the app, such as the latest version number, minimum version number, changelog, and so on.
+### `StoreVersioning`
+A model that represents the JSON structure mentioned above. It contains versioning details of the app, such as the latest version number, minimum version number, changelog, and so on.
 
-VersionarteProvider: A delegate that fetches an instance of StoreVersioning. It can be implemented to create other sources of VersionarteProviders such as Firestore, GraphQL, and so on.
+### `VersionarteProvider`
+A delegate that fetches an instance of `StoreVersioning`. You can implement it to create other sources of `VersionarteProvider`s such as Firestore, GraphQL, and so on.
 
-RemoteConfigVersionarteProvider: A VersionarteProvider that fetches StoreVersioning based on the Firebase Remote Config.
+### `RemoteConfigVersionarteProvider`
+A VersionarteProvider that fetches `StoreVersioning` based on the Firebase Remote Config.
 
-RestfulVersionarteProvider: A VersionarteProvider that fetches StoreVersioning information by sending an HTTP GET request to the given URL.
+### `RestfulVersionarteProvider`
+A VersionarteProvider that fetches `StoreVersioning` information by sending an HTTP GET request to the given URL.
 
-LocalVersioning: A model that contains versioning details of the currently running app. It has three fields: androidVersion for the current version number of the running Android app, iosVersion for the current version number of the running iOS app, and platformVersion for the version number of the current platform. The platformVersion property is a getter that returns the version number depending on the target platform of the app.
+### `LocalVersioning`
+A model that contains versioning details of the currently running app. It has three fields: `androidVersion` for the current version number of the running Android app, `iosVersion` for the current version number of the running iOS app, and `platformVersion` for the version number of the current platform. The platformVersion property is a getter that returns the version number depending on the target platform of the app.
 
 ## 🕹️ Usage
 
 ### A basic example
-Below here is minimal example of `Versionarte` with Firebase Remote Config to retrieve a `VersionarteResult`:
+Below is a minimal example of how to use Versionarte with Firebase Remote Config to retrieve a VersionarteResult:
 
 ```dart
 final result = await Versionarte.check(
@@ -72,19 +77,25 @@ final result = await Versionarte.check(
 );
 ```
 
-Then using `result` we can decide what we want to do with:
+In this example, we import the required packages and call the Versionarte.check function to retrieve the VersionarteResult. The RemoteConfigVersionarteProvider is used to retrieve the remote version information from Firebase Remote Config, and the LocalVersioning.fromPackageInfo() function is used to retrieve the local version information.
+
+Then, we use the result to decide what to do next based on the versioning state. Here's an example of how to do that:
 
 ```dart
 if (result == VersionarteResult.unavailable) {
-// TODO: 
+  // TODO: Handle the case where remote version information is unavailable
 } else if (result == VersionarteResult.mustUpdate) {
-// TODO: 
+  // TODO: Handle the case where an update is required
 } else if (result == VersionarteResult.couldUpdate) {
-// TODO: 
-} 
+  // TODO: Handle the case where an update is optional
+} else if (result == VersionarteResult.upToDate) {
+  // TODO: If needed handle the case where the app is up to date
+} else if (result == VersionarteResult.failedToCheck) {
+  // TODO: If needed handle the case where the version check failed
+}
 ```
 
-Here you don't need to try-catch the function: called function catches all the erros inside, if anything goes wrong, still an instance of `VersionarteResult` is returned with a `message` property containing error message. Also, be sure to check debug console to see the debug-only prints that package prints.
+Note that you don't need to try-catch the Versionarte.check function, as the called function catches all the errors inside. If anything goes wrong, an instance of VersionarteResult is still returned, with a message property containing the error message. Also, be sure to check the debug console to see the debug-only prints that the package prints.
 
 You want to use your own RESTful API instead of FirebaseRemoteConfig? Use `RestfulVersionarteProvider`:
 
@@ -98,7 +109,6 @@ final result = await Versionarte.check(
 ```
 
 Maybe you want to use Firestore, Graphql or any other service to provider `StoreVersioning`? Extend `VersionarteProvider`, override `getStoreVersioning`, fetch serverside data, parse it into a `StoreVersioning` instance using `StoreVersioning.fromJson` factory constructor:
-
 
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
@@ -117,7 +127,9 @@ See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/exampl
 🤔 Implement in-app upgrade on Android.  
 🤔 An int indicating how many times the user opened the app.  
 🤔 Execute function when the user installs the new version.  
+🤔 Execute function when the user opens the app for the first time.
 🤔 A bool indicating the user opening this build/version for the first time.  
+
 
 ## 🤓 Contributors
 
