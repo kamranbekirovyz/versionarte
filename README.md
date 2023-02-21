@@ -50,19 +50,19 @@ versionarte has a specific JSON format, which you must use to provide the versio
 
 ## 👀 Before usage: terminology
 
-### `StoreVersioning`
+### StoreVersioning
 A model that represents the JSON structure mentioned above. It contains versioning details of the app, such as the latest version number, minimum version number, changelog, and so on.
 
-### `VersionarteProvider`
+### VersionarteProvider
 A delegate that fetches an instance of `StoreVersioning`. You can implement it to create other sources of `VersionarteProvider`s such as Firestore, GraphQL, and so on.
 
-### `RemoteConfigVersionarteProvider`
+### RemoteConfigVersionarteProvider
 A VersionarteProvider that fetches `StoreVersioning` based on the Firebase Remote Config.
 
-### `RestfulVersionarteProvider`
+### RestfulVersionarteProvider
 A VersionarteProvider that fetches `StoreVersioning` information by sending an HTTP GET request to the given URL.
 
-### `LocalVersioning`
+### LocalVersioning
 A model that contains versioning details of the currently running app. It has three fields: `androidVersion` for the current version number of the running Android app, `iosVersion` for the current version number of the running iOS app, and `platformVersion` for the version number of the current platform. The platformVersion property is a getter that returns the version number depending on the target platform of the app.
 
 ## 🕹️ Usage
@@ -127,7 +127,7 @@ See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/exampl
 🤔 Implement in-app upgrade on Android.  
 🤔 An int indicating how many times the user opened the app.  
 🤔 Execute function when the user installs the new version.  
-🤔 Execute function when the user opens the app for the first time.
+🤔 Execute function when the user opens the app for the first time.  
 🤔 A bool indicating the user opening this build/version for the first time.  
 
 
