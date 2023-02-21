@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 
-/// Common logging function.
+/// Logs a message to the console.
 void logV(String? s) {
   debugPrint('[VERSIONARTE] $s');
 }

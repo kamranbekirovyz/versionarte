@@ -1,15 +1,19 @@
 import 'package:flutter/foundation.dart';
 
-/// Serverside representation model of the app versioning.
+/// A serverside representation model of the app versioning.
 class StoreVersioning {
   const StoreVersioning({
     required this.android,
     required this.ios,
   });
 
+  /// The versioning information for Android platform.
   final PlatformVersionarte android;
+
+  /// The versioning information for iOS platform.
   final PlatformVersionarte ios;
 
+  /// Creates an instance of [StoreVersioning] from a JSON [Map].
   factory StoreVersioning.fromJson(Map<String, dynamic> json) {
     return StoreVersioning(
       android: PlatformVersionarte.fromJson(json["android"]),
@@ -17,6 +21,7 @@ class StoreVersioning {
     );
   }
 
+  /// Returns a JSON [Map] representation of this object.
   Map<String, dynamic> toJson() {
     return {
       'android': android.toJson(),
@@ -24,6 +29,9 @@ class StoreVersioning {
     };
   }
 
+  /// Returns the [PlatformVersionarte] object corresponding to the current platform.
+  ///
+  /// Throws an [UnimplementedError] if the current platform is not supported by the package.
   PlatformVersionarte get platformVersionarte {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -80,6 +88,9 @@ class PlatformVersionarte {
     };
   }
 
+  /// Returns the changelog for a given language code.
+  ///
+  /// If no changelog is available for the given language code, null is returned.
   List<String?>? getChangelogForLanguage(String languageCode) {
     return changelog?[languageCode];
   }

@@ -10,6 +10,7 @@ class LocalVersioning {
   /// Current version number of the running iOS app.
   final int? _iosVersion;
 
+  /// A class that represents the versioning details of the running app.
   const LocalVersioning({
     int? androidVersion,
     int? iosVersion,

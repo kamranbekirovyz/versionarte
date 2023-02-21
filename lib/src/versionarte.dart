@@ -9,31 +9,36 @@ import 'package:versionarte/src/models/versionarte_result.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 import 'package:versionarte/versionarte.dart';
 
+/// A utility class that helps to check the version of the app on the device
+/// against the version available on the app store.
 class Versionarte {
   static PackageInfo? _packageInfo;
   static LocalVersioning? _localVersioning;
 
-  /// Retrieves package information from the platform.
+  /// Retrieves package information from the platform. This method uses the
+  /// `package_info_plus` package to get the package information.
   static Future<PackageInfo?> get packageInfo async {
     _packageInfo ??= await PackageInfo.fromPlatform();
-
     return _packageInfo;
   }
 
-  /// Cached verison of [LocalVersioning] used when called calling
-  /// `Versionarte.check(...)` method.
-  ///
-  /// Used internally for [VersionarteIndicator] widget.
+  /// Cached version of [LocalVersioning] used when calling the
+  /// `Versionarte.check(...)` method. This is used internally for the
+  /// [VersionarteIndicator] widget.
   static LocalVersioning? get localVersioning => _localVersioning;
 
-  /// Main method to check app versioning status. Takes two parameters:
+  /// Main method to check app versioning status. This method takes two
+  /// parameters:
   ///
-  /// `versionarteProvider`: a [VersionarteProvider] to retrieve
-  /// [StoreVersioning] stored remotly most probably.
+  /// - `versionarteProvider`: A [VersionarteProvider] instance to retrieve
+  /// [StoreVersioning] stored remotely, most probably.
+  /// - `localVersioning`: [LocalVersioning] of the currently running app. If
+  /// not specified, it is retrieved using [PackageInfo]. If you keep your
+  /// current app version somewhere in your Dart codes, you can set a
+  /// [LocalVersioning] manually.
   ///
-  /// `localVersioning`: [LocalVersioning] of the currently running app. If not
-  /// specified it retrieved using [PackageInfo]. If you keep your current
-  /// app version somewhere in your dart codes, set a [LocalVersioning] manually.
+  /// This method returns a [VersionarteResult] instance with the status of the
+  /// app's versioning status.
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
     LocalVersioning? localVersioning,
@@ -77,8 +82,7 @@ class Versionarte {
       if (localPlatformVersion == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
+          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
         );
       }
 
@@ -109,14 +113,12 @@ class Versionarte {
       if (versionarteProvider is RemoteConfigVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.',
+          message: 'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.',
         );
       } else if (versionarteProvider is RestfulVersionarteProvider) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
+          message: 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
         );
       } else {
         return VersionarteResult(
@@ -135,42 +137,54 @@ class Versionarte {
     }
   }
 
-  /// Using `url_launcher`, opens App Store on iOS, Play Store on Android.
+  /// Opens the app's page on the Play Store on Android and the App Store on iOS
+  /// using the `url_launcher` package.
   ///
-  /// App URL for Play Store is generated automatically by the help of the
-  /// package info, so no need to specify `androidPackageName` manually.
-  /// But, for the App Store you must specify your app ID as an `int`, meaning
-  /// no need for "id" prefix.
+  /// On Android, the `androidPackageName` parameter is used to generate the
+  /// Play Store URL. If the parameter is `null`, the package name is retrieved
+  /// automatically from the device's `package_info` package. On iOS, the
+  /// `appleAppId` parameter is used to generate the App Store URL.
   ///
-  /// `androidPackageName`: Package name of the app (Android)
+  /// If the platform is not Android or iOS, the method logs an error message and
+  /// returns `false`.
   ///
-  /// `appleAppId`: App ID of the app on App Store (iOS). If your app is not
-  /// published on the App Store, pass `appleAppId` as `null`
+  /// Parameters:
+  ///   - `appleAppId` (int): The app ID of the app on the App Store (iOS).
+  ///     If the app is not published on the App Store, pass `null`.
+  ///   - `androidPackageName` (String): The package name of the app (Android).
+  ///
+  /// Returns:
+  ///   - A `Future<bool>` that indicates whether the URL was successfully
+  ///     launched or not.
   static Future<bool> openAppInStore({
     required int? appleAppId,
     String? androidPackageName,
   }) async {
     if (Platform.isAndroid) {
+      // Retrieve package name from device's `package_info` package if needed
       androidPackageName ??= (await packageInfo)?.packageName;
 
       if (androidPackageName != null) {
+        // Generate Play Store URL and launch it
         return launchUrl(
           Uri.parse(
             'https://play.google.com/store/apps/details?id=$androidPackageName',
           ),
         );
       } else {
+        // Unable to retrieve package name
         return false;
       }
     } else if (Platform.isIOS) {
+      // Generate App Store URL and launch it
       return launchUrl(
         Uri.parse(
           'https://apps.apple.com/app/id$appleAppId',
         ),
       );
     } else {
+      // Platform is not supported
       logV('${Platform.operatingSystem} is not supported.');
-
       return false;
     }
   }

@@ -1,20 +1,20 @@
-/// Enum representing status of the app for the platform.
+/// Enum representing the versioning status of the app for the current platform.
 enum VersionarteStatus {
-  /// "There is a new version available"
+  /// There is a new version available, but it is not mandatory to update.
   couldUpdate,
 
-  /// "There is a new version available and user must update"
+  /// There is a new version available and the user must update to continue using the app.
   mustUpdate,
 
-  /// "User has the latest version"
+  /// The user has the latest version of the app.
   upToDate,
 
-  /// "App is not available for the time being"
+  /// The app is not available for the time being, e.g. it is currently undergoing maintenance.
   unavailable,
 
-  /// "Error occured while checking status for the platform."
+  /// An error occurred while checking the versioning status for the current platform.
   ///
-  ///  Check `message` property of [VersionarteResult] to see the possible
-  /// error caused it.
+  /// Check the `message` property of the [VersionarteResult] object to see the
+  /// possible error that caused this status.
   failedToCheck,
 }
