@@ -48,10 +48,25 @@ versionarte has a specific JSON format, which you must use to provide the versio
 }
 ```
 
+- `android`: This is a top-level property representing the Android platform. All the configuration properties for Android are nested within this property.
+
+- `minimum`: This property specifies the minimum required version of the Android app. The number property represents the version code and name property represents the version name.
+
+- `latest`: This property specifies the latest version of the Android app. The number property represents the version code and name property represents the version name.
+
+- `availability`: This property specifies whether the app is currently available or not. The available property is a boolean value that indicates availability. If available is `false`, then the `message` and `details` properties provide a message and details about the unavailability.
+
+- `changelog`: This property specifies the changelog for the Android app. It contains two sub-properties, en and es, which represent the changelog in English and Spanish languages, respectively. Each sub-property contains an array of strings representing the individual changes made in the corresponding version of the app.
+
+- `ios`: This property is similar to the android property, but it contains the configuration properties for the iOS platform instead of Android. All the properties in the android property are also present in the ios property with the same structure and meaning.
+
 ## 👀 Before usage: terminology
 
 ### StoreVersioning
 A model that represents the JSON structure mentioned above. It contains versioning details of the app, such as the latest version number, minimum version number, changelog, and so on.
+
+### LocalVersioning
+A model that contains versioning details of the currently running app. It has three fields: `androidVersion` for the current version number of the running Android app, `iosVersion` for the current version number of the running iOS app, and `platformVersion` for the version number of the current platform. The platformVersion property is a getter that returns the version number depending on the target platform of the app.
 
 ### VersionarteProvider
 A delegate that fetches an instance of `StoreVersioning`. You can implement it to create other sources of `VersionarteProvider`s such as Firestore, GraphQL, and so on.
@@ -62,8 +77,6 @@ A VersionarteProvider that fetches `StoreVersioning` based on the Firebase Remot
 ### RestfulVersionarteProvider
 A VersionarteProvider that fetches `StoreVersioning` information by sending an HTTP GET request to the given URL.
 
-### LocalVersioning
-A model that contains versioning details of the currently running app. It has three fields: `androidVersion` for the current version number of the running Android app, `iosVersion` for the current version number of the running iOS app, and `platformVersion` for the version number of the current platform. The platformVersion property is a getter that returns the version number depending on the target platform of the app.
 
 ## 🕹️ Usage
 

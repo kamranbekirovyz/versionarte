@@ -5,21 +5,29 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:versionarte/src/models/store_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
+/// A [VersionarteProvider] that retrieves [StoreVersioning] information stored in Firebase
+/// Remote Config using the key name "versionarte" or a different key name specified through
+/// the `keyName` constructor parameter.
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
   final _remoteConfig = FirebaseRemoteConfig.instance;
   late final String _keyName;
   late final RemoteConfigSettings _remoteConfigSettings;
   late final bool _initializeRemoteConfig;
 
-  /// A [VersionarteProvider] that helps retrieve [StoreVersioning]
-  /// information stored in Firebase Remote Config with a key name
-  /// "versionarte" unless specified differently using `keyName` constructor
-  /// property.
+  /// Creates a new instance of [RemoteConfigVersionarteProvider].
   ///
-  /// By default `fetchTimeout` is set to 7 seconds, `minimumFetchInterval` to
-  /// `Duration.zero`.
+  /// The `initializeRemoteConfig` parameter indicates whether or not the Firebase Remote Config
+  /// settings should be initialized. By default, it's set to `true`.
   ///
-  /// To see example json file, check /versionarte.json file.
+  /// The `remoteConfigSettings` parameter allows you to set the fetch timeout and minimum fetch
+  /// interval for Firebase Remote Config. By default, `fetchTimeout` is set to 7 seconds and
+  /// `minimumFetchInterval` to `Duration.zero`.
+  ///
+  /// The `keyName` parameter is used to specify the key name for the Firebase Remote Config to
+  /// fetch. By default, it's set to "versionarte".
+  ///
+  /// To see an example of the JSON file that is uploaded to Firebase Remote Config, check the
+  /// /versionarte.json file.
   RemoteConfigVersionarteProvider({
     bool initializeRemoteConfig = true,
     RemoteConfigSettings? remoteConfigSettings,
@@ -37,13 +45,19 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     }
   }
 
-  /// Initializes (sets configurations) for Firebase Remote Config
+  /// Initializes the Firebase Remote Config settings.
+  ///
+  /// The `settings` parameter is a [RemoteConfigSettings] instance that specifies the fetch
+  /// timeout and minimum fetch interval for Firebase Remote Config.
   Future<void> _initialize(RemoteConfigSettings settings) async {
     return _remoteConfig.setConfigSettings(settings);
   }
 
-  /// Fetches json uploaded to the Firebase Remote Config, parses it into an
-  /// instance of [StoreVersioning]
+  /// Fetches the JSON uploaded to Firebase Remote Config and decodes it into an instance of
+  /// [StoreVersioning].
+  ///
+  /// Returns a [Future] that resolves to a [StoreVersioning] instance or `null` if there was an
+  /// error while fetching or decoding the JSON.
   @override
   FutureOr<StoreVersioning?> getStoreVersioning() async {
     if (_initializeRemoteConfig) {

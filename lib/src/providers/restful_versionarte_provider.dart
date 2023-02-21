@@ -2,24 +2,31 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:versionarte/src/helpers/logger.dart';
-import 'package:versionarte/src/models/store_versioning.dart';
-import 'package:versionarte/src/providers/versionarte_provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:versionarte/versionarte.dart';
+import 'package:versionarte/src/helpers/logger.dart';
 
+/// A [VersionarteProvider] that helps retrieve `StoreVersioning` information via
+/// sending an HTTP GET request with the given headers to the given URL.
 class RestfulVersionarteProvider extends VersionarteProvider {
   final String _url;
   final Map<String, String>? _headers;
 
-  /// A [VersionarteProvider] that helps retrieve `StoreVersioning`
-  /// information via sending an HTTP GET request with the given headers to the
-  /// given URL.
+  /// Creates a new instance of [RestfulVersionarteProvider].
+  ///
+  /// The `url` parameter is the URL of the RESTful API that returns the StoreVersioning information.
+  ///
+  /// The `headers` parameter allows you to set additional headers to be sent with the HTTP GET request.
   const RestfulVersionarteProvider({
     required String url,
     Map<String, String>? headers,
   })  : _url = url,
         _headers = headers;
 
+  /// Sends an HTTP GET request to the RESTful API and decodes the response body into a `StoreVersioning` object.
+  ///
+  /// Returns a [Future] that resolves to a `StoreVersioning` object or `null` if there was an
+  /// error while sending the HTTP request or decoding the response body.
   @override
   FutureOr<StoreVersioning?> getStoreVersioning() async {
     final client = http.Client();
@@ -42,8 +49,6 @@ class RestfulVersionarteProvider extends VersionarteProvider {
 
     logV('Status code: ${response.statusCode}');
     logV('Response body: ${response.body}');
-
-    // TODO: pretty print the response body
 
     final json = jsonDecode(response.body);
 

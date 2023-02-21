@@ -5,8 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:versionarte/src/helpers/logger.dart';
-import 'package:versionarte/src/models/versionarte_result.dart';
-import 'package:versionarte/src/providers/versionarte_provider.dart';
 import 'package:versionarte/versionarte.dart';
 
 /// A utility class that helps to check the version of the app on the device
@@ -33,9 +31,9 @@ class Versionarte {
   /// - `versionarteProvider`: A [VersionarteProvider] instance to retrieve
   /// [StoreVersioning] stored remotely, most probably.
   /// - `localVersioning`: [LocalVersioning] of the currently running app. If
-  /// not specified, it is retrieved using [PackageInfo]. If you keep your
-  /// current app version somewhere in your Dart codes, you can set a
-  /// [LocalVersioning] manually.
+  /// it is not provided, the version information is obtained from the package
+  /// information using [PackageInfo]. If you keep your current app version
+  /// somewhere in your Dart codes, you can set a [LocalVersioning] manually.
   ///
   /// This method returns a [VersionarteResult] instance with the status of the
   /// app's versioning status.
@@ -50,7 +48,7 @@ class Versionarte {
       if (localVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message: 'A null LocalVersioning received.',
+          message: 'Failed to get local versioning information.',
         );
       }
 
@@ -62,7 +60,7 @@ class Versionarte {
       if (storeVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message: 'StoreVersioning could not be fetched.',
+          message: 'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
         );
       }
 
@@ -110,29 +108,23 @@ class Versionarte {
         details: platformVersionarte,
       );
     } on FormatException catch (e) {
-      if (versionarteProvider is RemoteConfigVersionarteProvider) {
-        return VersionarteResult(
-          VersionarteStatus.failedToCheck,
-          message: 'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.',
-        );
-      } else if (versionarteProvider is RestfulVersionarteProvider) {
-        return VersionarteResult(
-          VersionarteStatus.failedToCheck,
-          message: 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.',
-        );
-      } else {
-        return VersionarteResult(
-          VersionarteStatus.failedToCheck,
-          message: e.toString(),
-        );
-      }
+      final message = versionarteProvider is RemoteConfigVersionarteProvider
+          ? 'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.'
+          : versionarteProvider is RestfulVersionarteProvider
+              ? 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.'
+              : e.toString();
+
+      return VersionarteResult(
+        VersionarteStatus.failedToCheck,
+        message: message,
+      );
     } catch (e, s) {
       logV('Exception: $e');
       logV('Stack Trace: $s');
 
       return VersionarteResult(
         VersionarteStatus.failedToCheck,
-        message: e.toString(),
+        message: 'An error occurred while checking for updates. Check the debug console to see the error and stack trace.',
       );
     }
   }

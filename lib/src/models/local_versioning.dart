@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:versionarte/versionarte.dart';
 
+/// A class that represents the versioning details of the running app.
 class LocalVersioning {
   /// Current version number of the running Android app.
   final int? _androidVersion;
@@ -10,20 +11,24 @@ class LocalVersioning {
   /// Current version number of the running iOS app.
   final int? _iosVersion;
 
-  /// A class that represents the versioning details of the running app.
+  /// Creates a new [LocalVersioning] instance with the given parameters.
+  ///
+  /// [androidVersion] is the version number of the running Android app.
+  ///
+  /// [iosVersion] is the version number of the running iOS app.
   const LocalVersioning({
     int? androidVersion,
     int? iosVersion,
   })  : _androidVersion = androidVersion,
         _iosVersion = iosVersion;
 
-  /// Creates [LocalVersioning] instance from package information retrieved
-  /// from the platform.
+  /// Creates a new [LocalVersioning] instance from package information retrieved
+  /// from the platform. Returns null if package information is unavailable.
   static Future<LocalVersioning?> fromPackageInfo() async {
     final packageInfo = await Versionarte.packageInfo;
 
     if (packageInfo == null) {
-      throw 'Failed to get versioning details from PackageInfo';
+      return null;
     }
 
     final number = int.parse(packageInfo.buildNumber);
@@ -34,7 +39,9 @@ class LocalVersioning {
     );
   }
 
-  /// Version number of current platform.
+  /// Returns the version number of the current platform.
+  ///
+  /// Throws an [UnimplementedError] if the platform is not implemented in this package.
   int? get platformVersion {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -52,7 +59,7 @@ class LocalVersioning {
     }
   }
 
-  /// Overriding for a readable [String] representation of its instance.
+  /// Returns a readable [String] representation of this instance.
   @override
   String toString() {
     return 'current platform version: $platformVersion';

@@ -1,11 +1,11 @@
 import 'dart:async';
-
 import 'package:versionarte/src/models/store_versioning.dart';
 
 /// An interface for a server-side store versioning information provider.
 ///
 /// This interface defines the contract for objects that provide store versioning information
-/// from a remote data source, such as a server. The [getStoreVersioning] method should return
+/// from a remote data source, such as a server. Implementations of this interface should
+/// provide a concrete implementation for the [getStoreVersioning] method, which should return
 /// a [StoreVersioning] object or null if the versioning information cannot be retrieved.
 abstract class VersionarteProvider {
   /// Constructs a [VersionarteProvider].
@@ -13,9 +13,10 @@ abstract class VersionarteProvider {
 
   /// Returns the store versioning information from a remote data source.
   ///
-  /// Returns a [StoreVersioning] object if the versioning information is available,
-  /// or null if the information cannot be retrieved.
+  /// This method should be implemented to retrieve store versioning information from a remote
+  /// data source. If the information is available, it should be returned as a [StoreVersioning]
+  /// object. If the information cannot be retrieved, the method should return null.
   ///
-  /// Throws an error if an exception occurs while retrieving the versioning information.
+  /// Throws an [Exception] if an error occurs while retrieving the versioning information.
   FutureOr<StoreVersioning?> getStoreVersioning();
 }
