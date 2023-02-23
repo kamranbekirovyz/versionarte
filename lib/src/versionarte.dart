@@ -64,7 +64,7 @@ class Versionarte {
         );
       }
 
-      logV('StoreVersioning: \n$storeVersioning');
+      logV('StoreVersioning: $storeVersioning');
 
       final platformStoreDetails = storeVersioning.platformStoreDetails;
 

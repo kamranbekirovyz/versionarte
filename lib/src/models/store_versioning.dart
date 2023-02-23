@@ -48,6 +48,11 @@ class StoreVersioning {
         );
     }
   }
+
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 }
 
 class PlatformStoreDetails {
