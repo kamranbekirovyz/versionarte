@@ -152,6 +152,8 @@ class Versionarte {
     required int? appleAppId,
     String? androidPackageName,
   }) async {
+    const mode = LaunchMode.externalApplication;
+
     if (Platform.isAndroid) {
       // Retrieve package name from device's `package_info` package if needed
       androidPackageName ??= (await packageInfo)?.packageName;
@@ -162,6 +164,7 @@ class Versionarte {
           Uri.parse(
             'https://play.google.com/store/apps/details?id=$androidPackageName',
           ),
+          mode: mode,
         );
       } else {
         // Unable to retrieve package name
@@ -173,6 +176,7 @@ class Versionarte {
         Uri.parse(
           'https://apps.apple.com/app/id$appleAppId',
         ),
+        mode: mode,
       );
     } else {
       // Platform is not supported
