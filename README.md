@@ -45,6 +45,7 @@ versionarte has a specific JSON format, which you must use to provide the versio
     "ios": {
         // same data we used for "android"
     }
+    // "web", "macos", "windows", "linux" will be suppoerted in next versions
 }
 ```
 
@@ -60,7 +61,7 @@ versionarte has a specific JSON format, which you must use to provide the versio
 
 - `ios`: This property is similar to the android property, but it contains the configuration properties for the iOS platform instead of Android. All the properties in the android property are also present in the ios property with the same structure and meaning.
 
-## 👀 Before usage: terminology
+## 🎬 Terminology
 
 ### StoreVersioning
 A model that represents the JSON structure mentioned above. It contains versioning details of the app, such as the latest version number, minimum version number, changelog, and so on.
@@ -128,21 +129,20 @@ See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/exampl
 
 ## 🛣️ Roadmap
 
-✅ Firebase Remote Config, RESTful API, and custom  versioning provider support.  
-✅ Built-in views and components.  
-✅ Launch the App Store on iOS and the Play Store on Android.  
-✅ Add support for providing the latest release notes/changelog.  
-⏳ Detailed examples for every use case.  
-⏳ Ability to launch AppGallery on Huawei devices.  
-⏳ Documentation website: https://versionarte.dev  
-⏳ Support for separate web, macOS, windows, linux platform  support.  
-⏳ Test coverage.  
-🤔 Implement in-app upgrade on Android.  
-🤔 An int indicating how many times the user opened the app.  
-🤔 Execute function when the user installs the new version.  
-🤔 Execute function when the user opens the app for the first time.  
-🤔 A bool indicating the user opening this build/version for the first time.  
-
+✅ Firebase Remote Config, RESTful API, and custom versioning provider support.
+✅ Built-in views and components.
+✅ Launch the App Store on iOS and the Play Store on Android.
+✅ Add support for providing the latest release notes/changelog.
+⏳ Detailed examples for every use case.
+⏳ Ability to launch AppGallery on Huawei devices.
+⏳ Documentation website: https://versionarte.dev.
+⏳ Support for separate web, macOS, windows, and Linux platforms.
+⏳ Test coverage.
+🤔 Implement in-app upgrade on Android.
+🤔 An int indicating how many times the user opened the app.
+🤔 Execute a function when the user installs the new version.
+🤔 Execute a function when the user opens the app for the first time.
+🤔 A bool indicating whether the user is opening this build/version for the first time.
 
 ## 🤓 Contributors
 

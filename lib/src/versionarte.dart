@@ -109,9 +109,12 @@ class Versionarte {
       );
     } on FormatException catch (e) {
       final message = versionarteProvider is RemoteConfigVersionarteProvider
-          ? 'Failed to parse json received from Firebase Remote Config. Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.'
+          ? 'Failed to parse json received from Firebase Remote Config. '
+              'Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. '
+              'If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.'
           : versionarteProvider is RestfulVersionarteProvider
-              ? 'Failed to parse json received from RESTful API endpoint. Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.'
+              ? 'Failed to parse json received from RESTful API endpoint. '
+                  'Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.'
               : e.toString();
 
       return VersionarteResult(
@@ -124,7 +127,8 @@ class Versionarte {
 
       return VersionarteResult(
         VersionarteStatus.failedToCheck,
-        message: 'An error occurred while checking for updates. Check the debug console to see the error and stack trace.',
+        message: 'An error occurred while checking for updates. '
+            'Check the debug console to see the error and stack trace.',
       );
     }
   }
