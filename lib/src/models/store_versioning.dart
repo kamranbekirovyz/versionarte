@@ -8,16 +8,16 @@ class StoreVersioning {
   });
 
   /// The versioning information for Android platform.
-  final PlatformVersionarte android;
+  final PlatformStoreDetails android;
 
   /// The versioning information for iOS platform.
-  final PlatformVersionarte ios;
+  final PlatformStoreDetails ios;
 
   /// Creates an instance of [StoreVersioning] from a JSON [Map].
   factory StoreVersioning.fromJson(Map<String, dynamic> json) {
     return StoreVersioning(
-      android: PlatformVersionarte.fromJson(json["android"]),
-      ios: PlatformVersionarte.fromJson(json["ios"]),
+      android: PlatformStoreDetails.fromJson(json["android"]),
+      ios: PlatformStoreDetails.fromJson(json["ios"]),
     );
   }
 
@@ -29,10 +29,10 @@ class StoreVersioning {
     };
   }
 
-  /// Returns the [PlatformVersionarte] object corresponding to the current platform.
+  /// Returns the [PlatformStoreDetails] object corresponding to the current platform.
   ///
   /// Throws an [UnimplementedError] if the current platform is not supported by the package.
-  PlatformVersionarte get platformVersionarte {
+  PlatformStoreDetails get platformStoreDetails {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -50,20 +50,20 @@ class StoreVersioning {
   }
 }
 
-class PlatformVersionarte {
+class PlatformStoreDetails {
   final ReleaseDetails minimum;
   final ReleaseDetails latest;
   final Availability availability;
   final Map<String?, List<String?>?>? changelog;
 
-  const PlatformVersionarte({
+  const PlatformStoreDetails({
     required this.minimum,
     required this.latest,
     required this.availability,
     required this.changelog,
   });
 
-  factory PlatformVersionarte.fromJson(Map<String, dynamic> json) {
+  factory PlatformStoreDetails.fromJson(Map<String, dynamic> json) {
     final Map<String?, List<String?>?> changelog_ = {};
 
     json['changelog']?.forEach(
@@ -71,7 +71,7 @@ class PlatformVersionarte {
         changelog_[key] = value.cast<String?>();
       },
     );
-    return PlatformVersionarte(
+    return PlatformStoreDetails(
       minimum: ReleaseDetails.fromJson(json["minimum"]),
       latest: ReleaseDetails.fromJson(json["latest"]),
       availability: Availability.fromJson(json["availability"]),
