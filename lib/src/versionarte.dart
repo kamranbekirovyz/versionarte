@@ -60,7 +60,8 @@ class Versionarte {
       if (storeVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message: 'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
+          message:
+              'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
         );
       }
 
@@ -80,7 +81,8 @@ class Versionarte {
       if (localPlatformVersion == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
+          message:
+              'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
         );
       }
 

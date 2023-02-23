@@ -1,3 +1,8 @@
+## 0.4.2
+- Renamed `PlatformVersionate` as `PlatformStoreDetails`.
+- Added `LaunchMode.externalApplication` when openAppInStore(...) is called.
+- Improved documentation comments.
+
 ## 0.4.1
 - Now, `VersionarteIndicator` besides `PackageInfo` also uses cached value of `LocalVersioning` that used to check the app status.
 - Improved documentation comments.

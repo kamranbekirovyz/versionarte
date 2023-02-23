@@ -48,7 +48,8 @@ class VersionarteIndicator extends StatelessWidget {
 
         // Use the platform version from LocalVersioning if available,
         // otherwise use the build number from PackageInfo.
-        final versionNumber = Versionarte.localVersioning?.platformVersion ?? info.buildNumber;
+        final versionNumber =
+            Versionarte.localVersioning?.platformVersion ?? info.buildNumber;
 
         return Text(
           '$appName v$versionName+$versionNumber',
