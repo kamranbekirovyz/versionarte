@@ -15,7 +15,7 @@ class VersionarteResult {
 
   /// The version details for the app on the current platform, including
   /// changelog and messages for when the app is unavailable.
-  final PlatformStoreDetails? details;
+  final StorePlatformDetails? details;
 
   /// An optional error message in case of [VersionarteStatus.failedToCheck] status.
   final String? message;

@@ -45,7 +45,7 @@ versionarte has a specific JSON format, which you must use to provide the versio
     "ios": {
         // same data we used for "android"
     }
-    // "web", "macos", "windows", "linux" will be suppoerted in next versions
+    // "macos", "windows", "linux" will be suppoerted in next versions
 }
 ```
 
@@ -124,8 +124,12 @@ final result = await Versionarte.check(
 
 Maybe you want to use Firestore, Graphql or any other service to provider `StoreVersioning`? Extend `VersionarteProvider`, override `getStoreVersioning`, fetch serverside data, parse it into a `StoreVersioning` instance using `StoreVersioning.fromJson` factory constructor:
 
-
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
+
+
+## 🛣️ Roadmap
+
+
 
 ## 🛣️ Roadmap
 

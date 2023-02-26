@@ -6,24 +6,27 @@ import 'package:versionarte/versionarte.dart';
 /// A class that represents the versioning details of the running app.
 class LocalVersioning {
   /// Current version number of the running Android app.
-  final int? _androidVersion;
+  final int? androidVersionNumber;
 
   /// Current version number of the running iOS app.
-  final int? _iosVersion;
+  final int? iOSVersionNumber;
 
   /// Creates a new [LocalVersioning] instance with the given parameters.
   ///
-  /// [androidVersion] is the version number of the running Android app.
+  /// [androidVersionNumber] is the version number of the running Android app.
   ///
-  /// [iosVersion] is the version number of the running iOS app.
+  /// [iOSVersionNumber] is the version number of the running iOS app.
   const LocalVersioning({
-    int? androidVersion,
-    int? iosVersion,
-  })  : _androidVersion = androidVersion,
-        _iosVersion = iosVersion;
+    this.androidVersionNumber,
+    this.iOSVersionNumber,
+  });
 
   /// Creates a new [LocalVersioning] instance from package information retrieved
   /// from the platform. Returns null if package information is unavailable.
+  ///
+  /// This method is used to create a new instance of [LocalVersioning] by reading
+  /// the package information of the running app. It returns `null` if package information
+  /// is unavailable, e.g. if the package is not installed or if the app is running on an unsupported platform.
   static Future<LocalVersioning?> fromPackageInfo() async {
     final packageInfo = await Versionarte.packageInfo;
 
@@ -31,23 +34,25 @@ class LocalVersioning {
       return null;
     }
 
-    final number = int.parse(packageInfo.buildNumber);
+    final buildNumber = int.parse(packageInfo.buildNumber);
 
     return LocalVersioning(
-      androidVersion: Platform.isAndroid ? number : -1,
-      iosVersion: Platform.isIOS ? number : -1,
+      androidVersionNumber: Platform.isAndroid ? buildNumber : null,
+      iOSVersionNumber: Platform.isIOS ? buildNumber : null,
     );
   }
 
   /// Returns the version number of the current platform.
   ///
-  /// Throws an [UnimplementedError] if the platform is not implemented in this package.
-  int? get platformVersion {
+  /// This method is used to get the version number of the current platform, which can be either
+  /// Android or iOS. If the current platform is not supported by this package, an [UnimplementedError]
+  /// is thrown.
+  int? get currentPlatformVersionNumber {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return _androidVersion;
+        return androidVersionNumber;
       case TargetPlatform.iOS:
-        return _iosVersion;
+        return iOSVersionNumber;
       case TargetPlatform.fuchsia:
       case TargetPlatform.linux:
       case TargetPlatform.macOS:
@@ -60,8 +65,11 @@ class LocalVersioning {
   }
 
   /// Returns a readable [String] representation of this instance.
+  ///
+  /// This method is used to create a readable string representation of the [LocalVersioning] instance,
+  /// which includes the version number of the current platform. It is mainly used for debugging purposes.
   @override
   String toString() {
-    return 'current platform version: $platformVersion';
+    return 'Current platform version number: $currentPlatformVersionNumber';
   }
 }

@@ -8,16 +8,16 @@ class StoreVersioning {
   });
 
   /// The versioning information for Android platform.
-  final PlatformStoreDetails android;
+  final StorePlatformDetails android;
 
   /// The versioning information for iOS platform.
-  final PlatformStoreDetails ios;
+  final StorePlatformDetails ios;
 
   /// Creates an instance of [StoreVersioning] from a JSON [Map].
   factory StoreVersioning.fromJson(Map<String, dynamic> json) {
     return StoreVersioning(
-      android: PlatformStoreDetails.fromJson(json["android"]),
-      ios: PlatformStoreDetails.fromJson(json["ios"]),
+      android: StorePlatformDetails.fromJson(json["android"]),
+      ios: StorePlatformDetails.fromJson(json["ios"]),
     );
   }
 
@@ -32,7 +32,7 @@ class StoreVersioning {
   /// Returns the [PlatformStoreDetails] object corresponding to the current platform.
   ///
   /// Throws an [UnimplementedError] if the current platform is not supported by the package.
-  PlatformStoreDetails get platformStoreDetails {
+  StorePlatformDetails get currentPlatformStoreDetails {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -55,20 +55,20 @@ class StoreVersioning {
   }
 }
 
-class PlatformStoreDetails {
+class StorePlatformDetails {
   final ReleaseDetails minimum;
   final ReleaseDetails latest;
   final Availability availability;
   final Map<String?, List<String?>?>? changelog;
 
-  const PlatformStoreDetails({
+  const StorePlatformDetails({
     required this.minimum,
     required this.latest,
     required this.availability,
     required this.changelog,
   });
 
-  factory PlatformStoreDetails.fromJson(Map<String, dynamic> json) {
+  factory StorePlatformDetails.fromJson(Map<String, dynamic> json) {
     final Map<String?, List<String?>?> changelog_ = {};
 
     json['changelog']?.forEach(
@@ -76,7 +76,7 @@ class PlatformStoreDetails {
         changelog_[key] = value.cast<String?>();
       },
     );
-    return PlatformStoreDetails(
+    return StorePlatformDetails(
       minimum: ReleaseDetails.fromJson(json["minimum"]),
       latest: ReleaseDetails.fromJson(json["latest"]),
       availability: Availability.fromJson(json["availability"]),

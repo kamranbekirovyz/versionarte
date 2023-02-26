@@ -60,54 +60,52 @@ class Versionarte {
       if (storeVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
+          message: 'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
         );
       }
 
       logV('StoreVersioning: $storeVersioning');
 
-      final platformStoreDetails = storeVersioning.platformStoreDetails;
+      final currentPlatformStoreDetails = storeVersioning.currentPlatformStoreDetails;
 
-      final available = platformStoreDetails.availability.available;
+      final available = currentPlatformStoreDetails.availability.available;
       if (!available) {
         return VersionarteResult(
           VersionarteStatus.unavailable,
-          details: platformStoreDetails,
+          details: currentPlatformStoreDetails,
         );
       }
 
-      final localPlatformVersion = localVersioning.platformVersion;
-      if (localPlatformVersion == null) {
+      final currentPlatformVersionNumber = localVersioning.currentPlatformVersionNumber;
+      if (currentPlatformVersionNumber == null) {
         return VersionarteResult(
           VersionarteStatus.failedToCheck,
-          message:
-              'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
+          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
         );
       }
 
-      final storeMinPlatformVersion = platformStoreDetails.minimum.number;
-      final mustUpdate = storeMinPlatformVersion > localPlatformVersion;
+      final storeMinPlatformVersion = currentPlatformStoreDetails.minimum.number;
+      final mustUpdate = storeMinPlatformVersion > currentPlatformVersionNumber;
       if (mustUpdate) {
         return VersionarteResult(
           VersionarteStatus.mustUpdate,
-          details: platformStoreDetails,
+          details: currentPlatformStoreDetails,
         );
       }
 
-      final storeLatestPlatformVersion = platformStoreDetails.latest.number;
-      final couldUpdate = storeLatestPlatformVersion > localPlatformVersion;
+      final storeLatestPlatformVersion = currentPlatformStoreDetails.latest.number;
+      final couldUpdate = storeLatestPlatformVersion > currentPlatformVersionNumber;
 
       if (couldUpdate) {
         return VersionarteResult(
           VersionarteStatus.couldUpdate,
-          details: platformStoreDetails,
+          details: currentPlatformStoreDetails,
         );
       }
 
       return VersionarteResult(
         VersionarteStatus.upToDate,
-        details: platformStoreDetails,
+        details: currentPlatformStoreDetails,
       );
     } on FormatException catch (e) {
       final message = versionarteProvider is RemoteConfigVersionarteProvider

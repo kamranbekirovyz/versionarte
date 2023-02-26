@@ -42,8 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
     _versionarteResult = await Versionarte.check(
       versionarteProvider: RemoteConfigVersionarteProvider(),
       localVersioning: const LocalVersioning(
-        androidVersion: _androidVersion,
-        iosVersion: _iosVersion,
+        androidVersionNumber: _androidVersion,
+        iOSVersionNumber: _iosVersion,
       ),
     );
   }
@@ -61,8 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
           : const VersionarteView.mustUpdate(
               header: FlutterLogo(size: 96.0),
               title: 'App is not available',
-              description:
-                  'We\'re doing some maintainance work on our services. Please, come back later.',
+              description: 'We\'re doing some maintainance work on our services. Please, come back later.',
               appleAppId: 123,
               buttonLabel: 'Update the app',
             ),
