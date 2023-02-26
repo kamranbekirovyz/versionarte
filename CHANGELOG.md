@@ -1,3 +1,8 @@
+## 0.4.3
+- Renamed `PlatformStoreDetails` as `StorePlatformDetails`.
+- Renamed `androidVersion` and `iosVersion` as `androidVersionNumber` and `iOSVersionNumber` respectively.
+- Improved documentation comments.
+
 ## 0.4.2
 - Renamed `PlatformVersionate` as `PlatformStoreDetails`.
 - Added `LaunchMode.externalApplication` when openAppInStore(...) is called.
