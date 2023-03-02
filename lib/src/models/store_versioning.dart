@@ -76,6 +76,7 @@ class StorePlatformDetails {
         changelog_[key] = value.cast<String?>();
       },
     );
+
     return StorePlatformDetails(
       minimum: ReleaseDetails.fromJson(json["minimum"]),
       latest: ReleaseDetails.fromJson(json["latest"]),
@@ -103,18 +104,54 @@ class StorePlatformDetails {
 
 class Availability {
   final bool available;
-  final String? message;
-  final String? details;
+  final Map<String?, UnavailabilityText?>? content;
 
   const Availability({
     required this.available,
+    required this.content,
+  });
+
+  factory Availability.fromJson(Map<String, dynamic> json) {
+    final Map<String?, UnavailabilityText?> content_ = {};
+
+    json['content']?.forEach(
+      (String? key, dynamic value) {
+        content_[key] = UnavailabilityText.fromJson(value);
+      },
+    );
+
+    return Availability(
+      available: json["available"],
+      content: content_,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'available': available,
+      'content': content,
+    };
+  }
+
+  /// Get content for unavailable app in the given language.
+  ///
+  /// If no content is available for the given language code, null is returned.
+  UnavailabilityText? getContentForLanguage(String languageCode) {
+    return content?[languageCode];
+  }
+}
+
+class UnavailabilityText {
+  final String? message;
+  final String? details;
+
+  const UnavailabilityText({
     required this.message,
     required this.details,
   });
 
-  factory Availability.fromJson(Map<String, dynamic> json) {
-    return Availability(
-      available: json["available"],
+  factory UnavailabilityText.fromJson(Map<String, dynamic> json) {
+    return UnavailabilityText(
       message: json["message"],
       details: json["details"],
     );
@@ -122,7 +159,6 @@ class Availability {
 
   Map<String, dynamic> toJson() {
     return {
-      'available': available,
       'message': message,
       'details': details,
     };

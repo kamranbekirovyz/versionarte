@@ -28,8 +28,16 @@ versionarte has a specific JSON format, which you must use to provide the versio
         },
         "availability": {
             "available": true,
-            "message": "Versionarte is unavailable.",
-            "details": "App is in maintanence mode, please come back later."
+            "content": {
+                "en": {
+                    "message": "Temporarily unavailable.",
+                    "details": "App is in maintanence mode, please come back later."
+                },
+                "es": {
+                    "message": "Temporalmente no disponible.",
+                    "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
+                }
+            }
         },
         "changelog": {
             "en": [
@@ -125,10 +133,6 @@ final result = await Versionarte.check(
 Maybe you want to use Firestore, Graphql or any other service to provider `StoreVersioning`? Extend `VersionarteProvider`, override `getStoreVersioning`, fetch serverside data, parse it into a `StoreVersioning` instance using `StoreVersioning.fromJson` factory constructor:
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
-
-
-## 🛣️ Roadmap
-
 
 
 ## 🛣️ Roadmap

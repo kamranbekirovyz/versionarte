@@ -10,8 +10,16 @@
         },
         "availability": {
             "available": true,
-            "message": "Versionarte is unavailable.",
-            "details": "App is in maintanence mode, please come back later."
+            "content": {
+                "en": {
+                    "message": "Temporarily unavailable.",
+                    "details": "App is in maintanence mode, please come back later."
+                },
+                "es": {
+                    "message": "Temporalmente no disponible.",
+                    "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
+                }
+            }
         },
         "changelog": {
             "en": [
@@ -35,8 +43,16 @@
         },
         "availability": {
             "available": true,
-            "message": "Versionarte is unavailable.",
-            "details": "App is in maintanence mode, please come back later."
+            "content": {
+                "en": {
+                    "message": "Temporarily unavailable.",
+                    "details": "App is in maintanence mode, please come back later."
+                },
+                "es": {
+                    "message": "Temporalmente no disponible.",
+                    "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
+                }
+            }
         },
         "changelog": {
             "en": [
