@@ -156,7 +156,6 @@ class UnavailabilityText {
   });
 
   factory UnavailabilityText.fromJson(Map<String, dynamic> json) {
-    print('fromstore: $json');
     return UnavailabilityText(
       message: json["message"],
       details: json["details"],

@@ -11,7 +11,7 @@ Versionarte is a Flutter package that allows you to remotely manage your app's v
 
 Versionarte comes with built-in support for RESTful APIs and Firebase Remote Config. However, you can also fetch your configuration data from any source by extending the VersionarteProvider class. You have total freedom over the UI and logic, allowing you to customize the user experience to fit your app's branding and style.
 
-<img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/master/docs/cover.png" alt="cover_picture" />
+<img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/master/assets/cover.png" alt="cover_picture" />
 
 ## 🚀 Motivation
 

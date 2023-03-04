@@ -1,6 +1,6 @@
 name: versionarte
-description: A Flutter package for determining update availability besides with some helpful features and pre-canned UI-kit.
-version: 0.4.3
+description: Remotely manage your Flutter app's versioning and availability.
+version: 0.5.0
 repository: https://github.com/kamranbekirovyz/versionarte
 home: https://github.com/kamranbekirovyz/versionarte
 

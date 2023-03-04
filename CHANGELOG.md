@@ -1,3 +1,6 @@
+## 0.5.0
+- Now, you can provide information texts in multiple languages when app is disabled (`VersionarteStatus.unavailable`).
+
 ## 0.4.3
 - Renamed `PlatformStoreDetails` as `StorePlatformDetails`.
 - Renamed `androidVersion` and `iosVersion` as `androidVersionNumber` and `iOSVersionNumber` respectively.
