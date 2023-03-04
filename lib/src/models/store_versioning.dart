@@ -59,6 +59,11 @@ class StorePlatformDetails {
   final ReleaseDetails minimum;
   final ReleaseDetails latest;
   final Availability availability;
+
+  /// Changelog of the latest release for each language.
+  ///
+  /// Usecases: display latest release changelog while force updating or
+  /// showing non-mandatory update.
   final Map<String?, List<String?>?>? changelog;
 
   const StorePlatformDetails({
@@ -151,6 +156,7 @@ class UnavailabilityText {
   });
 
   factory UnavailabilityText.fromJson(Map<String, dynamic> json) {
+    print('fromstore: $json');
     return UnavailabilityText(
       message: json["message"],
       details: json["details"],

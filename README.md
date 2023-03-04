@@ -1,15 +1,23 @@
 # versionarte
 
-A package for Flutter that allows you to remotely manage your app's versioning and availability. Using versionarte, you can easily disable your app for usage with custom remotely stored information texts, show a forced update screen, show an update available screen, and provide a changelog to the user about latest changes on the app.
+Versionarte is a Flutter package that allows you to remotely manage your app's versioning and availability, with a variety of features to suit your needs:
 
+- Force users to update to the latest version of the app before continuing.
+- Disable the app for usage/maintenance with custom remotely stored information texts.
+- Indicate to users that a new version optional update is available.
+- Launch the App Store on iOS and Play Store on Android.
+- Provide changelog information for the latest release.
+- Prebuilt views and widgets for easy and fast integration.
 
-<img src="https://raw.githubusercontent.com/kamranbekirovyz/cupertino-refresh/master/.docs/cover.png" alt="cover_picture" />
+Versionarte comes with built-in support for RESTful APIs and Firebase Remote Config. However, you can also fetch your configuration data from any source by extending the VersionarteProvider class. You have total freedom over the UI and logic, allowing you to customize the user experience to fit your app's branding and style.
+
+<img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/master/docs/cover.png" alt="cover_picture" />
 
 ## 🚀 Motivation
 
 Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or disabling the app for maintenance, requires submitting a new version to the app store and waiting for approval. Even after approval, users may still need to manually update their app to access the latest version. 
 
-To simplify the app versioning process, versionarte offers remote management of app versioning and availability. This makes the app development process more efficient and seamless, benefiting both developers and users alike.
+To simplify the app versioning process, versionarte offers remote management of app versioning and availability. This makes the app development process more controllable.
 
 ## 🖋️JSON format
 
@@ -137,20 +145,21 @@ See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/exampl
 
 ## 🛣️ Roadmap
 
-✅ Firebase Remote Config, RESTful API, and custom versioning provider support.
-✅ Built-in views and components.
-✅ Launch the App Store on iOS and the Play Store on Android.
-✅ Add support for providing the latest release notes/changelog.
-⏳ Detailed examples for every use case.
-⏳ Ability to launch AppGallery on Huawei devices.
-⏳ Documentation website: https://versionarte.dev.
-⏳ Support for separate web, macOS, windows, and Linux platforms.
-⏳ Test coverage.
-🤔 Implement in-app upgrade on Android.
-🤔 An int indicating how many times the user opened the app.
-🤔 Execute a function when the user installs the new version.
-🤔 Execute a function when the user opens the app for the first time.
-🤔 A bool indicating whether the user is opening this build/version for the first time.
+- ✅ Firebase Remote Config, RESTful API, and custom versioning provider support.
+- ✅ Prebuilt views and components.
+- ✅ Launch the App Store on iOS and the Play Store on Android.
+- ✅ Add support for providing the latest release notes/changelog.
+- ✅ Providing unavailability information texts in multiple languages.
+- ⏳ Detailed examples for every use case.
+- ⏳ Ability to launch AppGallery on Huawei devices.
+- ⏳ Documentation website: https://versionarte.dev.
+- ⏳ Support for WEB, macOS, Windows, and Linux platforms.
+- ⏳ Tests.
+- 🤔 Implement in-app upgrade on Android.
+- 🤔 An int indicating how many times the user opened the app.
+- 🤔 Execute a function when the user installs the new version.
+- 🤔 Execute a function when the user opens the app for the first time.
+- 🤔 A bool indicating whether the user is opening this build/version for the first time.
 
 ## 🤓 Contributors
 
