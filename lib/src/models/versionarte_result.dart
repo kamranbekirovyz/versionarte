@@ -10,14 +10,14 @@ class VersionarteResult {
   ///   - [VersionarteStatus.mustUpdate]: A new version is available, and the user must update to continue using the app.
   ///   - [VersionarteStatus.upToDate]: The app is up-to-date and no new version is available.
   ///   - [VersionarteStatus.unavailable]: The app is currently unavailable, for example due to maintenance.
-  ///   - [VersionarteStatus.failedToCheck]: An error occurred while checking the versioning status for the current platform.
+  ///   - [VersionarteStatus.unknown]: An error occurred while checking the versioning status for the current platform.
   final VersionarteStatus status;
 
   /// The version details for the app on the current platform, including
   /// changelog and messages for when the app is unavailable.
   final StorePlatformDetails? details;
 
-  /// An optional error message in case of [VersionarteStatus.failedToCheck] status.
+  /// An optional error message in case of [VersionarteStatus.unknown] status.
   final String? message;
 
   /// Creates a new [VersionarteResult] instance.

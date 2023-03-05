@@ -16,5 +16,5 @@ enum VersionarteStatus {
   ///
   /// The `message` property of the [VersionarteResult] object can be checked to see
   /// the possible error that caused this status.
-  failedToCheck,
+  unknown,
 }

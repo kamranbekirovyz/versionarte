@@ -120,7 +120,7 @@ if (result == VersionarteResult.unavailable) {
   // TODO: Handle the case where an update is optional
 } else if (result == VersionarteResult.upToDate) {
   // TODO: If needed handle the case where the app is up to date
-} else if (result == VersionarteResult.failedToCheck) {
+} else if (result == VersionarteResult.unknown) {
   // TODO: If needed handle the case where the version check failed
 }
 ```
