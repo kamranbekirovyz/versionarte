@@ -4,23 +4,7 @@ import 'package:versionarte/versionarte.dart';
 
 /// A widget that displays the app version and name.
 class VersionarteIndicator extends StatelessWidget {
-  /// The style to use for this widget's text.
-  ///
-  /// If null, defaults to:
-  ///
-  /// ```
-  /// const TextStyle(
-  ///   fontSize: 14.0,
-  ///   height: 16.0 / 14.0,
-  ///   color: Colors.grey,
-  /// )
-  /// ```
-  final TextStyle? textStyle;
-
   /// Constructs a new [VersionarteIndicator] widget.
-  ///
-  /// [textStyle] is the style to use for this widget's text. If null, the
-  /// default style is used.
   ///
   /// The version information is retrieved using the [PackageInfo] package
   /// and the [LocalVersioning] class you've provided to the `Versionarte.check`
@@ -29,7 +13,6 @@ class VersionarteIndicator extends StatelessWidget {
   /// is cached and re-used for building this widget.
   const VersionarteIndicator({
     Key? key,
-    this.textStyle,
   }) : super(key: key);
 
   @override
@@ -52,11 +35,8 @@ class VersionarteIndicator extends StatelessWidget {
 
         return Text(
           '$appName $versionName+$versionNumber',
-          style: textStyle ??
-              const TextStyle(
-                fontSize: 14.0,
-                height: 16.0 / 14.0,
-                color: Colors.grey,
+          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
               ),
         );
       },
