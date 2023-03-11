@@ -48,12 +48,10 @@ class VersionarteIndicator extends StatelessWidget {
 
         // Use the platform version from LocalVersioning if available,
         // otherwise use the build number from PackageInfo.
-        final versionNumber =
-            Versionarte.localVersioning?.currentPlatformVersionNumber ??
-                info.buildNumber;
+        final versionNumber = Versionarte.localVersioning?.currentPlatformVersionNumber ?? info.buildNumber;
 
         return Text(
-          '$appName v$versionName+$versionNumber',
+          '$appName $versionName+$versionNumber',
           style: textStyle ??
               const TextStyle(
                 fontSize: 14.0,
