@@ -13,10 +13,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Versionarte Demo',
-      home: MyHomePage(),
+      theme: ThemeData(
+        useMaterial3: true,
+      ),
+      home: const MyHomePage(),
     );
   }
 }
@@ -29,7 +32,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  VersionarteResult? _versionarteResult;
+  late final VersionarteResult _versionarteResult;
+  bool _isChecking = false;
 
   @override
   void initState() {
@@ -39,6 +43,10 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _checkVersionarte() async {
+    setState(() {
+      _isChecking = true;
+    });
+
     _versionarteResult = await Versionarte.check(
       versionarteProvider: RemoteConfigVersionarteProvider(),
       localVersioning: const LocalVersioning(
@@ -46,6 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
         iOSVersionNumber: _iosVersion,
       ),
     );
+
+    setState(() {
+      _isChecking = false;
+    });
   }
 
   @override
@@ -54,18 +66,23 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Versionarte Demo'),
       ),
-      body: _versionarteResult == null
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
-          : const VersionarteView.mustUpdate(
-              header: FlutterLogo(size: 96.0),
-              title: 'App is not available',
-              description:
-                  'We\'re doing some maintainance work on our services. Please, come back later.',
-              appleAppId: 123,
-              buttonLabel: 'Update the app',
-            ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (_isChecking)
+              const CircularProgressIndicator()
+            else ...[
+              ListTile(
+                title: const Text('Status'),
+                subtitle: Text(
+                  _versionarteResult.status.toString(),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
     );
   }
 }

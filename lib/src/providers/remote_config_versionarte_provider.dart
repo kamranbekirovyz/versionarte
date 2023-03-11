@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:versionarte/src/helpers/logger.dart';
 import 'package:versionarte/src/models/store_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
@@ -9,7 +10,6 @@ import 'package:versionarte/src/providers/versionarte_provider.dart';
 /// Remote Config using the key name "versionarte" or a different key name specified through
 /// the `keyName` constructor parameter.
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
-  final _remoteConfig = FirebaseRemoteConfig.instance;
   late final String _keyName;
   late final RemoteConfigSettings _remoteConfigSettings;
   late final bool _initializeRemoteConfig;
@@ -50,7 +50,7 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   /// The `settings` parameter is a [RemoteConfigSettings] instance that specifies the fetch
   /// timeout and minimum fetch interval for Firebase Remote Config.
   Future<void> _initialize(RemoteConfigSettings settings) async {
-    return _remoteConfig.setConfigSettings(settings);
+    return FirebaseRemoteConfig.instance.setConfigSettings(settings);
   }
 
   /// Fetches the JSON uploaded to Firebase Remote Config and decodes it into an instance of
@@ -60,15 +60,24 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   /// error while fetching or decoding the JSON.
   @override
   FutureOr<StoreVersioning?> getStoreVersioning() async {
-    if (_initializeRemoteConfig) {
-      await _initialize(_remoteConfigSettings);
+    StoreVersioning? storeVersioning;
+
+    try {
+      if (_initializeRemoteConfig) {
+        await _initialize(_remoteConfigSettings);
+      }
+
+      await FirebaseRemoteConfig.instance.fetchAndActivate();
+
+      final versionarteString = FirebaseRemoteConfig.instance.getString(_keyName);
+      final versionarteDecoded = jsonDecode(versionarteString);
+
+      storeVersioning = StoreVersioning.fromJson(versionarteDecoded);
+    } catch (e, s) {
+      logV(e.toString());
+      logV(s.toString());
     }
 
-    await _remoteConfig.fetchAndActivate();
-
-    final versionarteString = _remoteConfig.getString(_keyName);
-    final versionarteDecoded = jsonDecode(versionarteString);
-
-    return StoreVersioning.fromJson(versionarteDecoded);
+    return storeVersioning;
   }
 }
