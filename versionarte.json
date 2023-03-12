@@ -1,47 +1,27 @@
 {
     "android": {
-        "minimum": {
-            "number": 12,
-            "name": "2.7.4"
+        "version": {
+            "minimum": 12,
+            "latest": 14
         },
-        "latest": {
-            "number": 14,
-            "name": "2.8.0"
-        },
-        "availability": {
+        "status": {
             "available": true,
-            "content": {
-                "en": {
-                    "title": "Temporarily unavailable.",
-                    "details": "App is in maintanence mode, please come back later."
-                },
-                "es": {
-                    "title": "Temporalmente no disponible.",
-                    "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
-                }
+            "message": {
+                "en": "App is in maintanence mode, please come back later.",
+                "es": "La aplicación está en modo de mantenimiento, vuelva más tarde."
             }
         }
     },
     "ios": {
-        "minimum": {
-            "number": 12,
-            "name": "2.7.4"
+        "version": {
+            "minimum": 12,
+            "latest": 15
         },
-        "latest": {
-            "number": 15,
-            "name": "2.8.1+hotfix"
-        },
-        "availability": {
+        "status": {
             "available": true,
-            "content": {
-                "en": {
-                    "title": "Temporarily unavailable.",
-                    "details": "App is in maintanence mode, please come back later."
-                },
-                "es": {
-                    "title": "Temporalmente no disponible.",
-                    "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
-                }
+            "message": {
+                "en": "App is in maintanence mode, please come back later.",
+                "es": "La aplicación está en modo de mantenimiento, vuelva más tarde."
             }
         }
     }

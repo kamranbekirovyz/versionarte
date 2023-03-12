@@ -56,116 +56,85 @@ class StoreVersioning {
 }
 
 class StorePlatformDetails {
-  final ReleaseDetails minimum;
-  final ReleaseDetails latest;
-  final Availability availability;
+  final VersionDetails version;
+  final StatusDetails status;
 
   const StorePlatformDetails({
-    required this.minimum,
-    required this.latest,
-    required this.availability,
+    required this.version,
+    required this.status,
   });
 
   factory StorePlatformDetails.fromJson(Map<String, dynamic> json) {
     return StorePlatformDetails(
-      minimum: ReleaseDetails.fromJson(json["minimum"]),
-      latest: ReleaseDetails.fromJson(json["latest"]),
-      availability: Availability.fromJson(json["availability"]),
+      version: VersionDetails.fromJson(json["version"]),
+      status: StatusDetails.fromJson(json["status"]),
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'minimum': minimum.toJson(),
-      'latest': minimum.toJson(),
-      'availability': availability.toJson(),
+      'version': version.toJson(),
+      'status': status.toJson(),
     };
+  }
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
 }
 
-class Availability {
+class StatusDetails {
   final bool available;
-  final Map<String?, UnavailabilityContent?>? content;
+  final Map<String?, String?>? message;
 
-  const Availability({
+  const StatusDetails({
     required this.available,
-    required this.content,
+    required this.message,
   });
 
-  factory Availability.fromJson(Map<String, dynamic> json) {
-    final Map<String?, UnavailabilityContent?> content_ = {};
-
-    json['content']?.forEach(
-      (String? key, dynamic value) {
-        content_[key] = UnavailabilityContent.fromJson(value);
-      },
-    );
-
-    return Availability(
+  factory StatusDetails.fromJson(Map<String, dynamic> json) {
+    return StatusDetails(
       available: json["available"],
-      content: content_,
+      message: json["message"],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
       'available': available,
-      'content': content,
+      'message': message,
     };
   }
 
   /// Get content for unavailable app in the given language.
   ///
   /// If no content is available for the given language code, null is returned.
-  UnavailabilityContent? getContentForLanguage(String languageCode) {
-    return content?[languageCode];
+  String? getMessageForLanguageCode(String languageCode) {
+    return message?[languageCode];
   }
 }
 
-class UnavailabilityContent {
-  final String? title;
-  final String? details;
+class VersionDetails {
+  final int minimum;
+  final int latest;
 
-  const UnavailabilityContent({
-    required this.title,
-    required this.details,
+  const VersionDetails({
+    required this.minimum,
+    required this.latest,
   });
 
-  factory UnavailabilityContent.fromJson(Map<String, dynamic> json) {
-    return UnavailabilityContent(
-      title: json["title"],
-      details: json["details"],
+  factory VersionDetails.fromJson(Map<String, dynamic> json) {
+    return VersionDetails(
+      minimum: json["minimum"],
+      latest: json["latest"],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'title': title,
-      'details': details,
-    };
-  }
-}
-
-class ReleaseDetails {
-  final int number;
-  final String name;
-
-  const ReleaseDetails({
-    required this.number,
-    required this.name,
-  });
-
-  factory ReleaseDetails.fromJson(Map<String, dynamic> json) {
-    return ReleaseDetails(
-      number: json["number"],
-      name: json["name"],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'number': number,
-      'name': name,
+      'minimum': minimum,
+      'latest': latest,
     };
   }
 }
