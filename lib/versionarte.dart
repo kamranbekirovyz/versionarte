@@ -1,10 +1,5 @@
 library versionarte;
 
-// UI Kit
-export 'src/widgets/versionarte_indicator.dart';
-export 'src/widgets/versionarte_must_update_view.dart';
-export 'src/widgets/versionarte_unavailable_view.dart';
-
 // Logic
 export 'src/versionarte.dart';
 export 'src/providers/remote_config_versionarte_provider.dart';
