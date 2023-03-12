@@ -60,33 +60,17 @@ class StorePlatformDetails {
   final ReleaseDetails latest;
   final Availability availability;
 
-  /// Changelog of the latest release for each language.
-  ///
-  /// Usecases: display latest release changelog while force updating or
-  /// showing non-mandatory update.
-  final Map<String?, List<String?>?>? changelog;
-
   const StorePlatformDetails({
     required this.minimum,
     required this.latest,
     required this.availability,
-    required this.changelog,
   });
 
   factory StorePlatformDetails.fromJson(Map<String, dynamic> json) {
-    final Map<String?, List<String?>?> changelog_ = {};
-
-    json['changelog']?.forEach(
-      (String? key, dynamic value) {
-        changelog_[key] = value.cast<String?>();
-      },
-    );
-
     return StorePlatformDetails(
       minimum: ReleaseDetails.fromJson(json["minimum"]),
       latest: ReleaseDetails.fromJson(json["latest"]),
       availability: Availability.fromJson(json["availability"]),
-      changelog: changelog_,
     );
   }
 
@@ -95,15 +79,7 @@ class StorePlatformDetails {
       'minimum': minimum.toJson(),
       'latest': minimum.toJson(),
       'availability': availability.toJson(),
-      'changelog': changelog,
     };
-  }
-
-  /// Returns the changelog for a given language code.
-  ///
-  /// If no changelog is available for the given language code, null is returned.
-  List<String?>? getChangelogForLanguage(String languageCode) {
-    return changelog?[languageCode];
   }
 }
 

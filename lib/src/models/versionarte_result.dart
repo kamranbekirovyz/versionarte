@@ -14,7 +14,7 @@ class VersionarteResult {
   final VersionarteStatus status;
 
   /// The version details for the app on the current platform, including
-  /// changelog and messages for when the app is unavailable.
+  /// messages for when the app is unavailable.
   final StorePlatformDetails? details;
 
   /// An optional error message in case of [VersionarteStatus.unknown] status.

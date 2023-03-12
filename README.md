@@ -6,7 +6,6 @@ Versionarte is a Flutter package that allows you to remotely manage your app's v
 - Disable the app for usage/maintenance with custom remotely stored information texts.
 - Indicate to users that a new version optional update is available.
 - Launch the App Store on iOS and Play Store on Android.
-- Provide changelog information for the latest release.
 - Prebuilt views and widgets for easy and fast integration.
 
 Versionarte comes with built-in support for RESTful APIs and Firebase Remote Config. However, you can also fetch your configuration data from any source by extending the VersionarteProvider class. You have total freedom over the UI and logic, allowing you to customize the user experience to fit your app's branding and style.
@@ -46,16 +45,6 @@ versionarte has a specific JSON format, which you must use to provide the versio
                     "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
                 }
             }
-        },
-        "changelog": {
-            "en": [
-                "Minor improvements.",
-                "Fixed login issue."
-            ],
-            "es": [
-                "Pequeñas mejoras.",
-                "Solucionado el problema de inicio de sesión."
-            ]
         }
     },
     "ios": {
@@ -73,14 +62,12 @@ versionarte has a specific JSON format, which you must use to provide the versio
 
 - `availability`: This property specifies whether the app is currently available or not. The available property is a boolean value that indicates availability. If available is `false`, then the `message` and `details` properties provide a message and details about the unavailability.
 
-- `changelog`: This property specifies the changelog for the Android app. It contains two sub-properties, en and es, which represent the changelog in English and Spanish languages, respectively. Each sub-property contains an array of strings representing the individual changes made in the corresponding version of the app.
-
 - `ios`: This property is similar to the android property, but it contains the configuration properties for the iOS platform instead of Android. All the properties in the android property are also present in the ios property with the same structure and meaning.
 
 ## 🎬 Terminology
 
 ### StoreVersioning
-A model that represents the JSON structure mentioned above. It contains versioning details of the app, such as the latest version number, minimum version number, changelog, and so on.
+A model that represents the JSON structure mentioned above. It contains versioning details of the app, such as the latest version number, minimum version number and so on.
 
 ### LocalVersioning
 A model that contains versioning details of the currently running app. It has three fields: `androidVersion` for the current version number of the running Android app, `iosVersion` for the current version number of the running iOS app, and `platformVersion` for the version number of the current platform. The platformVersion property is a getter that returns the version number depending on the target platform of the app.
@@ -142,13 +129,11 @@ Maybe you want to use Firestore, Graphql or any other service to provider `Store
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
 
-
 ## 🛣️ Roadmap
 
 - ✅ Firebase Remote Config, RESTful API, and custom versioning provider support.
 - ✅ Prebuilt views and components.
 - ✅ Launch the App Store on iOS and the Play Store on Android.
-- ✅ Add support for providing the latest release notes/changelog.
 - ✅ Providing unavailability information texts in multiple languages.
 - ⏳ Detailed examples for every use case.
 - ⏳ Ability to launch AppGallery on Huawei devices.

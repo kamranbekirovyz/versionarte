@@ -20,16 +20,6 @@
                     "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
                 }
             }
-        },
-        "changelog": {
-            "en": [
-                "Minor improvements.",
-                "Fixed login issue."
-            ],
-            "es": [
-                "Pequeñas mejoras.",
-                "Solucionado el problema de inicio de sesión."
-            ]
         }
     },
     "ios": {
@@ -53,16 +43,6 @@
                     "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
                 }
             }
-        },
-        "changelog": {
-            "en": [
-                "Minor improvements.",
-                "Fixed login issue."
-            ],
-            "es": [
-                "Pequeñas mejoras.",
-                "Solucionado el problema de inicio de sesión."
-            ]
         }
     }
 }
