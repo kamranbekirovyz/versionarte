@@ -52,20 +52,23 @@ class Versionarte {
       }
 
       debugPrint('[VERSIONARTE] LocalVersioning: $localVersioning');
-      debugPrint('[VERSIONARTE] VersionarteProvider: ${versionarteProvider.runtimeType}');
+      debugPrint(
+          '[VERSIONARTE] VersionarteProvider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
 
       if (storeVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.unknown,
-          message: 'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
+          message:
+              'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
         );
       }
 
       debugPrint('[VERSIONARTE] StoreVersioning: $storeVersioning');
 
-      final currentPlatformStoreDetails = storeVersioning.currentPlatformStoreDetails;
+      final currentPlatformStoreDetails =
+          storeVersioning.currentPlatformStoreDetails;
 
       final available = currentPlatformStoreDetails.availability.available;
       if (!available) {
@@ -75,15 +78,18 @@ class Versionarte {
         );
       }
 
-      final currentPlatformVersionNumber = localVersioning.currentPlatformVersionNumber;
+      final currentPlatformVersionNumber =
+          localVersioning.currentPlatformVersionNumber;
       if (currentPlatformVersionNumber == null) {
         return VersionarteResult(
           VersionarteStatus.unknown,
-          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
+          message:
+              'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
         );
       }
 
-      final storeMinPlatformVersion = currentPlatformStoreDetails.minimum.number;
+      final storeMinPlatformVersion =
+          currentPlatformStoreDetails.minimum.number;
       final mustUpdate = storeMinPlatformVersion > currentPlatformVersionNumber;
       if (mustUpdate) {
         return VersionarteResult(
@@ -92,8 +98,10 @@ class Versionarte {
         );
       }
 
-      final storeLatestPlatformVersion = currentPlatformStoreDetails.latest.number;
-      final couldUpdate = storeLatestPlatformVersion > currentPlatformVersionNumber;
+      final storeLatestPlatformVersion =
+          currentPlatformStoreDetails.latest.number;
+      final couldUpdate =
+          storeLatestPlatformVersion > currentPlatformVersionNumber;
 
       if (couldUpdate) {
         return VersionarteResult(
@@ -183,7 +191,8 @@ class Versionarte {
       );
     } else {
       // Platform is not supported
-      debugPrint('[VERSIONARTE] ${Platform.operatingSystem} is not supported.');
+      debugPrint(
+          '[VERSIONARTE] Opening store for ${Platform.operatingSystem} platform is not supported.');
       return false;
     }
   }

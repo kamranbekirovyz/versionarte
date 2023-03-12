@@ -1,3 +1,8 @@
+## 0.6.1
+- [VersionarteStatus.failedToCheck] renamed as [VersionarteStatus.unknown].
+- All UI related widgets are moved to <a href="https://pub.dev/packages/versionarte_ui_kit">versionarte_ui_kit</a> package 💆🏻‍♂️.
+- Upgraded dependencies to the latest version.
+
 ## 0.5.0
 - Now, you can provide information texts in multiple languages when app is disabled (`VersionarteStatus.unavailable`).
 

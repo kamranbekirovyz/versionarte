@@ -40,7 +40,8 @@ class RestfulVersionarteProvider extends VersionarteProvider {
       headers.addEntries(_headers!.entries);
     }
 
-    debugPrint('[VERSIONARTE] Getting StoreVersioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
+    debugPrint(
+        '[VERSIONARTE] Getting StoreVersioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
 
     final response = await client.get(
       Uri.parse(_url),
