@@ -85,7 +85,7 @@ class StorePlatformDetails {
 
 class Availability {
   final bool available;
-  final Map<String?, UnavailabilityText?>? content;
+  final Map<String?, UnavailabilityContent?>? content;
 
   const Availability({
     required this.available,
@@ -93,11 +93,11 @@ class Availability {
   });
 
   factory Availability.fromJson(Map<String, dynamic> json) {
-    final Map<String?, UnavailabilityText?> content_ = {};
+    final Map<String?, UnavailabilityContent?> content_ = {};
 
     json['content']?.forEach(
       (String? key, dynamic value) {
-        content_[key] = UnavailabilityText.fromJson(value);
+        content_[key] = UnavailabilityContent.fromJson(value);
       },
     );
 
@@ -117,30 +117,30 @@ class Availability {
   /// Get content for unavailable app in the given language.
   ///
   /// If no content is available for the given language code, null is returned.
-  UnavailabilityText? getContentForLanguage(String languageCode) {
+  UnavailabilityContent? getContentForLanguage(String languageCode) {
     return content?[languageCode];
   }
 }
 
-class UnavailabilityText {
-  final String? message;
+class UnavailabilityContent {
+  final String? title;
   final String? details;
 
-  const UnavailabilityText({
-    required this.message,
+  const UnavailabilityContent({
+    required this.title,
     required this.details,
   });
 
-  factory UnavailabilityText.fromJson(Map<String, dynamic> json) {
-    return UnavailabilityText(
-      message: json["message"],
+  factory UnavailabilityContent.fromJson(Map<String, dynamic> json) {
+    return UnavailabilityContent(
+      title: json["title"],
       details: json["details"],
     );
   }
 
   Map<String, dynamic> toJson() {
     return {
-      'message': message,
+      'title': title,
       'details': details,
     };
   }

@@ -4,9 +4,8 @@ Versionarte is a Flutter package that allows you to remotely manage your app's v
 
 - Force users to update to the latest version of the app before continuing.
 - Disable the app for usage/maintenance with custom remotely stored information texts.
-- Indicate to users that a new version optional update is available.
+- Indicate to users that a new optional update is available.
 - Launch the App Store on iOS and Play Store on Android.
-- Prebuilt views and widgets for easy and fast integration.
 
 Versionarte comes with built-in support for RESTful APIs and Firebase Remote Config. However, you can also fetch your configuration data from any source by extending the VersionarteProvider class. You have total freedom over the UI and logic, allowing you to customize the user experience to fit your app's branding and style.
 
@@ -37,12 +36,12 @@ versionarte has a specific JSON format, which you must use to provide the versio
             "available": true,
             "content": {
                 "en": {
-                    "message": "Temporarily unavailable.",
-                    "details": "App is in maintanence mode, please come back later."
+                    "title": "Temporarily unavailable.",
+                    "title": "App is in maintanence mode, please come back later."
                 },
                 "es": {
-                    "message": "Temporalmente no disponible.",
-                    "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
+                    "title": "Temporalmente no disponible.",
+                    "title": "La aplicación está en modo de mantenimiento, vuelva más tarde."
                 }
             }
         }
@@ -60,7 +59,7 @@ versionarte has a specific JSON format, which you must use to provide the versio
 
 - `latest`: This property specifies the latest version of the Android app. The number property represents the version code and name property represents the version name.
 
-- `availability`: This property specifies whether the app is currently available or not. The available property is a boolean value that indicates availability. If available is `false`, then the `message` and `details` properties provide a message and details about the unavailability.
+- `availability`: This property specifies whether the app is currently available or not. The available property is a boolean value that indicates availability. If available is `false`, then the `title` and `details` properties provide information about the unavailability.
 
 - `ios`: This property is similar to the android property, but it contains the configuration properties for the iOS platform instead of Android. All the properties in the android property are also present in the ios property with the same structure and meaning.
 

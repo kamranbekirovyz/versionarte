@@ -12,11 +12,11 @@
             "available": true,
             "content": {
                 "en": {
-                    "message": "Temporarily unavailable.",
+                    "title": "Temporarily unavailable.",
                     "details": "App is in maintanence mode, please come back later."
                 },
                 "es": {
-                    "message": "Temporalmente no disponible.",
+                    "title": "Temporalmente no disponible.",
                     "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
                 }
             }
@@ -35,11 +35,11 @@
             "available": true,
             "content": {
                 "en": {
-                    "message": "Temporarily unavailable.",
+                    "title": "Temporarily unavailable.",
                     "details": "App is in maintanence mode, please come back later."
                 },
                 "es": {
-                    "message": "Temporalmente no disponible.",
+                    "title": "Temporalmente no disponible.",
                     "details": "La aplicación está en modo de mantenimiento, vuelva más tarde."
                 }
             }
