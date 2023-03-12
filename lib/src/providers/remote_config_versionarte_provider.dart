@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:versionarte/src/helpers/logger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:versionarte/src/models/store_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
 
@@ -74,8 +74,8 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
 
       storeVersioning = StoreVersioning.fromJson(versionarteDecoded);
     } catch (e, s) {
-      logV(e.toString());
-      logV(s.toString());
+      debugPrint('[VERSIONARTE] Exception: $e');
+      debugPrint('[VERSIONARTE] Stack Trace: $s');
     }
 
     return storeVersioning;

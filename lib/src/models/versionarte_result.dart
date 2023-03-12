@@ -1,4 +1,4 @@
-import 'package:versionarte/src/helpers/logger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:versionarte/versionarte.dart';
 
 /// A class representing the result of a version check for the app on the current platform.
@@ -28,7 +28,7 @@ class VersionarteResult {
     this.details,
     this.message,
   }) : super() {
-    logV(toString());
+    debugPrint('[VERSIONARTE] VersionarteResult: $this');
   }
 
   /// Returns a readable string representation of the [VersionarteResult] instance.

@@ -2,9 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:versionarte/versionarte.dart';
-import 'package:versionarte/src/helpers/logger.dart';
 
 /// A [VersionarteProvider] that helps retrieve `StoreVersioning` information via
 /// sending an HTTP GET request with the given headers to the given URL.
@@ -40,16 +40,15 @@ class RestfulVersionarteProvider extends VersionarteProvider {
       headers.addEntries(_headers!.entries);
     }
 
-    logV(
-        'Getting StoreVersioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
+    debugPrint('[VERSIONARTE] Getting StoreVersioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
 
     final response = await client.get(
       Uri.parse(_url),
       headers: headers,
     );
 
-    logV('Status code: ${response.statusCode}');
-    logV('Response body: ${response.body}');
+    debugPrint('[VERSIONARTE] Status code: ${response.statusCode}');
+    debugPrint('[VERSIONARTE] Response body: ${response.body}');
 
     final json = jsonDecode(response.body);
 
