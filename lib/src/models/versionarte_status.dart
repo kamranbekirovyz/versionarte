@@ -10,7 +10,7 @@ enum VersionarteStatus {
   upToDate,
 
   /// The app is not currently available, for example due to maintenance.
-  unavailable,
+  inactive,
 
   /// An error occurred while checking the versioning status for the current platform.
   ///

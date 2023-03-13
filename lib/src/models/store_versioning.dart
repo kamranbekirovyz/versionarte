@@ -66,9 +66,6 @@ class StorePlatformDetails {
     );
   }
 
-  /// Get content for unavailable app in the given language.
-  ///
-  /// If no content is available for the given language code, null is returned.
   String? getMessageForLanguageCode(String languageCode) {
     return message?[languageCode];
   }

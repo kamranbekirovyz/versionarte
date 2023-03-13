@@ -53,7 +53,7 @@ class Versionarte {
       final active = storeDetails.active;
       if (!active) {
         return VersionarteResult(
-          VersionarteStatus.unavailable,
+          VersionarteStatus.inactive,
           details: storeDetails,
         );
       }
