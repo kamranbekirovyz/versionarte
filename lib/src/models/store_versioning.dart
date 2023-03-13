@@ -7,7 +7,7 @@ class StoreVersioning {
     required this.ios,
   });
 
-  // TODO: can be optional  (null) if the app is not available in the store
+  // TODO: can be optional  (null)
 
   /// The versioning information for Android platform.
   final StorePlatformDetails android;
@@ -66,7 +66,7 @@ class StorePlatformDetails {
     );
   }
 
-  String? getMessageForLanguageCode(String languageCode) {
-    return message?[languageCode];
+  String? getMessageForLanguage(String code) {
+    return message?[code];
   }
 }

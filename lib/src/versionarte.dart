@@ -19,11 +19,11 @@ class Versionarte {
     return _packageInfo!;
   }
 
-  /// Main method to check app versioning status. This method takes two
-  /// parameters:
+  /// Checks app versioning status.
   ///
+  /// Parameters:
   /// - `versionarteProvider`: A [VersionarteProvider] instance to retrieve
-  /// [StoreVersioning] stored remotely, most probably.
+  /// [StoreVersioning] stored remotely.
   ///
   /// This method returns a [VersionarteResult] instance with the status of the
   /// app's versioning status.
@@ -56,24 +56,24 @@ class Versionarte {
           VersionarteStatus.inactive,
           details: storeDetails,
         );
+      } else {
+        final minimumVersion = Version.parse(storeDetails.minimum);
+        final latestVersion = Version.parse(storeDetails.latest);
+
+        final minimumDifference = platformVersion.compareTo(minimumVersion);
+        final latestDifference = platformVersion.compareTo(latestVersion);
+
+        final status = minimumDifference < 0
+            ? VersionarteStatus.mustUpdate
+            : latestDifference == 0
+                ? VersionarteStatus.upToDate
+                : VersionarteStatus.couldUpdate;
+
+        return VersionarteResult(
+          status,
+          details: storeDetails,
+        );
       }
-
-      final minimumVersion = Version.parse(storeDetails.minimum);
-      final latestVersion = Version.parse(storeDetails.latest);
-
-      final minimumDifference = platformVersion.compareTo(minimumVersion);
-      final latestDifference = platformVersion.compareTo(latestVersion);
-
-      final status = minimumDifference < 0
-          ? VersionarteStatus.mustUpdate
-          : latestDifference == 0
-              ? VersionarteStatus.upToDate
-              : VersionarteStatus.couldUpdate;
-
-      return VersionarteResult(
-        status,
-        details: storeDetails,
-      );
     } on FormatException catch (e) {
       final message = versionarteProvider is RemoteConfigVersionarteProvider
           ? 'Failed to parse json received from Firebase Remote Config. '
@@ -101,12 +101,6 @@ class Versionarte {
   }
 
   /// Opens the app's page on the Play Store on Android and the App Store on iOS
-  /// using the `url_launcher` package.
-  ///
-  /// On Android, the `androidPackageName` parameter is used to generate the
-  /// Play Store URL. If the parameter is `null`, the package name is retrieved
-  /// automatically from the device's `package_info` package. On iOS, the
-  /// `appleAppId` parameter is used to generate the App Store URL.
   ///
   /// If the platform is not Android or iOS, the method logs an error message and
   /// returns `false`.
@@ -114,7 +108,8 @@ class Versionarte {
   /// Parameters:
   ///   - `appleAppId` (int): The app ID of the app on the App Store (iOS).
   ///     If the app is not published on the App Store, pass `null`.
-  ///   - `androidPackageName` (String): The package name of the app (Android).
+  ///   - `androidPackageName` (String): The package name of the app (Android)
+  ///     retrieved automatically from the device's `package_info` package
   ///
   /// Returns:
   ///   - A `Future<bool>` that indicates whether the URL was successfully

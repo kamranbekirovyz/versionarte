@@ -98,8 +98,8 @@ In this example, we import the required packages and call the Versionarte.check 
 Then, we use the result to decide what to do next based on the versioning state. Here's an example of how to do that:
 
 ```dart
-if (result == VersionarteResult.unavailable) {
-  // TODO: Handle the case where remote version information is unavailable
+if (result == VersionarteResult.inactive) {
+  // TODO: Handle the case where remote version information is inactive
 } else if (result == VersionarteResult.mustUpdate) {
   // TODO: Handle the case where an update is required
 } else if (result == VersionarteResult.couldUpdate) {
