@@ -18,6 +18,7 @@ class VersionarteResult {
   final StorePlatformDetails? details;
 
   /// An optional error message in case of [VersionarteStatus.unknown] status.
+  // TODO: rname to errorMessage?
   final String? message;
 
   /// Creates a new [VersionarteResult] instance.

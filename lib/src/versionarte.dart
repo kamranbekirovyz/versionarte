@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:versionarte/versionarte.dart';
 
@@ -10,48 +11,30 @@ import 'package:versionarte/versionarte.dart';
 /// against the version available on the app store.
 class Versionarte {
   static PackageInfo? _packageInfo;
-  static LocalVersioning? _localVersioning;
 
   /// Retrieves package information from the platform. This method uses the
   /// `package_info_plus` package to get the package information.
-  static Future<PackageInfo?> get packageInfo async {
+  static Future<PackageInfo> get packageInfo async {
     _packageInfo ??= await PackageInfo.fromPlatform();
-    return _packageInfo;
+    return _packageInfo!;
   }
-
-  /// Cached version of [LocalVersioning] used when calling the
-  /// `Versionarte.check(...)` method. This is used internally for the
-  /// [VersionarteIndicator] widget.
-  static LocalVersioning? get localVersioning => _localVersioning;
 
   /// Main method to check app versioning status. This method takes two
   /// parameters:
   ///
   /// - `versionarteProvider`: A [VersionarteProvider] instance to retrieve
   /// [StoreVersioning] stored remotely, most probably.
-  /// - `localVersioning`: [LocalVersioning] of the currently running app. If
-  /// it is not provided, the version information is obtained from the package
-  /// information using [PackageInfo]. If you keep your current app version
-  /// somewhere in your Dart codes, you can set a [LocalVersioning] manually.
   ///
   /// This method returns a [VersionarteResult] instance with the status of the
   /// app's versioning status.
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
-    LocalVersioning? localVersioning,
   }) async {
     try {
-      localVersioning ??= await LocalVersioning.fromPackageInfo();
-      _localVersioning = localVersioning;
+      final info = await packageInfo;
+      final platformVersion = Version.parse(info.version);
 
-      if (localVersioning == null) {
-        return VersionarteResult(
-          VersionarteStatus.unknown,
-          message: 'Failed to get local versioning information.',
-        );
-      }
-
-      debugPrint('[VERSIONARTE] LocalVersioning: $localVersioning');
+      debugPrint('[VERSIONARTE] Current platform version: $platformVersion');
       debugPrint('[VERSIONARTE] VersionarteProvider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
@@ -65,46 +48,31 @@ class Versionarte {
 
       debugPrint('[VERSIONARTE] StoreVersioning: $storeVersioning');
 
-      final currentPlatformStoreDetails = storeVersioning.currentPlatformStoreDetails;
+      final storeDetails = storeVersioning.storeDetailsForPlatform;
 
-      final available = currentPlatformStoreDetails.status.available;
-      if (!available) {
+      final active = storeDetails.active;
+      if (!active) {
         return VersionarteResult(
           VersionarteStatus.unavailable,
-          details: currentPlatformStoreDetails,
+          details: storeDetails,
         );
       }
 
-      final currentPlatformVersionNumber = localVersioning.currentPlatformVersionNumber;
-      if (currentPlatformVersionNumber == null) {
-        return VersionarteResult(
-          VersionarteStatus.unknown,
-          message: 'LocalVersioning does not contain a version number for the platform $defaultTargetPlatform.',
-        );
-      }
+      final minimumVersion = Version.parse(storeDetails.minimum);
+      final latestVersion = Version.parse(storeDetails.latest);
 
-      final storeMinPlatformVersion = currentPlatformStoreDetails.version.minimum;
-      final mustUpdate = storeMinPlatformVersion > currentPlatformVersionNumber;
-      if (mustUpdate) {
-        return VersionarteResult(
-          VersionarteStatus.mustUpdate,
-          details: currentPlatformStoreDetails,
-        );
-      }
+      final minimumDifference = platformVersion.compareTo(minimumVersion);
+      final latestDifference = platformVersion.compareTo(latestVersion);
 
-      final storeLatestPlatformVersion = currentPlatformStoreDetails.version.latest;
-      final couldUpdate = storeLatestPlatformVersion > currentPlatformVersionNumber;
-
-      if (couldUpdate) {
-        return VersionarteResult(
-          VersionarteStatus.couldUpdate,
-          details: currentPlatformStoreDetails,
-        );
-      }
+      final status = minimumDifference < 0
+          ? VersionarteStatus.mustUpdate
+          : latestDifference == 0
+              ? VersionarteStatus.upToDate
+              : VersionarteStatus.couldUpdate;
 
       return VersionarteResult(
-        VersionarteStatus.upToDate,
-        details: currentPlatformStoreDetails,
+        status,
+        details: storeDetails,
       );
     } on FormatException catch (e) {
       final message = versionarteProvider is RemoteConfigVersionarteProvider
@@ -159,20 +127,14 @@ class Versionarte {
 
     if (Platform.isAndroid) {
       // Retrieve package name from device's `package_info` package if needed
-      androidPackageName ??= (await packageInfo)?.packageName;
+      androidPackageName ??= (await packageInfo).packageName;
 
-      if (androidPackageName != null) {
-        // Generate Play Store URL and launch it
-        return launchUrl(
-          Uri.parse(
-            'https://play.google.com/store/apps/details?id=$androidPackageName',
-          ),
-          mode: mode,
-        );
-      } else {
-        // Unable to determine package name
-        return false;
-      }
+      return launchUrl(
+        Uri.parse(
+          'https://play.google.com/store/apps/details?id=$androidPackageName',
+        ),
+        mode: mode,
+      );
     } else if (Platform.isIOS) {
       // Generate App Store URL and launch it
       return launchUrl(

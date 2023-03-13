@@ -7,6 +7,8 @@ class StoreVersioning {
     required this.ios,
   });
 
+  // TODO: can be optional  (null) if the app is not available in the store
+
   /// The versioning information for Android platform.
   final StorePlatformDetails android;
 
@@ -21,18 +23,10 @@ class StoreVersioning {
     );
   }
 
-  /// Returns a JSON [Map] representation of this object.
-  Map<String, dynamic> toJson() {
-    return {
-      'android': android.toJson(),
-      'ios': ios.toJson(),
-    };
-  }
-
   /// Returns the [PlatformStoreDetails] object corresponding to the current platform.
   ///
   /// Throws an [UnimplementedError] if the current platform is not supported by the package.
-  StorePlatformDetails get currentPlatformStoreDetails {
+  StorePlatformDetails get storeDetailsForPlatform {
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -48,63 +42,28 @@ class StoreVersioning {
         );
     }
   }
-
-  @override
-  String toString() {
-    return toJson().toString();
-  }
 }
 
 class StorePlatformDetails {
-  final VersionDetails version;
-  final StatusDetails status;
+  final String minimum;
+  final String latest;
+  final bool active;
+  final Map<String?, String?>? message;
 
   const StorePlatformDetails({
-    required this.version,
-    required this.status,
+    required this.minimum,
+    required this.latest,
+    required this.active,
+    required this.message,
   });
 
   factory StorePlatformDetails.fromJson(Map<String, dynamic> json) {
     return StorePlatformDetails(
-      version: VersionDetails.fromJson(json["version"]),
-      status: StatusDetails.fromJson(json["status"]),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'version': version.toJson(),
-      'status': status.toJson(),
-    };
-  }
-
-  @override
-  String toString() {
-    return toJson().toString();
-  }
-}
-
-class StatusDetails {
-  final bool available;
-  final Map<String?, String?>? message;
-
-  const StatusDetails({
-    required this.available,
-    required this.message,
-  });
-
-  factory StatusDetails.fromJson(Map<String, dynamic> json) {
-    return StatusDetails(
-      available: json["available"],
+      minimum: json["minimum"],
+      latest: json["latest"],
+      active: json["active"],
       message: json["message"],
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'available': available,
-      'message': message,
-    };
   }
 
   /// Get content for unavailable app in the given language.
@@ -112,29 +71,5 @@ class StatusDetails {
   /// If no content is available for the given language code, null is returned.
   String? getMessageForLanguageCode(String languageCode) {
     return message?[languageCode];
-  }
-}
-
-class VersionDetails {
-  final int minimum;
-  final int latest;
-
-  const VersionDetails({
-    required this.minimum,
-    required this.latest,
-  });
-
-  factory VersionDetails.fromJson(Map<String, dynamic> json) {
-    return VersionDetails(
-      minimum: json["minimum"],
-      latest: json["latest"],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'minimum': minimum,
-      'latest': latest,
-    };
   }
 }
