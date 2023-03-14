@@ -32,6 +32,10 @@ class VersionarteResult {
     debugPrint('[VERSIONARTE] VersionarteResult: $this');
   }
 
+  String? getMessageForLanguage(String code) {
+    return details?.status.getMessageForLanguage(code);
+  }
+
   /// Returns a readable string representation of the [VersionarteResult] instance.
   @override
   String toString() {

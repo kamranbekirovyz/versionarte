@@ -50,14 +50,21 @@ class Versionarte {
 
       final storeDetails = storeVersioning.storeDetailsForPlatform;
 
-      if (!storeDetails.active) {
+      if (storeDetails == null) {
+        return VersionarteResult(
+          VersionarteStatus.unknown,
+          message: 'Failed to get store versioning information for $defaultTargetPlatform.',
+        );
+      }
+
+      if (!storeDetails.status.active) {
         return VersionarteResult(
           VersionarteStatus.inactive,
           details: storeDetails,
         );
       } else {
-        final minimumVersion = Version.parse(storeDetails.minimum);
-        final latestVersion = Version.parse(storeDetails.latest);
+        final minimumVersion = Version.parse(storeDetails.version.minimum);
+        final latestVersion = Version.parse(storeDetails.version.latest);
 
         final minimumDifference = platformVersion.compareTo(minimumVersion);
         final latestDifference = platformVersion.compareTo(latestVersion);
