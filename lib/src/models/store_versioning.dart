@@ -5,10 +5,7 @@ class StoreVersioning {
   const StoreVersioning({
     this.android,
     this.iOS,
-    this.windows,
-    this.linux,
     this.macOS,
-    this.fuchsia,
   });
 
   /// The versioning information for Android platform.
@@ -17,17 +14,8 @@ class StoreVersioning {
   /// The versioning information for iOS platform.
   final StorePlatformDetails? iOS;
 
-  /// The versioning information for Android platform.
-  final StorePlatformDetails? windows;
-
-  /// The versioning information for iOS platform.
-  final StorePlatformDetails? linux;
-
-  /// The versioning information for iOS platform.
+  /// The versioning information for macOS platform.
   final StorePlatformDetails? macOS;
-
-  /// The versioning information for iOS platform.
-  final StorePlatformDetails? fuchsia;
 
   /// Creates an instance of [StoreVersioning] from a JSON [Map].
   factory StoreVersioning.fromJson(Map<String, dynamic> json) {
@@ -42,24 +30,9 @@ class StoreVersioning {
               json["iOS"],
             )
           : null,
-      windows: json["windows"] != null
-          ? StorePlatformDetails.fromJson(
-              json["windows"],
-            )
-          : null,
-      linux: json["linux"] != null
-          ? StorePlatformDetails.fromJson(
-              json["linux"],
-            )
-          : null,
       macOS: json["macOS"] != null
           ? StorePlatformDetails.fromJson(
               json["macOS"],
-            )
-          : null,
-      fuchsia: json["fuchsia"] != null
-          ? StorePlatformDetails.fromJson(
-              json["fuchsia"],
             )
           : null,
     );
@@ -74,14 +47,11 @@ class StoreVersioning {
         return android;
       case TargetPlatform.iOS:
         return iOS;
-      case TargetPlatform.fuchsia:
-        return fuchsia;
-      case TargetPlatform.linux:
-        return linux;
       case TargetPlatform.macOS:
         return macOS;
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.linux:
       case TargetPlatform.windows:
-        return windows;
       default:
         throw UnimplementedError(
           '$defaultTargetPlatform not supported',
