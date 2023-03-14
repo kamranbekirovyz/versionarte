@@ -50,8 +50,7 @@ class Versionarte {
 
       final storeDetails = storeVersioning.storeDetailsForPlatform;
 
-      final active = storeDetails.active;
-      if (!active) {
+      if (!storeDetails.active) {
         return VersionarteResult(
           VersionarteStatus.inactive,
           details: storeDetails,
@@ -76,7 +75,7 @@ class Versionarte {
       }
     } on FormatException catch (e) {
       final message = versionarteProvider is RemoteConfigVersionarteProvider
-          ? 'Failed to parse json received from Firebase Remote Config. '
+          ? 'Failed to parse json retrieved from Firebase Remote Config. '
               'Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. '
               'If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.'
           : versionarteProvider is RestfulVersionarteProvider
@@ -131,7 +130,6 @@ class Versionarte {
         mode: mode,
       );
     } else if (Platform.isIOS) {
-      // Generate App Store URL and launch it
       return launchUrl(
         Uri.parse(
           'https://apps.apple.com/app/id$appleAppId',
@@ -139,7 +137,6 @@ class Versionarte {
         mode: mode,
       );
     } else {
-      // Platform is not supported
       debugPrint('[VERSIONARTE] Opening store for ${Platform.operatingSystem} platform is not supported.');
       return false;
     }
