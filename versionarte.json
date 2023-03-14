@@ -1,20 +1,28 @@
 {
     "android": {
-        "minimum": "2.7.1",
-        "latest": "2.8.0",
-        "active": true,
-        "message": {
-            "en": "App is in maintanence mode, please come back later.",
-            "es": "La aplicación está en modo de mantenimiento, vuelva más tarde."
+        "version": {
+            "minimum": "2.7.0",
+            "latest": "2.8.0"
+        },
+        "status": {
+            "active": true,
+            "message": {
+                "en": "App is in maintanence mode, please come back later.",
+                "es": "La aplicación está en modo de mantenimiento, vuelva más tarde."
+            }
         }
     },
     "ios": {
-        "minimum": "2.7.1",
-        "latest": "2.8.1",
-        "active": true,
-        "message": {
-            "en": "App is in maintanence mode, please come back later.",
-            "es": "La aplicación está en modo de mantenimiento, vuelva más tarde."
+        "version": {
+            "minimum": "2.7.0",
+            "latest": "2.8.1"
+        },
+        "status": {
+            "active": true,
+            "message": {
+                "en": "App is in maintanence mode, please come back later.",
+                "es": "La aplicación está en modo de mantenimiento, vuelva más tarde."
+            }
         }
     }
 }
