@@ -35,14 +35,16 @@ class Versionarte {
       final platformVersion = Version.parse(info.version);
 
       debugPrint('[VERSIONARTE] Current platform version: $platformVersion');
-      debugPrint('[VERSIONARTE] VersionarteProvider: ${versionarteProvider.runtimeType}');
+      debugPrint(
+          '[VERSIONARTE] VersionarteProvider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
 
       if (storeVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.unknown,
-          message: 'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
+          message:
+              'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
         );
       }
 
@@ -53,7 +55,8 @@ class Versionarte {
       if (storeDetails == null) {
         return VersionarteResult(
           VersionarteStatus.unknown,
-          message: 'Failed to get store versioning information for $defaultTargetPlatform.',
+          message:
+              'Failed to get store versioning information for $defaultTargetPlatform.',
         );
       }
 
@@ -144,7 +147,8 @@ class Versionarte {
         mode: mode,
       );
     } else {
-      debugPrint('[VERSIONARTE] Opening store for ${Platform.operatingSystem} platform is not supported.');
+      debugPrint(
+          '[VERSIONARTE] Opening store for ${Platform.operatingSystem} platform is not supported.');
       return false;
     }
   }

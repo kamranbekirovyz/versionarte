@@ -1,3 +1,9 @@
+## 0.7.2
+- Renamed `openAppInStore` as `launchStore`.
+- Renamed `VersionarteStatus.unavailable` as `VersionarteStatus.inactive`.
+- Updated JSON structure so that comparison is now done with "version name" (1.0.0) instead of "version number" (1).
+- Added support for macOS in addition to iOS and Android.
+
 ## 0.6.1
 - [VersionarteStatus.failedToCheck] renamed as [VersionarteStatus.unknown].
 - All UI related widgets are moved to <a href="https://pub.dev/packages/versionarte_ui_kit">versionarte_ui_kit</a> package 💆🏻‍♂️.
