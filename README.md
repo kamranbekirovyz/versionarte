@@ -64,7 +64,7 @@ Then, we use the result to decide what to do next based on the versioning state.
 ```dart
 if (result == VersionarteResult.inactive) {
   // TODO: Handle the case where remote version information is inactive
-} else if (result == VersionarteResult.mustUpdate) {
+} else if (result == VersionarteResult.mandatory) {
   // TODO: Handle the case where an update is required
 } else if (result == VersionarteResult.couldUpdate) {
   // TODO: Handle the case where an update is optional

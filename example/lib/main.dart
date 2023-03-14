@@ -37,7 +37,8 @@ class MockVersionarteProvider extends VersionarteProvider {
         "active": true,
         "message": {
           "en": "App is in maintanence mode, please come back later.",
-          "es": "La aplicación está en modo de mantenimiento, vuelva más tarde.",
+          "es":
+              "La aplicación está en modo de mantenimiento, vuelva más tarde.",
         }
       },
       "ios": {
@@ -46,7 +47,8 @@ class MockVersionarteProvider extends VersionarteProvider {
         "active": false,
         "message": {
           "en": "App is in maintanence mode, please come back later.",
-          "es": "La aplicación está en modo de mantenimiento, vuelva más tarde.",
+          "es":
+              "La aplicación está en modo de mantenimiento, vuelva más tarde.",
         }
       }
     };

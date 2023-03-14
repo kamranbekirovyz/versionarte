@@ -35,16 +35,14 @@ class Versionarte {
       final platformVersion = Version.parse(info.version);
 
       debugPrint('[VERSIONARTE] Current platform version: $platformVersion');
-      debugPrint(
-          '[VERSIONARTE] VersionarteProvider: ${versionarteProvider.runtimeType}');
+      debugPrint('[VERSIONARTE] VersionarteProvider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
 
       if (storeVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.unknown,
-          message:
-              'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
+          errorMessage: 'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
         );
       }
 
@@ -55,8 +53,7 @@ class Versionarte {
       if (storeDetails == null) {
         return VersionarteResult(
           VersionarteStatus.unknown,
-          message:
-              'Failed to get store versioning information for $defaultTargetPlatform.',
+          errorMessage: 'Failed to get store versioning information for $defaultTargetPlatform.',
         );
       }
 
@@ -73,10 +70,10 @@ class Versionarte {
         final latestDifference = platformVersion.compareTo(latestVersion);
 
         final status = minimumDifference < 0
-            ? VersionarteStatus.mustUpdate
+            ? VersionarteStatus.mandatory
             : latestDifference == 0
                 ? VersionarteStatus.upToDate
-                : VersionarteStatus.couldUpdate;
+                : VersionarteStatus.optional;
 
         return VersionarteResult(
           status,
@@ -84,7 +81,7 @@ class Versionarte {
         );
       }
     } on FormatException catch (e) {
-      final message = versionarteProvider is RemoteConfigVersionarteProvider
+      final errorMessage = versionarteProvider is RemoteConfigVersionarteProvider
           ? 'Failed to parse json retrieved from Firebase Remote Config. '
               'Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. '
               'If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.'
@@ -95,7 +92,7 @@ class Versionarte {
 
       return VersionarteResult(
         VersionarteStatus.unknown,
-        message: message,
+        errorMessage: errorMessage,
       );
     } catch (e, s) {
       debugPrint('[VERSIONARTE] Exception: $e');
@@ -103,7 +100,7 @@ class Versionarte {
 
       return VersionarteResult(
         VersionarteStatus.unknown,
-        message: 'An error occurred while checking for updates. '
+        errorMessage: 'An error occurred while checking for updates. '
             'Check the debug console to see the error and stack trace.',
       );
     }
@@ -147,8 +144,7 @@ class Versionarte {
         mode: mode,
       );
     } else {
-      debugPrint(
-          '[VERSIONARTE] Opening store for ${Platform.operatingSystem} platform is not supported.');
+      debugPrint('[VERSIONARTE] Opening store for ${Platform.operatingSystem} platform is not supported.');
       return false;
     }
   }
