@@ -1,3 +1,6 @@
+## 0.8.0
+- New updated values for `VersionarteStatus`: upToDate, optionalUpdateAvailable, mandatoryUpdateRequired, appInactive, unknown.
+
 ## 0.7.2
 - Renamed `openAppInStore` as `launchStore`.
 - Renamed `VersionarteStatus.unavailable` as `VersionarteStatus.inactive`.
