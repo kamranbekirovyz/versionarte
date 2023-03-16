@@ -10,6 +10,9 @@ import 'package:versionarte/versionarte.dart';
 /// A utility class that helps to check the version of the app on the device
 /// against the version available on the app store.
 class Versionarte {
+  /// The package information retrieved from the device. This is used to get the
+  /// current version of the app and stored in a static variable to avoid
+  /// multiple calls to the `package_info` package.
   static PackageInfo? _packageInfo;
 
   /// Retrieves package information from the platform. This method uses the
@@ -59,7 +62,7 @@ class Versionarte {
 
       if (!storeDetails.status.active) {
         return VersionarteResult(
-          VersionarteStatus.inactive,
+          VersionarteStatus.appInactive,
           details: storeDetails,
         );
       } else {
@@ -70,10 +73,10 @@ class Versionarte {
         final latestDifference = platformVersion.compareTo(latestVersion);
 
         final status = minimumDifference < 0
-            ? VersionarteStatus.mandatory
+            ? VersionarteStatus.mandatoryUpdateRequired
             : latestDifference == 0
                 ? VersionarteStatus.upToDate
-                : VersionarteStatus.optional;
+                : VersionarteStatus.optionalUpdateAvailable;
 
         return VersionarteResult(
           status,
