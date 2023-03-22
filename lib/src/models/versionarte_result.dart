@@ -7,8 +7,8 @@ class VersionarteResult {
   ///
   /// Possible values are:
   ///   - [VersionarteStatus.optional]: A new version is available, but it is optional to update.
-  ///   - [VersionarteStatus.mandatory]: A new version is available, and the user must update to continue using the app.
-  ///   - [VersionarteStatus.upToDate]: The app is up-to-date and no new version is available.
+  ///   - [VersionarteStatus.mustUpdate]: A new version is available, and the user must update to continue using the app.
+  ///   - [VersionarteStatus.shouldUpdate]: The app is up-to-date and no new version is available.
   ///   - [VersionarteStatus.inactive]: The app is currently inactive, for example due to maintenance.
   ///   - [VersionarteStatus.unknown]: An error occurred while checking the versioning status for the current platform.
   final VersionarteStatus status;
@@ -35,7 +35,7 @@ class VersionarteResult {
     return details?.status.getMessageForLanguage(code);
   }
 
-  /// Returns a readable string representation of the [VersionarteResult] instance.
+  /// Returns a JSON representation of this object.
   @override
   String toString() {
     return 'Result:\n'

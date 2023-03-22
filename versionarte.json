@@ -12,7 +12,7 @@
             }
         }
     },
-    "ios": {
+    "iOS": {
         "version": {
             "minimum": "2.7.0",
             "latest": "2.8.1"

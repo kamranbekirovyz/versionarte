@@ -1,13 +1,7 @@
-import 'package:flutter/foundation.dart';
+import 'dart:io';
 
 /// A serverside representation model of the app versioning.
 class StoreVersioning {
-  const StoreVersioning({
-    this.android,
-    this.iOS,
-    this.macOS,
-  });
-
   /// The versioning information for Android platform.
   final StorePlatformDetails? android;
 
@@ -17,51 +11,68 @@ class StoreVersioning {
   /// The versioning information for macOS platform.
   final StorePlatformDetails? macOS;
 
+  const StoreVersioning({
+    this.android,
+    this.iOS,
+    this.macOS,
+  });
+
   /// Creates an instance of [StoreVersioning] from a JSON [Map].
-  factory StoreVersioning.fromJson(Map<String, dynamic> json) {
-    return StoreVersioning(
-      android: json["android"] != null
-          ? StorePlatformDetails.fromJson(
-              json["android"],
-            )
-          : null,
-      iOS: json["iOS"] != null
-          ? StorePlatformDetails.fromJson(
-              json["iOS"],
-            )
-          : null,
-      macOS: json["macOS"] != null
-          ? StorePlatformDetails.fromJson(
-              json["macOS"],
-            )
-          : null,
-    );
-  }
+  StoreVersioning.fromJson(Map<String, dynamic> json)
+      : android = json["android"] != null
+            ? StorePlatformDetails.fromJson(
+                json["android"],
+              )
+            : null,
+        iOS = json["iOS"] != null
+            ? StorePlatformDetails.fromJson(
+                json["iOS"],
+              )
+            : null,
+        macOS = json["macOS"] != null
+            ? StorePlatformDetails.fromJson(
+                json["macOS"],
+              )
+            : null;
 
   /// Returns the [PlatformStoreDetails] object corresponding to the current platform.
   ///
   /// Throws an [UnimplementedError] if the current platform is not supported by the package.
   StorePlatformDetails? get storeDetailsForPlatform {
-    switch (defaultTargetPlatform) {
-      case TargetPlatform.android:
+    switch (Platform.operatingSystem) {
+      case 'android':
         return android;
-      case TargetPlatform.iOS:
+      case 'ios':
         return iOS;
-      case TargetPlatform.macOS:
+      case 'macos':
         return macOS;
-      case TargetPlatform.fuchsia:
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
       default:
-        throw UnimplementedError(
-          '$defaultTargetPlatform not supported',
+        throw UnsupportedError(
+          '${Platform.operatingSystem} not supported',
         );
     }
+  }
+
+  /// Returns a JSON representation of this object.
+  Map<String, dynamic> toJson() {
+    return {
+      "android": android?.toJson(),
+      "iOS": iOS?.toJson(),
+      "macOS": macOS?.toJson(),
+    };
+  }
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
 }
 
 class StorePlatformDetails {
+  /// The version details for this platform.
   final VersionDetails version;
+
+  /// The status details for this platform.
   final StatusDetails status;
 
   const StorePlatformDetails({
@@ -69,14 +80,30 @@ class StorePlatformDetails {
     required this.status,
   });
 
-  factory StorePlatformDetails.fromJson(Map<String, dynamic> json) {
-    return StorePlatformDetails(
-      version: VersionDetails.fromJson(json["version"]),
-      status: StatusDetails.fromJson(json["status"]),
-    );
+  /// Creates an instance of [StorePlatformDetails] from a JSON [Map].
+  StorePlatformDetails.fromJson(Map<String, dynamic> json)
+      : version = VersionDetails.fromJson(
+          json["version"],
+        ),
+        status = StatusDetails.fromJson(
+          json["status"],
+        );
+
+  /// Returns a JSON representation of this object.
+  Map<String, dynamic> toJson() {
+    return {
+      "version": version.toJson(),
+      "status": status.toJson(),
+    };
+  }
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
 }
 
+/// Represents the minimum and latest versions of an application.
 class VersionDetails {
   final String minimum;
   final String latest;
@@ -86,14 +113,25 @@ class VersionDetails {
     required this.latest,
   });
 
-  factory VersionDetails.fromJson(Map<String, dynamic> json) {
-    return VersionDetails(
-      minimum: json["minimum"],
-      latest: json["latest"],
-    );
+  VersionDetails.fromJson(Map<String, dynamic> json)
+      : minimum = json["minimum"],
+        latest = json["latest"];
+
+  /// Returns a JSON representation of this object.
+  Map<String, dynamic> toJson() {
+    return {
+      "minimum": minimum,
+      "latest": latest,
+    };
+  }
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
 }
 
+/// Represents the status of an application.
 class StatusDetails {
   final bool active;
   final Map<String?, dynamic>? message;
@@ -103,14 +141,24 @@ class StatusDetails {
     required this.message,
   });
 
-  factory StatusDetails.fromJson(Map<String, dynamic> json) {
-    return StatusDetails(
-      active: json["active"],
-      message: json["message"],
-    );
-  }
+  StatusDetails.fromJson(Map<String, dynamic> json)
+      : active = json["active"],
+        message = json["message"];
 
   String? getMessageForLanguage(String code) {
     return message?[code];
+  }
+
+  /// Returns a JSON representation of this object.
+  Map<String, dynamic> toJson() {
+    return {
+      "active": active,
+      "message": message,
+    };
+  }
+
+  @override
+  String toString() {
+    return toJson().toString();
   }
 }

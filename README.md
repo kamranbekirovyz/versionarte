@@ -11,7 +11,7 @@ Versionarte allows you to remotely manage your Flutter app's versioning and avai
 
 ## 🚀 Motivation
 
-Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or disabling the app for maintenance, requires submitting a new version to the app store and waiting for approval. Even after approval, users may still need to manually update their app to access the latest version. 
+Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or disabling the app for maintenance, requires submitting a new version to the app store and waiting for approval. Even after approval, users may still need to manually update their app to access the latest version.
 
 To simplify the app versioning process, versionarte offers remote management of app versioning and availability. This makes the app development process more controllable.
 
@@ -49,9 +49,9 @@ Then, based on the versioning state, you can decide what to do next. Here's an e
 ```dart
 if (result == VersionarteResult.inactive) {
   // TODO: Handle the case where remote version information is inactive
-} else if (result == VersionarteResult.mandatoryUpdateRequired) {
+} else if (result == VersionarteResult.mustUpdate) {
   // TODO: Handle the case where an update is required
-} else if (result == VersionarteResult.optionalUpdateAvailable) {
+} else if (result == VersionarteResult.shouldUpdate) {
   // TODO: Handle the case where an update is optional
 } 
 ```
@@ -106,10 +106,6 @@ Each platform contains two objects:
 - `status`: An object that contains information about the availability of the app.
 - `active`: A boolean that indicates whether the app is currently in maintenance mode or not.
 - `message`: A map that contains the maintenance messages for different languages. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the corresponding maintenance message in that language. If the app is not in maintenance mode, this field may be null or empty.
-
-## 🤓 Contributors
-
-<a  href="https://github.com/kamranbekirovyz/versionarte/graphs/contributors"> <img  src="https://github.com/kamranbekirovyz.png" height="100"></a>
 
 ## 🐞 Bugs/Requests
 
