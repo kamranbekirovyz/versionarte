@@ -96,7 +96,7 @@ class VersionDetails {
 
 class StatusDetails {
   final bool active;
-  final Map<String?, String?>? message;
+  final Map<String?, dynamic>? message;
 
   const StatusDetails({
     required this.active,
