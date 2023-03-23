@@ -1,10 +1,12 @@
 # versionarte
 
-Versionarte allows you to remotely manage your Flutter app's versioning and availability, with a variety of heplful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style:
+Versionarte allows you to remotely manage your Flutter app's versioning and availability, with a variety of heplful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
 
-- 😈 The ability to force users to update to the latest version of your app before continuing.
-- 🚧 Allowing you to disable your app for maintenance with custom information text to users.
-- 🆕 Inform users when a new optional update is available for your app.
+Features you can implement with versionarte:
+- 😈 Force users to update to the latest version of your app before continuing.
+- 💆🏻‍♂️ Have different minimum, latest versions and availability status for each platform.
+- 🚧 Disable your app for maintenance with custom information text to users.
+- 🆕 Inform users when a new, optional update is available for your app.
 - 🔗 Launch the App Store on iOS and Play Store on Android.
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/master/assets/cover.png" alt="cover_picture" />
@@ -17,13 +19,21 @@ To simplify the app versioning process, versionarte offers remote management of 
 
 ## 🕹️ Usage
 
+Versionarte, internally, gets the local app version using `package_info_plus` plugin and compares it to the `minimum` and `latest` versions fetched from a remote service. Where does those `minimum` and `latest` values come from? From any `VersionarteProvider` instance.
+
+[See the JSON format](#json-format)
+
 Versionarte package helps check the version of the app on a device against the version available on the store. The package uses `package_info_plus` to get the package information and `pub_semver` to parse and compare version numbers.
 
 ### Getting `VersionarteResult` object
 
-Package comes with built-in RESTful API and Firebase Remote Config support. However, you can also fetch your configuration data from any source by extending the `VersionarteProvider` class.
+To get the `VersionarteResult` object, you need to call the `Versionarte.check` method. This method takes a `VersionarteProvider` instance as a parameter, which is responsible for fetching the versioning information from the remote service. The `Versionarte.check` method returns a `VersionarteResult` object, which contains the result of the versioning check.
+
+There are two built-in providers that you can use to fetch the versioning information from the remote service: `RemoteConfigVersionarteProvider` and `RestfulVersionarteProvider`. You can also create your own custom provider by extending the `VersionarteProvider` class.
 
 #### Using Firebase Remote Config
+The `RemoteConfigVersionarteProvider` class uses the Firebase Remote Config service to fetch the versioning information. You need to set up the Firebase Remote Config service before using this provider. You can find the official documentation for setting up Firebase Remote Config <a href="https://firebase.google.com/docs/remote-config">here</a>.
+
 Below is a example of how to use Versionarte with Firebase Remote Config:
 
 ```dart
@@ -32,6 +42,11 @@ final result = await Versionarte.check(
 );
 ```
 
+The `RemoteConfigVersionarteProvider` has 3 optional parameters:
+- `initializeRemoteConfig`: if you haven't initialized Remote Config before calling `Versionarte.check` set this to true. By default, it's set to `true`.
+- `remoteConfigSettings`: allows you to set the fetch timeout and minimum fetch interval for Firebase Remote Config initialization (when `initializeRemoteConfig` is set to true). By default, `fetchTimeout` is set to 7 seconds and `minimumFetchInterval` to `Duration.zero`.
+- `keyName`: used to specify the key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte".
+
 #### Using RESTful API
 
 ```dart
@@ -39,6 +54,30 @@ final result = await Versionarte.check(
     versionarteProvider: RestfulVersionarteProvider(
         url: 'https://myapi.com/getVersioning',
     ),
+);
+```
+
+#### Using custom VersionarteProvider
+
+If you want to use a custom provider, say you use some other remote service to provide versioning details of your app, you can extend the `VersionarteProvider` class and override the `getStoreVersioning` method. This method is responsible for fetching the versioning information from the remote service and returning it as a `StoreVersioning` object.
+
+```dart
+class MyCustomVersionarteProvider extends VersionarteProvider {
+  @override
+  Future<StoreVersioning> getStoreVersioning() async {
+    final result = MyCustomService.fetchVersioning();
+
+    final decodedResult = jsonDecode(result);
+
+    return StoreVersioning.fromJson(decodedResult);
+  }
+```
+    
+Then, you can use your custom provider in the `Versionarte.check` method:
+
+```dart
+final result = await Versionarte.check(
+    versionarteProvider: MyCustomVersionarteProvider(),
 );
 ```
 
@@ -87,7 +126,7 @@ versionarte has a specific JSON format, which you must use to provide the versio
             }
         }
     },
-    "ios": {
+    "iOS": {
         // same data we used for "android"
     }
     "macOS": {
