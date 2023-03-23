@@ -42,10 +42,8 @@ final result = await Versionarte.check(
 );
 ```
 
-The `RemoteConfigVersionarteProvider` has 3 optional parameters:
-- `initializeRemoteConfig`: if you haven't initialized Remote Config before calling `Versionarte.check` set this to true. By default, it's set to `true`.
-- `remoteConfigSettings`: allows you to set the fetch timeout and minimum fetch interval for Firebase Remote Config initialization (when `initializeRemoteConfig` is set to true). By default, `fetchTimeout` is set to 7 seconds and `minimumFetchInterval` to `Duration.zero`.
-- `keyName`: used to specify the key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte".
+The `RemoteConfigVersionarteProvider` has 1 optional parameter:
+- `keyName`: used to specify the key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". If you want to upload the [configuration JSON](#json-format) using different key name, you can use this parameter to specify the key name.
 
 #### Using RESTful API
 
@@ -107,7 +105,7 @@ The `Versionarte.launchStore` method is a utility method provided by the Version
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
 
-## 🖋️JSON format
+## 🖋️ JSON format
 
 versionarte has a specific JSON format, which you must use to provide the versioning details remotely. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, you must always use the structured JSON below:
 
@@ -145,6 +143,8 @@ Each platform contains two objects:
 - `status`: An object that contains information about the availability of the app.
 - `active`: A boolean that indicates whether the app is currently in maintenance mode or not.
 - `message`: A map that contains the maintenance messages for different languages. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the corresponding maintenance message in that language. If the app is not in maintenance mode, this field may be null or empty.
+
+## 🚜 Configuring Firebase Remote Config
 
 ## 🐞 Bugs/Requests
 
