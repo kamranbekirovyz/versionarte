@@ -38,8 +38,6 @@ class VersionarteResult {
   /// Returns a JSON representation of this object.
   @override
   String toString() {
-    return 'Result:\n'
-        '- Status: $status,\n'
-        '- Error message: $errorMessage';
+    return 'status: $status${errorMessage != null ? 'errorMessage: $errorMessage' : ''}';
   }
 }
