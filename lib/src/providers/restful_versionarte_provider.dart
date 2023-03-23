@@ -40,8 +40,7 @@ class RestfulVersionarteProvider extends VersionarteProvider {
       headers.addEntries(_headers!.entries);
     }
 
-    debugPrint(
-        '[VERSIONARTE] Getting StoreVersioning information from RESTful API\nURL: $_url\nRequest headers: $_headers');
+    debugPrint('[VERSIONARTE] RESTful API URL: $_url, Request headers: $_headers');
 
     final response = await client.get(
       Uri.parse(_url),
@@ -52,6 +51,8 @@ class RestfulVersionarteProvider extends VersionarteProvider {
     debugPrint('[VERSIONARTE] Response body: ${response.body}');
 
     final json = jsonDecode(response.body);
+
+    // TODO: pretty log response body
 
     return StoreVersioning.fromJson(json);
   }

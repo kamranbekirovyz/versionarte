@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
@@ -49,7 +50,7 @@ class Versionarte {
         );
       }
 
-      debugPrint('[VERSIONARTE] StoreVersioning: $storeVersioning');
+      debugPrint('[VERSIONARTE] StoreVersioning: ${const JsonEncoder.withIndent('  ').convert(storeVersioning)}');
 
       final storeDetails = storeVersioning.storeDetailsForPlatform;
 
