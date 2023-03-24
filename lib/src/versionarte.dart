@@ -7,10 +7,11 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:versionarte/src/utilities/logger.dart';
+import 'package:versionarte/src/utilities/pretty_json.dart';
 import 'package:versionarte/versionarte.dart';
 
 /// A utility class that helps to check the version of the app on the device
-/// against the version available on the app store.
+/// against the version available on the store.
 class Versionarte {
   /// The package information retrieved from the device. This is used to get the
   /// current version of the app and stored in a static variable to avoid
@@ -51,7 +52,7 @@ class Versionarte {
         );
       }
 
-      logVersionarte('StoreVersioning: ${const JsonEncoder.withIndent('  ').convert(storeVersioning)}');
+      logVersionarte('StoreVersioning: ${prettyJson(storeVersioning)}');
 
       final storeDetails = storeVersioning.storeDetailsForPlatform;
 
@@ -87,12 +88,12 @@ class Versionarte {
       }
     } on FormatException catch (e) {
       final errorMessage = versionarteProvider is RemoteConfigVersionarteProvider
-          ? 'Failed to parse json retrieved from Firebase Remote Config. '
-              'Check out the example json file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. '
-              'If you have uploaded it with a custom key name make sure you specify keyName as a constructor to RemoteConfigVersionarteProvider.'
+          ? 'Failed to parse JSON retrieved from Firebase Remote Config. '
+              'Check out the example JSON file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. '
+              'If you have uploaded it with a custom key name make sure you specify keyName as a constructor parameter to RemoteConfigVersionarteProvider.'
           : versionarteProvider is RestfulVersionarteProvider
-              ? 'Failed to parse json received from RESTful API endpoint. '
-                  'Check out the example json file at path /versionarte.json, and make sure that endpoint response body matches the pattern.'
+              ? 'Failed to parse JSON received from RESTful API endpoint. '
+                  'Check out the example JSON file at path /versionarte.json, and make sure that endpoint response body matches the pattern.'
               : e.toString();
 
       return VersionarteResult(
@@ -113,8 +114,7 @@ class Versionarte {
 
   /// Opens the app's page on the Play Store on Android and the App Store on iOS
   ///
-  /// If the platform is not Android or iOS, the method logs an error message and
-  /// returns `false`.
+  /// If launch the store for the platform is not supported returns `false`.
   ///
   /// Parameters:
   ///   - `appleAppId` (int): The app ID of the app on the App Store (iOS).
