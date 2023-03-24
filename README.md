@@ -5,23 +5,21 @@ Versionarte allows you to remotely manage your Flutter app's versioning and avai
 Features you can implement with versionarte:
 - 😈 Force users to update to the latest version of your app before continuing.
 - 💆🏻‍♂️ Have different minimum, latest versions and availability status for each platform.
-- 🚧 Disable your app for maintenance with custom information text to users.
-- 🆕 Inform users when a new, optional update is available for your app.
+- 🚧 Disable your app for maintenance with custom information text.
+- 🆕 Inform users when a new, optional update is available..
 - 🔗 Launch the App Store on iOS and Play Store on Android.
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/master/assets/cover.png" alt="cover_picture" />
 
 ## 🚀 Motivation
 
-Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or disabling the app for maintenance, requires submitting a new version to the app store and waiting for approval. Even after approval, users may still need to manually update their app to access the latest version.
+Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or disabling the app for maintenance, requires submitting a new version to the stores and waiting for approval. Even after approval, users may still need to manually update their app to have the latest version.
 
 To simplify the app versioning process, versionarte offers remote management of app versioning and availability. This makes the app development process more controllable.
 
 ## 🕹️ Usage
 
-Versionarte, internally, gets the local app version using `package_info_plus` plugin and compares it to the `minimum` and `latest` versions fetched from a remote service. Where does those `minimum` and `latest` values come from? From any `VersionarteProvider` instance.
-
-[See the JSON format](#json-format)
+Before you use, bear in mind that this package uses a specific, not editable JSON format to convey the app's version and availability status to the package. [See the JSON format](#json-format)
 
 Versionarte package helps check the version of the app on a device against the version available on the store. The package uses `package_info_plus` to get the package information and `pub_semver` to parse and compare version numbers.
 
@@ -85,11 +83,12 @@ Then, based on the versioning state, you can decide what to do next. Here's an e
 
 ```dart
 if (result == VersionarteResult.inactive) {
-  // TODO: Handle the case where remote version information is inactive
+    final message = result.status.getMessageForLanguage('en');
+    // TODO: Handle the case where the app is inactive
 } else if (result == VersionarteResult.mustUpdate) {
-  // TODO: Handle the case where an update is required
+    // TODO: Handle the case where an update is required
 } else if (result == VersionarteResult.shouldUpdate) {
-  // TODO: Handle the case where an update is optional
+    // TODO: Handle the case where an update is optional
 } 
 ```
 
@@ -137,12 +136,12 @@ This JSON object represents the versioning information for an app, including its
 
 Each platform contains two objects:
 
-- `version`: An object that contains information about the minimum and latest version of the app.
-- `minimum`: The minimum version of the app that users can use.
-- `latest`: The latest version of the app that is available.
+- `version`: An object that contains information about the minimum and latest version of the app. 
+    - `minimum`: The minimum version of the app that users can use. 
+    - `latest`: The latest version of the app that is available.
 - `status`: An object that contains information about the availability of the app.
-- `active`: A boolean that indicates whether the app is currently in maintenance mode or not.
-- `message`: A map that contains the maintenance messages for different languages. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the corresponding maintenance message in that language. If the app is not in maintenance mode, this field may be null or empty.
+    - `active`: A boolean that indicates whether the app is currently in active or not.
+    - `message`: A map that contains the maintenance messages for different languages. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the corresponding maintenance message in that language. If the app is not in maintenance mode, this field may be null or empty.
 
 ## 🚜 Configuring Firebase Remote Config
 
