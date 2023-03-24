@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
 /// A class representing the result of a version check for the app on the current platform.
@@ -28,7 +29,7 @@ class VersionarteResult {
     this.details,
     this.errorMessage,
   }) : super() {
-    debugPrint('[VERSIONARTE] VersionarteResult: $this');
+    logVersionarte('VersionarteResult: $this');
   }
 
   String? getMessageForLanguage(String code) {

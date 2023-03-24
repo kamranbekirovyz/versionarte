@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
 /// A [VersionarteProvider] that helps retrieve `StoreVersioning` information via
@@ -40,15 +41,15 @@ class RestfulVersionarteProvider extends VersionarteProvider {
       headers.addEntries(_headers!.entries);
     }
 
-    debugPrint('[VERSIONARTE] RESTful API URL: $_url, Request headers: $_headers');
+    logVersionarte('RESTful API URL: $_url, Request headers: $_headers');
 
     final response = await client.get(
       Uri.parse(_url),
       headers: headers,
     );
 
-    debugPrint('[VERSIONARTE] Status code: ${response.statusCode}');
-    debugPrint('[VERSIONARTE] Response body: ${response.body}');
+    logVersionarte('Status code: ${response.statusCode}');
+    logVersionarte('Response body: ${response.body}');
 
     final json = jsonDecode(response.body);
 

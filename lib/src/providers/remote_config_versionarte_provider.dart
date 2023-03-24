@@ -5,6 +5,7 @@ import 'package:firebase_remote_config/firebase_remote_config.dart';
 import 'package:flutter/foundation.dart';
 import 'package:versionarte/src/models/store_versioning.dart';
 import 'package:versionarte/src/providers/versionarte_provider.dart';
+import 'package:versionarte/src/utilities/logger.dart';
 
 /// A [VersionarteProvider] that retrieves [StoreVersioning] information stored in Firebase
 /// Remote Config using the key name "versionarte" or a different key name specified through
@@ -37,8 +38,8 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
 
       storeVersioning = StoreVersioning.fromJson(versionarteDecoded);
     } catch (e, s) {
-      debugPrint('[VERSIONARTE] Exception: $e');
-      debugPrint('[VERSIONARTE] Stack Trace: $s');
+      logVersionarte('Exception: $e');
+      logVersionarte('Stack Trace: $s');
     }
 
     return storeVersioning;

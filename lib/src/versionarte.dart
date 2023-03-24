@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
 /// A utility class that helps to check the version of the app on the device
@@ -38,8 +39,8 @@ class Versionarte {
       final info = await packageInfo;
       final platformVersion = Version.parse(info.version);
 
-      debugPrint('[VERSIONARTE] Current platform version: $platformVersion');
-      debugPrint('[VERSIONARTE] VersionarteProvider: ${versionarteProvider.runtimeType}');
+      logVersionarte('Platform: $defaultTargetPlatform, version: $platformVersion');
+      logVersionarte('VersionarteProvider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
 
@@ -50,7 +51,7 @@ class Versionarte {
         );
       }
 
-      debugPrint('[VERSIONARTE] StoreVersioning: ${const JsonEncoder.withIndent('  ').convert(storeVersioning)}');
+      logVersionarte('StoreVersioning: ${const JsonEncoder.withIndent('  ').convert(storeVersioning)}');
 
       final storeDetails = storeVersioning.storeDetailsForPlatform;
 
@@ -99,8 +100,8 @@ class Versionarte {
         errorMessage: errorMessage,
       );
     } catch (e, s) {
-      debugPrint('[VERSIONARTE] Exception: $e');
-      debugPrint('[VERSIONARTE] Stack Trace: $s');
+      logVersionarte('Exception: $e');
+      logVersionarte('Stack Trace: $s');
 
       return VersionarteResult(
         VersionarteStatus.unknown,
@@ -147,7 +148,7 @@ class Versionarte {
         mode: mode,
       );
     } else {
-      debugPrint('[VERSIONARTE] Opening store for ${Platform.operatingSystem} platform is not supported.');
+      logVersionarte('Opening store for ${Platform.operatingSystem} platform is not supported.');
       return false;
     }
   }
