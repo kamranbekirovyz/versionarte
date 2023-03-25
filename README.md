@@ -4,7 +4,7 @@ Versionarte allows you to remotely manage your Flutter app's versioning and avai
 
 Features you can implement with versionarte:
 - 😈 Force users to update to the latest version of your app before continuing.
-- 💆🏻‍♂️ Have different minimum, latest versions and availability status for each platform.
+- 💆🏻‍♂️ Have different minimum, latest versions and availability status for separate platforms.
 - 🚧 Disable your app for maintenance with custom information text.
 - 🆕 Inform users when a new, optional update is available..
 - 🔗 Launch the App Store on iOS and Play Store on Android.
@@ -19,20 +19,33 @@ To simplify the app versioning process, versionarte offers remote management of 
 
 ## 🕹️ Usage
 
-Before you use, bear in mind that this package uses a specific, not editable JSON format to convey the app's version and availability status to the package. [See the JSON format](#json-format)
+Before using this package, it is important to note that it uses a specific JSON format to convey the app's version and availability status to the package. Please refer to the JSON format section for more information.
 
-Versionarte package helps check the version of the app on a device against the version available on the store. The package uses `package_info_plus` to get the package information and `pub_semver` to parse and compare version numbers.
+Contents:
+- [Getting status](#-getting-status)
+    - [Using Firebase Remote Config](#-using-firebase-remote-config)
+    - [Using RESTful API](#-using-restful-api)
+    - [Using custom VersionarteProvider](#-using-custom-versionarteprovider)
+- [Handling the status](#-handling-the-result)
+- [Redirecting to the stores](#-redirecting-to-the-stores)
+- [Firebase Remote Config setup guide](#-firebase-remote-config-setup-guide)
 
-### Getting `VersionarteResult` object
+### Getting status
 
-To get the `VersionarteResult` object, you need to call the `Versionarte.check` method. This method takes a `VersionarteProvider` instance as a parameter, which is responsible for fetching the versioning information from the remote service. The `Versionarte.check` method returns a `VersionarteResult` object, which contains the result of the versioning check.
+There are multiple ways to obtain the app's version and availability status using this package:
 
-There are two built-in providers that you can use to fetch the versioning information from the remote service: `RemoteConfigVersionarteProvider` and `RestfulVersionarteProvider`. You can also create your own custom provider by extending the `VersionarteProvider` class.
+<!-- Using Firebase Remote Config: This is the recommended method and requires Firebase Remote Config to be set up. Please refer to the Firebase Remote Config setup guide section for more information.
 
-#### Using Firebase Remote Config
-The `RemoteConfigVersionarteProvider` class uses the Firebase Remote Config service to fetch the versioning information. You need to set up the Firebase Remote Config service before using this provider. You can find the official documentation for setting up Firebase Remote Config <a href="https://firebase.google.com/docs/remote-config">here</a>.
+Using RESTful API: This method involves making a RESTful API call to a specified URL to retrieve the JSON file containing the app's version and availability status.
 
-Below is a example of how to use Versionarte with Firebase Remote Config:
+Using custom VersionarteProvider: This method allows you to provide a custom implementation of the VersionarteProvider class to fetch the app's version and availability status from any source you desire.
+
+Please refer to the individual sections for detailed information on how to use each of these methods. -->
+
+### Using Firebase Remote Config
+The `RemoteConfigVersionarteProvider` fetches versioning information stored in FirebaseRemoteConfig with the key name of "versionarte". You need to set up the Firebase Remote Config service before using this provider. See [Firebase Remote Config setup guide](-firebase-remote-config-setup-guide) to learn more about configuration.
+
+Below is a example of how to use versionarte with Firebase Remote Config:
 
 ```dart
 final result = await Versionarte.check(
@@ -45,6 +58,8 @@ The `RemoteConfigVersionarteProvider` has 1 optional parameter:
 
 #### Using RESTful API
 
+Below is a example of how to use versionarte with RESTful API:
+
 ```dart
 final result = await Versionarte.check(
     versionarteProvider: RestfulVersionarteProvider(
@@ -53,9 +68,14 @@ final result = await Versionarte.check(
 );
 ```
 
+The `RestfulVersionarteProvider` has 1 optional parameter:
+- `headers`: used to specify the headers for the request. By default, it's set to an empty map.
+
 #### Using custom VersionarteProvider
 
-If you want to use a custom provider, say you use some other remote service to provide versioning details of your app, you can extend the `VersionarteProvider` class and override the `getStoreVersioning` method. This method is responsible for fetching the versioning information from the remote service and returning it as a `StoreVersioning` object.
+This method allows you to provide a custom implementation of the VersionarteProvider class to fetch the app's version and availability status from any source you desire.
+
+If you want to use a custom provider, say you use some other remote service to provide versioning details of your app, you can extend the VersionarteProvider class and override the getStoreVersioning method. This method is responsible for fetching the versioning information from the remote service and returning it as a StoreVersioning object.
 
 ```dart
 class MyCustomVersionarteProvider extends VersionarteProvider {
@@ -69,7 +89,7 @@ class MyCustomVersionarteProvider extends VersionarteProvider {
   }
 ```
     
-Then, you can use your custom provider in the `Versionarte.check` method:
+Below is a example of how to use versionarte with `MyCustomVersionarteProvider` we created before:
 
 ```dart
 final result = await Versionarte.check(
@@ -77,12 +97,24 @@ final result = await Versionarte.check(
 );
 ```
 
-### Handling the result
+### Handling the status
+
+After fetching the versioning information using the Versionarte.check() method, the method returns a VersionarteResult object, which contains 3 parameters:
+
+The method returns a `VersionarteResult` object, which contains 3 parameters:
+- `status`: the versioning status of the app. It can be one of the following values:
+    - `VersionarteStatus.appInactive`: the app is inactive and should not be used.
+    - `VersionarteStatus.mustUpdate`: the app is active, but the user must update to the latest version.
+    - `VersionarteStatus.shouldUpdate`: the app is active, but the user should update to the latest version.
+    - `VersionarteStatus.upToDate`: the app is active and the user is using the latest version.
+    - `VersionarteStatus.unknown`: the app is active, but the versioning status is unknown.
+- `details`: The version details of the app for the current platform, including messages for when the app is inactive. 
+- 'errorMessage`: The error message if any error occurred while fetching the versioning information.
 
 Then, based on the versioning state, you can decide what to do next. Here's an example of how to handle the different cases:
 
 ```dart
-if (result == VersionarteResult.inactive) {
+if (result == VersionarteResult.appInactive) {
     final message = result.status.getMessageForLanguage('en');
     // TODO: Handle the case where the app is inactive
 } else if (result == VersionarteResult.mustUpdate) {
@@ -98,7 +130,7 @@ Note that you don't need to try-catch the Versionarte.check function, as the cal
 
 Maybe you want to use Firestore, Graphql or any other service to provider `StoreVersioning`? Extend `VersionarteProvider`, override `getStoreVersioning`, fetch serverside data, parse it into a `StoreVersioning` instance using `StoreVersioning.fromJson` factory constructor:
 
-### Redirecting to the store
+### Redirecting to the stores
 
 The `Versionarte.launchStore` method is a utility method provided by the Versionarte package that opens the app's store page in the device's app store app.
 
@@ -143,7 +175,7 @@ Each platform contains two objects:
     - `active`: A boolean that indicates whether the app is currently in active or not.
     - `message`: A map that contains the maintenance messages for different languages. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the corresponding maintenance message in that language. If the app is not in maintenance mode, this field may be null or empty.
 
-## 🚜 Configuring Firebase Remote Config
+## 🚜 Firebase Remote Config setup guide
 
 ## 🐞 Bugs/Requests
 

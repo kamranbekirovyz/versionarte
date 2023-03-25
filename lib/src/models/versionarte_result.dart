@@ -9,7 +9,7 @@ class VersionarteResult {
   ///   - [VersionarteStatus.optional]: A new version is available, but it is optional to update.
   ///   - [VersionarteStatus.mustUpdate]: A new version is available, and the user must update to continue using the app.
   ///   - [VersionarteStatus.shouldUpdate]: The app is up-to-date and no new version is available.
-  ///   - [VersionarteStatus.inactive]: The app is currently inactive, for example due to maintenance.
+  ///   - [VersionarteStatus.appInactive]: The app is currently inactive, for example due to maintenance.
   ///   - [VersionarteStatus.unknown]: An error occurred while checking the versioning status for the current platform.
   final VersionarteStatus status;
 
