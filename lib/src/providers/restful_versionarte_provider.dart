@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:versionarte/src/utilities/logger.dart';
@@ -9,8 +8,11 @@ import 'package:versionarte/versionarte.dart';
 /// A [VersionarteProvider] that helps retrieve `StoreVersioning` information via
 /// sending an HTTP GET request with the given headers to the given URL.
 class RestfulVersionarteProvider extends VersionarteProvider {
-  final String _url;
-  final Map<String, String>? _headers;
+  /// URL of the RESTful API that returns the StoreVersioning information.
+  final String url;
+
+  /// Headers to be sent with the HTTP GET request.
+  final Map<String, String>? headers;
 
   /// Creates a new instance of [RestfulVersionarteProvider].
   ///
@@ -18,10 +20,9 @@ class RestfulVersionarteProvider extends VersionarteProvider {
   ///
   /// The `headers` parameter allows you to set additional headers to be sent with the HTTP GET request.
   const RestfulVersionarteProvider({
-    required String url,
-    Map<String, String>? headers,
-  })  : _url = url,
-        _headers = headers;
+    required this.url,
+    this.headers,
+  });
 
   /// Sends an HTTP GET request to the RESTful API and decodes the response body into a `StoreVersioning` object.
   ///
@@ -31,19 +32,10 @@ class RestfulVersionarteProvider extends VersionarteProvider {
   FutureOr<StoreVersioning?> getStoreVersioning() async {
     final client = http.Client();
 
-    final headers = {
-      HttpHeaders.acceptHeader: 'application/json',
-      HttpHeaders.contentTypeHeader: 'application/json',
-    };
-
-    if (_headers != null) {
-      headers.addEntries(_headers!.entries);
-    }
-
-    logVersionarte('RESTful API URL: $_url, Request headers: $_headers');
+    logVersionarte('RESTful API URL: $url, Request headers: $headers');
 
     final response = await client.get(
-      Uri.parse(_url),
+      Uri.parse(url),
       headers: headers,
     );
 
