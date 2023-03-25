@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
 

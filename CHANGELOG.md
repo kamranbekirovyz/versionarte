@@ -1,3 +1,7 @@
+## 0.8.3
+- Improved `RemoteConfigVersiorteProvider`.
+- Pretty logs and some minor improvements besides almost finished documentation.
+
 ## 0.8.0
 - New updated values for `VersionarteStatus`: upToDate, optionalUpdateAvailable, mandatoryUpdateRequired, appInactive, unknown.
 
