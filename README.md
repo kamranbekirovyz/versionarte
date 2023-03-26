@@ -11,19 +11,19 @@ Features you can implement with versionarte:
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/master/assets/cover.png" alt="cover_picture" />
 
-## 🚀 Motivation
+<!-- ## 🚀 Motivation
 
 Mobile application development is unique in that any changes, whether it be adding new features, fixing bugs, or disabling the app for maintenance, requires submitting a new version to the stores and waiting for approval. Even after approval, users may still need to manually update their app to have the latest version.
 
-To simplify the app versioning process, versionarte offers remote management of app versioning and availability. This makes the app development process more controllable.
+To simplify the app versioning process, versionarte offers remote management of app versioning and availability. This makes the app development process more controllable. -->
 
 ## 🕹️ Usage
 
 Before using this package, it is important to note that it uses a specific JSON format to convey the app's version and availability status to the package. Please refer to the JSON format section for more information.
 
 Contents:
-- [Getting status](#-getting-status)
-    - [Using Firebase Remote Config](#-using-firebase-remote-config)
+- [Getting status](#getting-status)
+    - [Using Firebase Remote Config](#using-firebase-remote-config)
     - [Using RESTful API](#-using-restful-api)
     - [Using custom VersionarteProvider](#-using-custom-versionarteprovider)
 - [Handling the status](#-handling-the-result)
@@ -32,18 +32,13 @@ Contents:
 
 ### Getting status
 
-There are multiple ways to obtain the app's version and availability status using this package:
+There are multiple ways to obtain the app's version and availability status using this package.
 
-<!-- Using Firebase Remote Config: This is the recommended method and requires Firebase Remote Config to be set up. Please refer to the Firebase Remote Config setup guide section for more information.
+Note that you don't need to try-catch the Versionarte.check function, as the called function catches all the errors inside. If anything goes wrong, an instance of VersionarteResult is still returned, with a message property containing the error message. Also, be sure to check the debug console to see the debug-only prints that the package prints.
 
-Using RESTful API: This method involves making a RESTful API call to a specified URL to retrieve the JSON file containing the app's version and availability status.
+#### 1. Using Firebase Remote Config
 
-Using custom VersionarteProvider: This method allows you to provide a custom implementation of the VersionarteProvider class to fetch the app's version and availability status from any source you desire.
-
-Please refer to the individual sections for detailed information on how to use each of these methods. -->
-
-### Using Firebase Remote Config
-The `RemoteConfigVersionarteProvider` fetches versioning information stored in FirebaseRemoteConfig with the key name of "versionarte". You need to set up the Firebase Remote Config service before using this provider. See [Firebase Remote Config setup guide](-firebase-remote-config-setup-guide) to learn more about configuration.
+The `RemoteConfigVersionarteProvider` fetches versioning information stored in Firebase Remote Config with the key name of "versionarte". You need to set up the Firebase Remote Config service before using this provider. See [Firebase Remote Config setup guide](#🚜-firebase-remote-config-setup-guide) to learn more about configuration.
 
 Below is a example of how to use versionarte with Firebase Remote Config:
 
@@ -54,9 +49,9 @@ final result = await Versionarte.check(
 ```
 
 The `RemoteConfigVersionarteProvider` has 1 optional parameter:
-- `keyName`: used to specify the key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". If you want to upload the [configuration JSON](#json-format) using different key name, you can use this parameter to specify the key name.
+- `keyName`: used to specify the key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". If you want to upload the [configuration JSON](#-json-format) using different key name, you can use this parameter to specify the key name.
 
-#### Using RESTful API
+#### 2. Using RESTful API
 
 Below is a example of how to use versionarte with RESTful API:
 
@@ -71,11 +66,9 @@ final result = await Versionarte.check(
 The `RestfulVersionarteProvider` has 1 optional parameter:
 - `headers`: used to specify the headers for the request. By default, it's set to an empty map.
 
-#### Using custom VersionarteProvider
+#### 3. Using custom VersionarteProvider
 
-This method allows you to provide a custom implementation of the VersionarteProvider class to fetch the app's version and availability status from any source you desire.
-
-If you want to use a custom provider, say you use some other remote service to provide versioning details of your app, you can extend the VersionarteProvider class and override the getStoreVersioning method. This method is responsible for fetching the versioning information from the remote service and returning it as a StoreVersioning object.
+If you want to use a custom provider, say you use some other remote service to provide versioning and availability details of your app, you can extend the VersionarteProvider class and override the getStoreVersioning method. This method is responsible for fetching the versioning information from the remote service and returning it as a StoreVersioning object.
 
 ```dart
 class MyCustomVersionarteProvider extends VersionarteProvider {
@@ -124,12 +117,6 @@ if (result == VersionarteResult.appInactive) {
 } 
 ```
 
-There are two other values that you can receive as a result: `VersionarteStatus.upToDate` and `VersionarteStatus.unknown`. But these two are never used mostly.
-
-Note that you don't need to try-catch the Versionarte.check function, as the called function catches all the errors inside. If anything goes wrong, an instance of VersionarteResult is still returned, with a message property containing the error message. Also, be sure to check the debug console to see the debug-only prints that the package prints.
-
-Maybe you want to use Firestore, Graphql or any other service to provider `StoreVersioning`? Extend `VersionarteProvider`, override `getStoreVersioning`, fetch serverside data, parse it into a `StoreVersioning` instance using `StoreVersioning.fromJson` factory constructor:
-
 ### Redirecting to the stores
 
 The `Versionarte.launchStore` method is a utility method provided by the Versionarte package that opens the app's store page in the device's app store app.
@@ -138,7 +125,11 @@ See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/exampl
 
 ## 🖋️ JSON format
 
-versionarte has a specific JSON format, which you must use to provide the versioning details remotely. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, you must always use the structured JSON below:
+versionarte has a specific JSON format, which you must use to provide the versioning and availability details remotely. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, you must always this structure.
+
+Note:
+- You don't need to provide the versioning information for all platforms. Say you only have an Android app, you can just provide the versioning information for Android and leave the iOS and macOS objects empty.
+- When app status is active, you can leave the `message` object empty or `null`.
 
 ```js
 {
@@ -164,7 +155,7 @@ versionarte has a specific JSON format, which you must use to provide the versio
 }
 ```
 
-This JSON object represents the versioning information for an app, including its minimum and latest versions, and the maintenance status of the app. The information is stored separately for three different platforms: Android, iOS, and macOS.
+This JSON object represents the versioning information for an app, including its minimum and latest versions, and the availability status of the app. The information is stored separately for three different platforms: Android, iOS, and macOS.
 
 Each platform contains two objects:
 
@@ -176,6 +167,17 @@ Each platform contains two objects:
     - `message`: A map that contains the maintenance messages for different languages. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the corresponding maintenance message in that language. If the app is not in maintenance mode, this field may be null or empty.
 
 ## 🚜 Firebase Remote Config setup guide
+
+To use `RemoteConfigVersionarteProvider`, you must first set up Firebase Remote Config in your app. You can follow the <a href="https://firebase.google.com/docs/remote-config/get-started?platform=flutter">official Flutter guide</a> to set up Firebase Remote Config in your app.
+
+Assuming you've already set up Firebase Remote Config in your app, below are steps on how to set up versionarte with Firebase Remote Config:
+
+### Step 1: open Remote Config tab
+Navigate to the Remote Config tab of the Firebase Console. You should see a screen similar to the one below:
+
+### Step 2: Upload "versionarte" parameter.
+
+1. Create a new Firebase Remote Config parameter in the Firebase console. The parameter name must be `versionarte` and the default value must be the JSON object that contains the versioning information for your app. See the <a href="
 
 ## 🐞 Bugs/Requests
 
