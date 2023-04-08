@@ -39,8 +39,7 @@ class Versionarte {
       final info = await packageInfo;
       final platformVersion = Version.parse(info.version);
 
-      logVersionarte(
-          'Platform: ${defaultTargetPlatform.name}, version: $platformVersion');
+      logVersionarte('Platform: ${defaultTargetPlatform.name}, version: $platformVersion');
       logVersionarte('Provider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
@@ -48,8 +47,7 @@ class Versionarte {
       if (storeVersioning == null) {
         return VersionarteResult(
           VersionarteStatus.unknown,
-          errorMessage:
-              'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
+          errorMessage: 'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
         );
       }
 
@@ -60,8 +58,7 @@ class Versionarte {
       if (storeDetails == null) {
         return VersionarteResult(
           VersionarteStatus.unknown,
-          errorMessage:
-              'Failed to get store versioning information for $defaultTargetPlatform.',
+          errorMessage: 'Failed to get store versioning information for $defaultTargetPlatform.',
         );
       }
 
@@ -77,11 +74,11 @@ class Versionarte {
         final minimumDifference = platformVersion.compareTo(minimumVersion);
         final latestDifference = platformVersion.compareTo(latestVersion);
 
-        final status = minimumDifference < 0
+        final status = minimumDifference.isNegative
             ? VersionarteStatus.mustUpdate
-            : latestDifference == 0
-                ? VersionarteStatus.upToDate
-                : VersionarteStatus.shouldUpdate;
+            : latestDifference.isNegative
+                ? VersionarteStatus.shouldUpdate
+                : VersionarteStatus.upToDate;
 
         return VersionarteResult(
           status,
@@ -89,8 +86,7 @@ class Versionarte {
         );
       }
     } on FormatException catch (e) {
-      final errorMessage = versionarteProvider
-              is RemoteConfigVersionarteProvider
+      final errorMessage = versionarteProvider is RemoteConfigVersionarteProvider
           ? 'Failed to parse JSON retrieved from Firebase Remote Config. '
               'Check out the example JSON file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. '
               'If you have uploaded it with a custom key name make sure you specify keyName as a constructor parameter to RemoteConfigVersionarteProvider.'
@@ -151,8 +147,7 @@ class Versionarte {
         mode: mode,
       );
     } else {
-      logVersionarte(
-          'Opening store for ${Platform.operatingSystem} platform is not supported.');
+      logVersionarte('Opening store for ${Platform.operatingSystem} platform is not supported.');
       return false;
     }
   }
