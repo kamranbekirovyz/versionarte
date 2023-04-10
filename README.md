@@ -17,26 +17,27 @@ Mobile application development is unique in that any changes, whether it be addi
 
 To simplify the app versioning process, versionarte offers remote management of app versioning and availability. This makes the app development process more controllable. -->
 
-## 🕹️ Usage
+<!-- ## 🕹️ Usage
 
-Before using this package, it is important to note that it uses a specific JSON format to convey the app's version and availability status to the package. Please refer to the JSON format section for more information.
+Before using this package, it is important to note that it uses a specific JSON format to convey the app's version and availability status to the package. Please refer to the JSON format section for more information. -->
 
-Contents:
+<!-- Contents:
 - [Getting status](#getting-status)
     - [Using Firebase Remote Config](#using-firebase-remote-config)
     - [Using RESTful API](#-using-restful-api)
     - [Using custom VersionarteProvider](#-using-custom-versionarteprovider)
 - [Handling the status](#-handling-the-result)
 - [Redirecting to the stores](#-redirecting-to-the-stores)
-- [Firebase Remote Config setup guide](#-firebase-remote-config-setup-guide)
+- [Firebase Remote Config setup guide](#-firebase-remote-config-setup-guide) -->
 
-### Getting status
+## 👨‍🔬 Getting status
 
-There are multiple ways to obtain the app's version and availability status.
+We get `VersionarteResult`, an object containing app status and availability information, by calling `Versionarte.check` method by providing it a `VersionarteProvider` object. The `VersionarteProvider` object is responsible for fetching the versioning information from the remote service. There are 2 built-in providers, `RemoteConfigVersionarteProvider` and `RestfulVersionarteProvider`, which fetches the versioning information from Firebase Remote Config and RESTful API respectively. You can also create your own custom provider by extending the `VersionarteProvider` class.
 
-<!-- Note that you don't need to try-catch the Versionarte.check function, as the called function catches all the errors inside. If anything goes wrong, an instance of VersionarteResult is still returned, with a message property containing the error message. Also, be sure to check the debug console to see the debug-only prints that the package prints. -->
+ℹ️ Note #1: no need to try-catch the `Versionarte.check` method, as the called function catches all the errors inside and if anything goes wrong, an instance of `VersionarteResult` is still returned, with a `message` property containing the error message.  
+ℹ️ Note #2: Be sure to check the debug console to see the debug-only prints that the package prints.
 
-#### 1. Using Firebase Remote Config
+### 1. Using Firebase Remote Config
 
 The `RemoteConfigVersionarteProvider` fetches versioning and availability information stored in Firebase Remote Config with the key name of "versionarte". You need to set up the Firebase Remote Config service before using this provider. See [Firebase Remote Config setup guide](#🚜-firebase-remote-config-setup-guide) to learn more about configuration.
 
@@ -51,7 +52,7 @@ final result = await Versionarte.check(
 The `RemoteConfigVersionarteProvider` has 1 optional parameter:
 - `keyName`: specifies the key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". Specify if you upload the [configuration JSON](#-json-format) using a different key name.
 
-#### 2. Using RESTful API
+### 2. Using RESTful API
 
 The `RestfulVersionarteProvider` fetches versioning and availability information by sending HTTP GET request to the specified URL with optional headers. The response body should be a JSON string that follows the [configuration JSON](#-json-format) format.
 
@@ -68,7 +69,7 @@ final result = await Versionarte.check(
 The `RestfulVersionarteProvider` has 1 optional parameter:
 - `headers`: request headers to send with the HTTP GET request. By default, it's set to an empty map.
 
-#### 3. Using custom VersionarteProvider
+### 3. Using custom VersionarteProvider
 
 If you want to use a custom provider, say you use some other remote service to provide versioning and availability information of your app, extend the `VersionarteProvider` class and override the `getStoreVersioning` method. This method is responsible for fetching the versioning information from the remote service and returning it as a `StoreVersioning` object.
 
@@ -92,7 +93,7 @@ final result = await Versionarte.check(
 );
 ```
 
-### Handling the status
+## 🙌 Handling the status
 
 After fetching the versioning information using the `Versionarte.check()` method, the method returns a `VersionarteResult` object, which contains 3 parameters:
 
@@ -119,7 +120,7 @@ if (result == VersionarteResult.appInactive) {
 } 
 ```
 
-### Redirecting to the stores
+## 🔗 Redirecting to the stores
 
 The `Versionarte.launchStore` method is a utility method provided by the Versionarte package that opens the app's store page in the device's app store app.
 
