@@ -17,16 +17,10 @@ class VersionarteResult {
   /// messages for when the app is inactive.
   final StorePlatformDetails? details;
 
-  /// Error message in case of [VersionarteStatus.unknown] status.
-  final String? errorMessage;
-
   /// Creates a new [VersionarteResult] instance.
-  ///
-  /// If `details` or `message` are not provided, they default to `null`.
   VersionarteResult(
     this.status, {
     this.details,
-    this.errorMessage,
   }) : super() {
     logVersionarte('VersionarteResult: $this');
   }
@@ -38,6 +32,6 @@ class VersionarteResult {
   /// Returns a JSON representation of this object.
   @override
   String toString() {
-    return 'status: $status${errorMessage != null ? 'errorMessage: $errorMessage' : ''}';
+    return 'status: $status';
   }
 }

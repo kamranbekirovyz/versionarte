@@ -11,13 +11,13 @@ Features you can implement with versionarte:
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/master/assets/cover.png" alt="cover_picture" />
 
-## 👨‍🔬 Getting the status
+## 👨‍🔬 Get the status
 
 We get `VersionarteResult` (an object containing app status and availability information), by calling `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from the remote service). 
 
 There are 2 built-in providers, `RemoteConfigVersionarteProvider` and `RestfulVersionarteProvider`, which fetches the versioning information from Firebase Remote Config and RESTful API respectively. You can also create your own custom provider by extending the `VersionarteProvider` class.
 
-ℹ️ No need to try-catch the `Versionarte.check` method, as the it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` is still returned, with a `message` property containing the error.  
+ℹ️ No need to try-catch the `Versionarte.check` method, as the it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is returned.  
 ℹ️ Be sure to check the debug console to see insightful the debug-only prints.
 
 ### 1. Using Firebase Remote Config
@@ -75,18 +75,17 @@ final result = await Versionarte.check(
 );
 ```
 
-## 🙌 Handling the status
+## 🙌 Handle the status
 
 Obtained `VersionarteResult` has 3 parameters:
 
-- `status`: the status of the app. It can be one of the following values:
+- `status`: (VersionarteResult) the status of the app. It can be one of the following values:
     - `VersionarteStatus.appInactive`: the app is inactive, user can't use the app.
     - `VersionarteStatus.mustUpdate`:  there is a mandatory update, user must update before continuing.
     - `VersionarteStatus.shouldUpdate`: there is an optional update, user can continue with and without updating.
     - `VersionarteStatus.upToDate`: the user is using the latest version.
     - `VersionarteStatus.unknown`: versioning status is unknown (some error occured while checking status).
-- `details`: Details for the current platform, including messages for when the app is inactive. 
-- `errorMessage`: The error message if any error occurred while checking.
+- `details`: (StorePlatformDetails) Details for the current platform, including messages for when the app is inactive. 
 
 Then, based on `VersionarteStatus`, you can decide what to do next. Here's an example of how to handle the different cases:
 
@@ -111,7 +110,7 @@ See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/exampl
 
 versionarte requires a specific JSON format for providing versioning and availability details remotely. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, make sure to use this universal JSON structure.
 
-ℹ️ Information for all platforms in the JSON is not necessary: you can provide information for only one platform, or for two platforms, or for all three platforms.
+ℹ️ Information for all platforms in the JSON is not necessary: you can provide information for only one platform, or for two platforms, or for all three platforms.   
 ℹ️ While the app status is active, the `message` can be left empty or set to `null`.
 
 ```js

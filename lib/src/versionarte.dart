@@ -24,14 +24,15 @@ class Versionarte {
     return _packageInfo!;
   }
 
-  /// Checks app versioning status.
+  /// Checks app's versioning and availability status.
   ///
   /// Parameters:
-  /// - `versionarteProvider`: A [VersionarteProvider] instance to retrieve
+  /// - versionarteProvider: A [VersionarteProvider] instance to retrieve
   /// [StoreVersioning] stored remotely.
   ///
-  /// This method returns a [VersionarteResult] instance with the status of the
-  /// app's versioning status.
+  /// Returns:
+  /// - A [Future] that resolves to a [VersionarteResult] instance which contains
+  /// the versioning and availability status of the app.
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
   }) async {
@@ -39,18 +40,15 @@ class Versionarte {
       final info = await packageInfo;
       final platformVersion = Version.parse(info.version);
 
-      logVersionarte(
-          'Platform: ${defaultTargetPlatform.name}, version: $platformVersion');
+      logVersionarte('Platform: ${defaultTargetPlatform.name}, version: $platformVersion');
       logVersionarte('Provider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
 
       if (storeVersioning == null) {
-        return VersionarteResult(
-          VersionarteStatus.unknown,
-          errorMessage:
-              'Failed to get store versioning information using ${versionarteProvider.runtimeType}.',
-        );
+        logVersionarte('Failed to get store versioning information using ${versionarteProvider.runtimeType}.');
+
+        return VersionarteResult(VersionarteStatus.unknown);
       }
 
       logVersionarte('StoreVersioning: ${prettyJson(storeVersioning)}');
@@ -58,11 +56,9 @@ class Versionarte {
       final storeDetails = storeVersioning.storeDetailsForPlatform;
 
       if (storeDetails == null) {
-        return VersionarteResult(
-          VersionarteStatus.unknown,
-          errorMessage:
-              'Failed to get store versioning information for $defaultTargetPlatform.',
-        );
+        logVersionarte('No store details found for platform ${defaultTargetPlatform.name}.');
+
+        return VersionarteResult(VersionarteStatus.unknown);
       }
 
       if (!storeDetails.status.active) {
@@ -89,8 +85,7 @@ class Versionarte {
         );
       }
     } on FormatException catch (e) {
-      final errorMessage = versionarteProvider
-              is RemoteConfigVersionarteProvider
+      final error = versionarteProvider is RemoteConfigVersionarteProvider
           ? 'Failed to parse JSON retrieved from Firebase Remote Config. '
               'Check out the example JSON file at path /versionarte.json, and make sure that the one you\'ve uploaded matches the pattern. '
               'If you have uploaded it with a custom key name make sure you specify keyName as a constructor parameter to RemoteConfigVersionarteProvider.'
@@ -99,19 +94,18 @@ class Versionarte {
                   'Check out the example JSON file at path /versionarte.json, and make sure that endpoint response body matches the pattern.'
               : e.toString();
 
-      return VersionarteResult(
-        VersionarteStatus.unknown,
-        errorMessage: errorMessage,
-      );
-    } catch (e, s) {
-      logVersionarte('Exception: $e');
-      logVersionarte('Stack Trace: $s');
+      logVersionarte(error, error: e);
 
-      return VersionarteResult(
-        VersionarteStatus.unknown,
-        errorMessage: 'An error occurred while checking for updates. '
-            'Check the debug console to see the error and stack trace.',
+      return VersionarteResult(VersionarteStatus.unknown);
+    } catch (e, s) {
+      logVersionarte(
+        'An error occurred while checking for updates. '
+        'Check the debug console to see the error and stack trace.',
+        error: e,
+        stackTrace: s,
       );
+
+      return VersionarteResult(VersionarteStatus.unknown);
     }
   }
 
@@ -151,8 +145,7 @@ class Versionarte {
         mode: mode,
       );
     } else {
-      logVersionarte(
-          'Opening store for ${Platform.operatingSystem} platform is not supported.');
+      logVersionarte('Opening store for ${Platform.operatingSystem} platform is not supported.');
       return false;
     }
   }
