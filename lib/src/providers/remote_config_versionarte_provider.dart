@@ -32,7 +32,8 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     try {
       await FirebaseRemoteConfig.instance.fetch();
 
-      final versionarteString = FirebaseRemoteConfig.instance.getString(keyName);
+      final versionarteString =
+          FirebaseRemoteConfig.instance.getString(keyName);
       final versionarteDecoded = jsonDecode(versionarteString);
 
       storeVersioning = StoreVersioning.fromJson(versionarteDecoded);

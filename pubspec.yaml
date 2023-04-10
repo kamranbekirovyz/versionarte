@@ -1,6 +1,6 @@
 name: versionarte
 description: Remotely manage your Flutter app's versioning and availability.
-version: 0.8.3
+version: 0.8.4
 repository: https://github.com/kamranbekirovyz/versionarte
 home: https://github.com/kamranbekirovyz/versionarte
 

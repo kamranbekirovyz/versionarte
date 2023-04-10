@@ -1,3 +1,7 @@
+## 0.8.4
+- Important bug fix in version comparison.
+- Updated README.
+
 ## 0.8.3
 - Improved `RemoteConfigVersiorteProvider`.
 - Pretty logs and some minor improvements besides almost finished documentation.
