@@ -9,7 +9,7 @@ Features can be implemented with versionarte:
 - 🆕 Inform users when an optional update is available.
 - 🔗 Launch the App Store on iOS and Play Store on Android.
 
-<img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/master/assets/cover.png" alt="cover_picture" />
+<img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/cover.png" alt="cover_picture" />
 
 ## 👨‍🔬 Get the status
 
