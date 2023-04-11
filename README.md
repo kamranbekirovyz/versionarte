@@ -1,8 +1,8 @@
 # versionarte
 
-Versionarte allows you to remotely manage your Flutter app's versioning and availability, with a variety of heplful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
+Remotly manage your Flutter app's versioning and availability, with a variety of heplful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
 
-Features you can implement with versionarte:
+Features can be implemented with versionarte:
 - ✋ Force users to update to the latest version of your app before continuing.
 - 💆🏻‍♂️ Have separate minimum, latest versions and availability status for platforms.
 - 🚧 Disable your app for maintenance with custom information text.
@@ -13,11 +13,11 @@ Features you can implement with versionarte:
 
 ## 👨‍🔬 Get the status
 
-We get `VersionarteResult` (an object containing app status and availability information), by calling `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from the remote service). 
+Get a `VersionarteResult` (an object containing app's status and availability information), by calling `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from the remote service). 
 
 There are 2 built-in providers, `RemoteConfigVersionarteProvider` and `RestfulVersionarteProvider`, which fetches the versioning information from Firebase Remote Config and RESTful API respectively. You can also create your own custom provider by extending the `VersionarteProvider` class.
 
-ℹ️ No need to try-catch the `Versionarte.check` method, as the it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is returned.  
+ℹ️ No need to try-catch the `Versionarte.check` method, as it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is returned.  
 ℹ️ Be sure to check the debug console to see insightful the debug-only prints.
 
 ### 1. Using Firebase Remote Config
@@ -84,10 +84,10 @@ Obtained `VersionarteResult` has 3 parameters:
     - `VersionarteStatus.mustUpdate`:  there is a mandatory update, user must update before continuing.
     - `VersionarteStatus.shouldUpdate`: there is an optional update, user can continue with and without updating.
     - `VersionarteStatus.upToDate`: the user is using the latest version.
-    - `VersionarteStatus.unknown`: versioning status is unknown (some error occured while checking status).
+    - `VersionarteStatus.unknown`: app status is unknown (some error occured while checking status).
 - `details`: (StorePlatformDetails) Details for the current platform, including messages for when the app is inactive. 
 
-Then, based on `VersionarteStatus`, you can decide what to do next. Here's an example of how to handle the different cases:
+Then, based on `VersionarteStatus` handle the status accordingly:
 
 ```dart
 if (result == VersionarteResult.appInactive) {
@@ -108,7 +108,7 @@ See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/exampl
 
 ## 🖋️ JSON format
 
-versionarte requires a specific JSON format for providing versioning and availability details remotely. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, make sure to use this universal JSON structure.
+For providing app's status and availability remotely, versionarte requires a specific JSON format. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, make sure to use this JSON structure.
 
 ℹ️ Information for all platforms in the JSON is not necessary: you can provide information for only one platform, or for two platforms, or for all three platforms.   
 ℹ️ While the app status is active, the `message` can be left empty or set to `null`.
