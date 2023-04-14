@@ -84,7 +84,7 @@ Obtained `VersionarteResult` has 3 parameters:
     - `VersionarteStatus.mustUpdate`:  user must update before continuing.
     - `VersionarteStatus.shouldUpdate`: user can continue with and without updating.
     - `VersionarteStatus.upToDate`: the user's version is up to date.
-    - `VersionarteStatus.unknown`: status is unknown (some error occured while checking status).
+    - `VersionarteStatus.unknown`: error occured while checking status.
 - `details`: (StorePlatformDetails) Details for the current platform, including messages for when the app is inactive. 
 
 Then, based on `status` do the if-else checks:
