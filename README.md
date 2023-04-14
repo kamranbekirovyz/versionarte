@@ -2,6 +2,8 @@
 
 Remotly manage your Flutter app's versioning and availability, with a variety of heplful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
 
+<img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/cover.png" alt="cover_picture" />
+
 Features can be implemented with versionarte:
 - ✋ Force users to update to the latest version of your app before continuing.
 - 💆🏻‍♂️ Have separate minimum, latest versions and availability status for platforms.
@@ -9,16 +11,14 @@ Features can be implemented with versionarte:
 - 🆕 Inform users when an optional update is available.
 - 🔗 Launch the App Store on iOS and Play Store on Android.
 
-<img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/cover.png" alt="cover_picture" />
+## 🏁 Getting started
 
-## 👨‍🔬 Get the status
-
-Get a `VersionarteResult` (an object containing app's status and availability information), by calling `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from the remote service). 
+How this works? Call `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from a remote service) which in turn returns a `VersionarteResult` (an object containing app's versioning and availability information).
 
 There are 2 built-in providers, `RemoteConfigVersionarteProvider` and `RestfulVersionarteProvider`, which fetches the versioning information from Firebase Remote Config and RESTful API respectively. You can also create your own custom provider by extending the `VersionarteProvider` class.
 
 ℹ️ No need to try-catch the `Versionarte.check` method, as it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is returned.  
-ℹ️ Be sure to check the debug console to see insightful the debug-only prints.
+ℹ️ Be sure to check the debug console to see insightful debug-only prints.
 
 ### 1. Using Firebase Remote Config
 
@@ -75,19 +75,19 @@ final result = await Versionarte.check(
 );
 ```
 
-## 🙌 Handle the status
+## 🙌 Handle the result
 
 Obtained `VersionarteResult` has 3 parameters:
 
 - `status`: (VersionarteResult) the status of the app. It can be one of the following values:
-    - `VersionarteStatus.appInactive`: the app is inactive, user can't use the app.
-    - `VersionarteStatus.mustUpdate`:  there is a mandatory update, user must update before continuing.
-    - `VersionarteStatus.shouldUpdate`: there is an optional update, user can continue with and without updating.
-    - `VersionarteStatus.upToDate`: the user is using the latest version.
-    - `VersionarteStatus.unknown`: app status is unknown (some error occured while checking status).
+    - `VersionarteStatus.appInactive`: the app is inactive for usage.
+    - `VersionarteStatus.mustUpdate`:  user must update before continuing.
+    - `VersionarteStatus.shouldUpdate`: user can continue with and without updating.
+    - `VersionarteStatus.upToDate`: the user's version is up to date.
+    - `VersionarteStatus.unknown`: status is unknown (some error occured while checking status).
 - `details`: (StorePlatformDetails) Details for the current platform, including messages for when the app is inactive. 
 
-Then, based on `VersionarteStatus` handle the status accordingly:
+Then, based on `status` do the if-else checks:
 
 ```dart
 if (result == VersionarteResult.appInactive) {
@@ -102,13 +102,20 @@ if (result == VersionarteResult.appInactive) {
 
 ## 🔗 Launching the stores
 
-The `Versionarte.launchStore` method is a utility method provided by the Versionarte package that opens the app's store page in the device's app store app.
+To launch the App Store on iOS and Play Store on Android, use the `Versionarte.launchStore` method by providing it with `appleAppId` (int) for App Store and `androidPackageName` for Play Store.
+
+```dart
+Versionarte.launchStore(
+    appleAppId: 123456789,
+    androidPackageName: 'com.example.app',
+);
+```
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
 
 ## 🖋️ JSON format
 
-For providing app's status and availability remotely, versionarte requires a specific JSON format. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, make sure to use this JSON structure.
+For providing app's status and availability information, versionarte requires a specific JSON. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, make sure to use this JSON format.
 
 ℹ️ Information for all platforms in the JSON is not necessary: you can provide information for only one platform, or for two platforms, or for all three platforms.   
 ℹ️ While the app status is active, the `message` can be left empty or set to `null`.
@@ -141,12 +148,12 @@ This JSON represents information stored separately for three platforms, containi
 
 Each platform contains two objects:
 
-- `version`: Information about the minimum and latest versions of the app:
+- `version`: <!-- Information about the minimum and latest versions of the app: -->
     - `minimum`: The minimum version of the app that users can use. 
     - `latest`: The latest version of the app that is available. 
-- `status`: Information about the availability of the app:
+- `status`: <!-- Information about the availability of the app: -->
     - `active`: A boolean that indicates whether the app is currently active or not.
-    - `message`: A map that contains the maintenance messages for different languages. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the corresponding message in that language. If the app is not in maintenance mode, this field may be empty or set to `null`.
+    - `message`: A map that contains the messages for different languages to be displayed to the user when app is inactive. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the message in that language.
 
 ## 🐞 Bugs/Requests
 
