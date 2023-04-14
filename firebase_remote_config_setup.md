@@ -17,7 +17,7 @@ If you already have some parameters, click the `Add parameter` button to add a n
 
 After clicking on either `Create configuration` or `Add parameter`, you will see the following screen. Fill the `Parameter name (key)` field with `versionarte` and choose `Data type` as `JSON`. 
 
-![](https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/remote-config-setup/name-and-value.png)
+![](https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/remote-config-setup/name-and-type.png)
 
 Then, expand the `Default value` field and fill it with the following JSON:
 
