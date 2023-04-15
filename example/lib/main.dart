@@ -20,40 +20,52 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         brightness: Brightness.dark,
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.dark,
       home: const MyHomePage(),
     );
   }
 }
 
+/// This is a mock class that implements the VersionarteProvider interface not
+/// intended for real use, but only for the example. Most of the time you will
+/// use [RemoteConfigVersionarteProvider] or [RestfulVersionarteProvider] with
+/// remotely stored dynamic values.
 class MockVersionarteProvider extends VersionarteProvider {
   @override
   Future<StoreVersioning?> getStoreVersioning() async {
     await Future.delayed(const Duration(seconds: 2));
-    final mockResponse = {
-      "android": {
-        "minimum": "2.7.1",
-        "latest": "2.8.0",
-        "active": true,
-        "message": {
-          "en": "App is in maintanence mode, please come back later.",
-          "es":
-              "La aplicación está en modo de mantenimiento, vuelva más tarde.",
-        }
-      },
-      "ios": {
-        "minimum": "1.1.1",
-        "latest": "1.2.1",
-        "active": false,
-        "message": {
-          "en": "App is in maintanence mode, please come back later.",
-          "es":
-              "La aplicación está en modo de mantenimiento, vuelva más tarde.",
-        }
-      }
-    };
 
-    return StoreVersioning.fromJson(mockResponse);
+    /// Creating a mocked [StoreVersioning] object with the following values:
+    const mockedStoreVersioning = StoreVersioning(
+      android: StorePlatformDetails(
+        version: VersionDetails(
+          minimum: '1.5.0',
+          latest: '2.5.0',
+        ),
+        status: StatusDetails(
+          active: true,
+          message: {
+            'en': 'This is a message in English',
+            'es': 'Este es un mensaje en español',
+          },
+        ),
+      ),
+      iOS: StorePlatformDetails(
+        version: VersionDetails(
+          minimum: '1.5.0',
+          latest: '2.5.0',
+        ),
+        status: StatusDetails(
+          active: true,
+          message: {
+            'en': 'This is a message in English',
+            'es': 'Este es un mensaje en español',
+          },
+        ),
+      ),
+    );
+
+    return mockedStoreVersioning;
   }
 }
 
@@ -76,17 +88,13 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _checkVersionarte() async {
-    setState(() {
-      _isChecking = true;
-    });
+    setState(() => _isChecking = true);
 
     _versionarteResult = await Versionarte.check(
       versionarteProvider: MockVersionarteProvider(),
     );
 
-    setState(() {
-      _isChecking = false;
-    });
+    setState(() => _isChecking = false);
   }
 
   @override
@@ -95,22 +103,44 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Versionarte Demo'),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (_isChecking)
-              const CircularProgressIndicator()
-            else ...[
-              ListTile(
-                title: const Text('Status'),
-                subtitle: Text(
-                  _versionarteResult.status.toString(),
-                ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (_isChecking)
+            const Center(
+              child: CircularProgressIndicator(),
+            )
+          else ...[
+            const ListTile(
+              title: Text('Local version'),
+              subtitle: Text('1.0.0'),
+            ),
+            ListTile(
+              title: const Text('Store version'),
+              subtitle: Text(
+                '${_versionarteResult.details?.version.toString()}',
               ),
-            ],
+            ),
+            ListTile(
+              title: const Text('Status'),
+              subtitle: Text(_versionarteResult.status.toString()),
+            ),
+            ListTile(
+              title: const Text('Availability information'),
+              subtitle: Text(
+                '${_versionarteResult.details?.status.toString()}',
+              ),
+            ),
+
+            /// This is an example of how to get a message for a specific language.
+            ListTile(
+              title: const Text('Message for English'),
+              subtitle: Text(
+                '${_versionarteResult.details?.status.getMessageForLanguage('en')}',
+              ),
+            ),
           ],
-        ),
+        ],
       ),
     );
   }
