@@ -17,12 +17,12 @@ How this works? Call `Versionarte.check` method by providing it a `VersionartePr
 
 There are 2 built-in providers, `RemoteConfigVersionarteProvider` and `RestfulVersionarteProvider`, which fetches the versioning information from Firebase Remote Config and RESTful API respectively. You can also create your own custom provider by extending the `VersionarteProvider` class.
 
-ℹ️ No need to try-catch the `Versionarte.check` method, as it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is returned.  
-ℹ️ Be sure to check the debug console to see insightful debug-only prints.
+💡 No need to try-catch the `Versionarte.check` method, as it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is returned.  
+💡 Be sure to check the debug console to see insightful debug-only prints.
 
 ### 1. Using Firebase Remote Config
 
-The `RemoteConfigVersionarteProvider` fetches information stored in Firebase Remote Config with the key name of "versionarte". You need to set up the Firebase Remote Config service before using this provider. See [Firebase Remote Config setup guide](#🚜-firebase-remote-config-setup-guide) to learn more about configuration.
+The `RemoteConfigVersionarteProvider` fetches information stored in Firebase Remote Config with the key name of "versionarte". You need to set up the Firebase Remote Config service before using this provider. See [Firebase Remote Config setup guide](https://github.com/kamranbekirovyz/versionarte/blob/main/firebase_remote_config_setup.md#-firebase-remote-config-setup-guide) to learn more about configuration.
 
 Example:
 
@@ -34,6 +34,8 @@ final result = await Versionarte.check(
 
 Optional parameters:
 - `keyName`: key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". Specify if you upload the [configuration JSON](#-json-format) using a different key name.
+- `initializeInternally`: if your project already initializes and configures Firebase Remote Config, set this to `false`. By default, it's set to `true`.
+- `remoteConfigSettings`: settings for Firebase Remote Config if `initializeInternally` set to true. By default, `fetchTimeout` and `minimumFetchInterval` are set to `10 seconds`.
 
 ### 2. Using RESTful API
 
@@ -111,14 +113,17 @@ Versionarte.launchStore(
 );
 ```
 
+💡 `androidPackageName` is optional: if not provided corresponding value obtained from `package_info` will be used.
+💡 It's suggested to test launching store on a real device.
+
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
 
 ## 🖋️ JSON format
 
 For providing app's status and availability information, versionarte requires a specific JSON. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, make sure to use this JSON format.
 
-ℹ️ Information for all platforms in the JSON is not necessary: you can provide information for only one platform, or for two platforms, or for all three platforms.   
-ℹ️ While the app status is active, the `message` can be left empty or set to `null`.
+💡 Information for all platforms in the JSON is not necessary: you can provide information for only one platform, or for two platforms, or for all three platforms.   
+💡 While the app status is active, the `message` can be left empty or set to `null`.
 
 ```js
 {
