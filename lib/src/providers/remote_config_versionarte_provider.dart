@@ -11,16 +11,30 @@ import 'package:versionarte/src/utilities/logger.dart';
 /// the `keyName` constructor parameter.
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
   final String keyName;
+  final bool initializeInternally;
+  final RemoteConfigSettings? remoteConfigSettings;
 
   /// Creates a new instance of [RemoteConfigVersionarteProvider].
   ///
-  /// The `keyName` parameter is used to specify the key name for the Firebase Remote Config to
-  /// fetch. By default, it's set to "versionarte".
-  ///
-  /// To see an example of the JSON file that is uploaded to Firebase Remote Config, check the
-  /// /versionarte.json file.
+  /// Parameters:
+  ///   - `keyName`: key name for the Firebase Remote Config to fetch.
+  /// By default, it's set to "versionarte". Specify if you upload configuration
+  /// JSON using a different key name.
+  ///   - `initializeInternally`: if your project already initializes and
+  /// configures Firebase Remote Config, set this to `false`. By default, it's
+  /// set to `true`.
+  ///   - `remoteConfigSettings`: settings for Firebase Remote Config if
+  /// `initializeInternally` set to true. By default, it's set to:
+  /// ```
+  /// RemoteConfigSettings(
+  ///  fetchTimeout: const Duration(seconds: 10),
+  /// minimumFetchInterval: const Duration(seconds: 10),
+  /// )
+  /// ```
   const RemoteConfigVersionarteProvider({
     this.keyName = 'versionarte',
+    this.initializeInternally = true,
+    this.remoteConfigSettings,
   });
 
   /// Fetches the JSON uploaded to Firebase Remote Config and decodes it into an instance of
@@ -30,10 +44,22 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     StoreVersioning? storeVersioning;
 
     try {
-      await FirebaseRemoteConfig.instance.fetch();
+      if (initializeInternally) {
+        final remoteConfigSettings_ = remoteConfigSettings ??
+            RemoteConfigSettings(
+              fetchTimeout: const Duration(seconds: 10),
+              minimumFetchInterval: const Duration(seconds: 10),
+            );
 
-      final versionarteString =
-          FirebaseRemoteConfig.instance.getString(keyName);
+        await FirebaseRemoteConfig.instance.setConfigSettings(
+          remoteConfigSettings_,
+        );
+        await FirebaseRemoteConfig.instance.fetchAndActivate();
+      } else {
+        await FirebaseRemoteConfig.instance.fetch();
+      }
+
+      final versionarteString = FirebaseRemoteConfig.instance.getString(keyName);
       final versionarteDecoded = jsonDecode(versionarteString);
 
       storeVersioning = StoreVersioning.fromJson(versionarteDecoded);
