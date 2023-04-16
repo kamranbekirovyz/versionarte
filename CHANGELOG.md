@@ -1,3 +1,7 @@
+## 0.8.5
+- Add internal initialization option to `RemoteConfigVersionarteProvider`.
+- Add [Firebase Remote Config setup guide](https://github.com/kamranbekirovyz/versionarte/blob/main/firebase_remote_config_setup.md#-firebase-remote-config-setup-guide)
+
 ## 0.8.4
 - Important bug fix in version comparison.
 - Updated README.

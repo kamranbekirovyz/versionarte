@@ -40,13 +40,15 @@ class Versionarte {
       final info = await packageInfo;
       final platformVersion = Version.parse(info.version);
 
-      logVersionarte('Platform: ${defaultTargetPlatform.name}, version: $platformVersion');
+      logVersionarte(
+          'Platform: ${defaultTargetPlatform.name}, version: $platformVersion');
       logVersionarte('Provider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
 
       if (storeVersioning == null) {
-        logVersionarte('Failed to get store versioning information using ${versionarteProvider.runtimeType}.');
+        logVersionarte(
+            'Failed to get store versioning information using ${versionarteProvider.runtimeType}.');
 
         return VersionarteResult(VersionarteStatus.unknown);
       }
@@ -56,7 +58,8 @@ class Versionarte {
       final storeDetails = storeVersioning.storeDetailsForPlatform;
 
       if (storeDetails == null) {
-        logVersionarte('No store details found for platform ${defaultTargetPlatform.name}.');
+        logVersionarte(
+            'No store details found for platform ${defaultTargetPlatform.name}.');
 
         return VersionarteResult(VersionarteStatus.unknown);
       }
@@ -145,7 +148,8 @@ class Versionarte {
         mode: mode,
       );
     } else {
-      logVersionarte('Opening store for ${Platform.operatingSystem} platform is not supported.');
+      logVersionarte(
+          'Opening store for ${Platform.operatingSystem} platform is not supported.');
       return false;
     }
   }
