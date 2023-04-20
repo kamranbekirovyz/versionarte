@@ -5,19 +5,19 @@ Remotely manage your Flutter app's versioning and availability, with a variety o
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/cover.png" alt="cover_picture" />
 
 Features can be implemented with versionarte:
-- ✋ Force users to update to the latest version of your app before continuing.
-- 💆🏻‍♂️ Have separate minimum, latest versions and availability status for platforms.
-- 🚧 Disable your app for maintenance with custom information text.
-- 🆕 Inform users when an optional update is available.
-- 🔗 Launch the App Store on iOS and Play Store on Android.
+- ✋ Force users to update to the latest version of your app before continuing
+- 💆🏻‍♂️ Have separate minimum, latest versions and availability status for platforms
+- 🚧 Disable your app for maintenance with custom information text
+- 🆕 Inform users when an optional update is available
+- 🔗 Launch the App Store on iOS and Play Store on Android
 
 ## 🏁 Getting started
 
-How this works? Call `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from a remote service) which in turn returns a `VersionarteResult` (an object containing app's versioning and availability information).
+How this works? Call `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from a remote service) which returns a `VersionarteResult` (an object containing app's versioning and availability information).
 
-There are 2 built-in providers, `RemoteConfigVersionarteProvider` and `RestfulVersionarteProvider`, which fetches the versioning information from Firebase Remote Config and RESTful API respectively. You can also create your own custom provider by extending the `VersionarteProvider` class.
+There are 2 built-in providers, [RemoteConfigVersionarteProvider](#1-using-firebase-remote-config) and [RestfulVersionarteProvider](#2-using-restful-api), which fetches the versioning information from Firebase Remote Config and RESTful API respectively. You can also create your own custom provider by extending the [VersionarteProvider](#3-using-custom-versionarteprovider) class.
 
-💡 No need to try-catch the `Versionarte.check` method, as it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is returned.  
+💡 No need to try-catch the `Versionarte.check` method, as it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is still returned.  
 💡 Be sure to check the debug console to see insightful debug-only prints.
 
 ### 1. Using Firebase Remote Config
@@ -33,13 +33,13 @@ final result = await Versionarte.check(
 ```
 
 Optional parameters:
-- `keyName`: key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". Specify if you upload the [configuration JSON](#-json-format) using a different key name.
+- `keyName`: key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". Specify if you upload the [configuration JSON](#%EF%B8%8F-configuration-json) using a different key name.
 - `initializeInternally`: if your project already initializes and configures Firebase Remote Config, set this to `false`. By default, it's set to `true`.
 - `remoteConfigSettings`: settings for Firebase Remote Config if `initializeInternally` set to true. By default, `fetchTimeout` and `minimumFetchInterval` are set to `10 seconds`.
 
 ### 2. Using RESTful API
 
-The `RestfulVersionarteProvider` fetches versioning and availability information by sending HTTP GET request to the specified URL with optional headers. The response body should be a JSON string that follows the [configuration JSON](#-json-format) format.
+The `RestfulVersionarteProvider` fetches versioning and availability information by sending HTTP GET request to the specified URL with optional headers. The response body should be a JSON string that follows the [configuration JSON](#%EF%B8%8F-configuration-json) format.
 
 Example:
 
@@ -104,7 +104,7 @@ if (result == VersionarteResult.appInactive) {
 
 ## 🔗 Launching the stores
 
-To launch the App Store on iOS and Play Store on Android, use the `Versionarte.launchStore` method by providing it with `appleAppId` (int) for App Store and `androidPackageName` for Play Store.
+To launch the App Store on iOS and Play Store on Android, use the `Versionarte.launchStore` method by providing it with `appleAppId` (int) for App Store and `androidPackageName` (String) for Play Store.
 
 ```dart
 Versionarte.launchStore(
@@ -118,9 +118,9 @@ Versionarte.launchStore(
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
 
-## 🖋️ JSON format
+## 🖋️ Configuration JSON
 
-For providing app's status and availability information, versionarte requires a specific JSON. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, make sure to use this JSON format.
+For providing app's status and availability information, versionarte requires a specific JSON format. Whether you're using `RemoteConfigVersionarteProvider`, `RestfulVersionarteProvider`, or a custom `VersionarteProvider`, make sure to use this JSON format.
 
 💡 Information for all platforms in the JSON is not necessary: you can provide information for only one platform, or for two platforms, or for all three platforms.   
 💡 While the app status is active, the `message` can be left empty or set to `null`.
@@ -154,11 +154,11 @@ This JSON represents information stored separately for three platforms, containi
 Each platform contains two objects:
 
 - `version`:
-    - `minimum`: The minimum version of the app that users can use. 
-    - `latest`: The latest version of the app that is available. 
+    - `minimum`: The minimum version of the app users can use. 
+    - `latest`: The latest version of the app available. 
 - `status`:
     - `active`: A boolean that indicates whether the app is currently active or not.
-    - `message`: A map that contains the messages for different languages to be displayed to the user when app is inactive. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the message in that language.
+    - `message`: A Map that contains the messages for different languages to be displayed to the user when app is inactive. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the message in that language.
 
 ## 🐞 Bugs/Requests
 

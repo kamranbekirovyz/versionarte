@@ -1,8 +1,8 @@
 ## 🚜 Firebase Remote Config setup guide
 
-To use the `RemoteConfigVersionarteProvider`, you don't need to manually add `firebase_remote_config` to your `pubspec.yaml` file as it's already included as a dependency of `versionarte` package.
+To use the `RemoteConfigVersionarteProvider`, you don't need to add `firebase_remote_config` to your project's `pubspec.yaml` as it's already included as a dependency of `versionarte` package.
 
-However, you need to add a new parameter to your Firebase Remote Config to contain the versioning information for your app. Here are the steps to follow:
+However, you need to add a new parameter to your Firebase Remote Config porject to contain the relevant information for your app. Here are the steps to follow:
 
 ### Step 1: Open Remote Config dashboard
 Go to <a href="https://console.firebase.google.com/">Firebase Console</a> website and select your project. Then, click on the `Remote Config` button.
@@ -21,7 +21,7 @@ Fill the `Parameter name (key)` field with `versionarte` and choose `Data type` 
 
 ![](https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/remote-config-setup/name-and-type.png)
 
-Then, expand the `Default value` field and fill it with the `JSON` which derived from <a href="https://github.com/kamranbekirovyz/versionarte#%EF%B8%8F-json-format" target="_blank">versionarte JSON format</a> in a way that it represents the information for your app.
+Then, expand the `Default value` field and fill it with the `JSON` which derived from <a href="https://github.com/kamranbekirovyz/versionarte#%EF%B8%8F-json-format" target="_blank">versionarte configuration JSON</a> in a way that it represents the information for your app.
 
 ![](https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/remote-config-setup/add-value.png)
 
@@ -31,7 +31,7 @@ When you click on the `Save` button, the pop-up will be closed. Click on the `Sa
 
 ### Step 3: Publish the changes
 
-Click `Publish` button to publish the changes.
+Click `Publish changes` button to publish the changes.
 
 ![](https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/remote-config-setup/publish-changes.png)
 
@@ -41,4 +41,4 @@ To update the value of the `versionarte` parameter, edit the existing one follow
 
 ![](https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/remote-config-setup/edit-value.png)
 
-✅ By following these steps, you should now have the versionarte parameter in your Firebase Remote Config, which you can use to manage your app's versioning information.
+🎉 By following these steps, you should now have the versionarte parameter in your Firebase Remote Config, which you can use to manage your app's versioning and availability.
