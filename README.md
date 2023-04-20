@@ -1,6 +1,6 @@
 # versionarte
 
-Remotly manage your Flutter app's versioning and availability, with a variety of heplful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
+Remotely manage your Flutter app's versioning and availability, with a variety of heplful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/cover.png" alt="cover_picture" />
 
@@ -153,10 +153,10 @@ This JSON represents information stored separately for three platforms, containi
 
 Each platform contains two objects:
 
-- `version`: <!-- Information about the minimum and latest versions of the app: -->
+- `version`:
     - `minimum`: The minimum version of the app that users can use. 
     - `latest`: The latest version of the app that is available. 
-- `status`: <!-- Information about the availability of the app: -->
+- `status`:
     - `active`: A boolean that indicates whether the app is currently active or not.
     - `message`: A map that contains the messages for different languages to be displayed to the user when app is inactive. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the message in that language.
 

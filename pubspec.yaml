@@ -3,6 +3,7 @@ description: Remotely manage your Flutter app's versioning and availability.
 version: 0.8.5
 repository: https://github.com/kamranbekirovyz/versionarte
 home: https://github.com/kamranbekirovyz/versionarte
+issue_tracker: https://github.com/kamranbekirovyz/versionarte/issues
 
 environment:
   sdk: '>=2.12.2 <3.0.0'
