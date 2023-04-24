@@ -1,6 +1,6 @@
 # versionarte
 
-Remotely manage your Flutter app's versioning and availability, with a variety of heplful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
+Remotely manage your Flutter app's versioning and availability, with a variety of helpful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/cover.png" alt="cover_picture" />
 
@@ -22,7 +22,7 @@ There are 2 built-in providers, [RemoteConfigVersionarteProvider](#1-using-fireb
 
 ### 1. Using Firebase Remote Config
 
-The `RemoteConfigVersionarteProvider` fetches information stored in Firebase Remote Config with the key name of "versionarte". You need to set up the Firebase Remote Config service before using this provider. See [Firebase Remote Config setup guide](https://github.com/kamranbekirovyz/versionarte/blob/main/firebase_remote_config_setup.md#-firebase-remote-config-setup-guide) to learn more about configuration.
+The `RemoteConfigVersionarteProvider` fetches information stored in Firebase Remote Config with the key name of "versionarte". You need to set up the Firebase Remote Config service before using this provider. See <a href="https://github.com/kamranbekirovyz/versionarte/blob/main/firebase_remote_config_setup.md#-firebase-remote-config-setup-guide" target="_blank">Firebase Remote Config setup guide</a> to learn more about configuration.
 
 Example:
 

@@ -21,7 +21,7 @@ Fill the `Parameter name (key)` field with `versionarte` and choose `Data type` 
 
 ![](https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/remote-config-setup/name-and-type.png)
 
-Then, expand the `Default value` field and fill it with the `JSON` which derived from <a href="https://github.com/kamranbekirovyz/versionarte#%EF%B8%8F-json-format" target="_blank">versionarte configuration JSON</a> in a way that it represents the information for your app.
+Then, expand the `Default value` field and fill it with the `JSON` which derived from <a href="https://github.com/kamranbekirovyz/versionarte#%EF%B8%8F-configuration-json" target="_blank">versionarte configuration JSON</a> in a way that it represents the information for your app.
 
 ![](https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/remote-config-setup/add-value.png)
 
