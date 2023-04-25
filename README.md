@@ -92,8 +92,8 @@ Obtained `VersionarteResult` has 3 parameters:
 Then, based on `status` do the if-else checks:
 
 ```dart
-if (result == VersionarteResult.appInactive) {
-    final message = result.status.getMessageForLanguage('en');
+if (result.status == VersionarteResult.appInactive) {
+    final message = result.details.status.getMessageForLanguage('en');
     // TODO: Handle the case where the app is inactive
 } else if (result == VersionarteResult.mustUpdate) {
     // TODO: Handle the case where an update is required
