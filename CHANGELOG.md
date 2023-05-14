@@ -1,3 +1,8 @@
+## 0.8.8
+- Fix some analyzer warnings.
+- Upgrade dependencies.
+- Update dependency constraints to `sdk: '>=2.18.0 <4.0.0'`
+
 ## 0.8.7
 - Fix errors in README and prepare for publishing.
 

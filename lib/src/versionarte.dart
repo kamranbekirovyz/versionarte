@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -39,9 +38,9 @@ class Versionarte {
     try {
       final info = await packageInfo;
       final platformVersion = Version.parse(info.version);
+      final platformName = Platform.operatingSystem;
 
-      logVersionarte(
-          'Platform: ${defaultTargetPlatform.name}, version: $platformVersion');
+      logVersionarte('Platform: $platformName, version: $platformVersion');
       logVersionarte('Provider: ${versionarteProvider.runtimeType}');
 
       final storeVersioning = await versionarteProvider.getStoreVersioning();
@@ -58,8 +57,7 @@ class Versionarte {
       final storeDetails = storeVersioning.storeDetailsForPlatform;
 
       if (storeDetails == null) {
-        logVersionarte(
-            'No store details found for platform ${defaultTargetPlatform.name}.');
+        logVersionarte('No store details found for platform $platformName.');
 
         return VersionarteResult(VersionarteStatus.unknown);
       }
