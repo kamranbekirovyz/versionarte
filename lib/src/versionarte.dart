@@ -28,12 +28,14 @@ class Versionarte {
   /// Parameters:
   /// - versionarteProvider: A [VersionarteProvider] instance to retrieve
   /// [StoreVersioning] stored remotely.
+  /// - useBuildNumber: A boolean value that indicates whether to use the build number (integer) instead of the semantic version (string) to compare the app's version against the store's version. Defaults to `false`.
   ///
   /// Returns:
   /// - A [Future] that resolves to a [VersionarteResult] instance which contains
   /// the versioning and availability status of the app.
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
+    bool useBuildNumber = false,
   }) async {
     try {
       final info = await packageInfo;
@@ -65,6 +67,36 @@ class Versionarte {
       if (!storeDetails.status.active) {
         return VersionarteResult(
           VersionarteStatus.appInactive,
+          details: storeDetails,
+        );
+      } else if (useBuildNumber) {
+        final platformBuildNumber = int.tryParse(info.buildNumber);
+        final minimumBuildNumber = int.tryParse(storeDetails.version.minimum);
+        final latestBuildNumber = int.tryParse(storeDetails.version.latest);
+
+        if (platformBuildNumber == null) {
+          throw const FormatException('Failed to parse build number from platform version. the build number must be an integer.');
+        }
+
+        if (minimumBuildNumber == null) {
+          throw const FormatException('Failed to parse build number from minimum version. the build number must be an integer.');
+        }
+
+        if (latestBuildNumber == null) {
+          throw const FormatException('Failed to parse build number from latest version. the build number must be an integer.');
+        }
+
+        final minimumDifference = platformBuildNumber.compareTo(minimumBuildNumber);
+        final latestDifference = platformBuildNumber.compareTo(latestBuildNumber);
+
+        final status = minimumDifference.isNegative
+            ? VersionarteStatus.mustUpdate
+            : latestDifference.isNegative
+                ? VersionarteStatus.shouldUpdate
+                : VersionarteStatus.upToDate;
+
+        return VersionarteResult(
+          status,
           details: storeDetails,
         );
       } else {
