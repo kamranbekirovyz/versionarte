@@ -10,3 +10,4 @@ export 'src/providers/versionarte_provider.dart';
 export 'src/models/store_versioning.dart';
 export 'src/models/versionarte_result.dart';
 export 'src/models/versionarte_status.dart';
+export 'src/models/versionarte_comparator.dart';
