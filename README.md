@@ -142,7 +142,7 @@ For providing app's status and availability information, versionarte requires a 
     },
     "iOS": {
         // same data we used for "android"
-    }
+    },
     "macOS": {
         // same data we used for "android"
     }
@@ -175,9 +175,9 @@ And also you should be making sure you provide build number in the JSON too:
             "minimum": 2, // <--- build number
             "latest": 3 // <--- build number
         }
-        ...rest of the JSON
+        // ...rest of the JSON
     }
-    ...rest of the JSON
+    // ...rest of the JSON
 }
 ```
 
