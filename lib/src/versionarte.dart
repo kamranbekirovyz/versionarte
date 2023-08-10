@@ -29,7 +29,7 @@ class Versionarte {
   /// Parameters:
   /// - versionarteProvider: A [VersionarteProvider] instance to retrieve
   /// [StoreVersioning] stored remotely.
-  /// - useBuildNumber: A boolean value that indicates whether to use the build number (integer) instead of the semantic version (string) to compare the app's version against the store's version. Defaults to `false`.
+  /// - versionarteComparator: A [VersionarteComparator] instance to customize the comparison technique.
   ///
   /// Returns:
   /// - A [Future] that resolves to a [VersionarteResult] instance which contains
