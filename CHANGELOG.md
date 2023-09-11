@@ -1,3 +1,7 @@
+## 0.9.0
+- Upgrade dependencies: firebase_remote_config, http, package_info_plus, url_launcher
+- Update dependency constraints to `sdk: '>=3.0.0 <4.0.0'`
+
 ## 0.8.8
 - Fix some analyzer warnings.
 - Upgrade dependencies.
