@@ -12,10 +12,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_remote_config: ^4.2.5
-  http: ^1.1.0
-  package_info_plus: ^4.1.0
-  url_launcher: ^6.1.12
+  firebase_remote_config: ^4.3.8
+  http: ^1.1.2
+  package_info_plus: ^5.0.1
+  url_launcher: ^6.2.1
   pub_semver: ^2.1.4
 
 dev_dependencies:
