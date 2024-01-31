@@ -104,12 +104,12 @@ if (result.status == VersionarteResult.appInactive) {
 
 ## 🔗 Launching the stores
 
-To launch the App Store on iOS and Play Store on Android, use the `Versionarte.launchStore` method by providing it with `appleAppId` (int) for App Store and `androidPackageName` (String) for Play Store.
+To launch the App Store on iOS and Play Store on Android, use the `Versionarte.launchStore` method by providing it with `appStoreUrl` (String) for App Store and `androidPackageName` (String) for Play Store.
 
 ```dart
 Versionarte.launchStore(
-    appleAppId: 123456789,
-    androidPackageName: 'com.example.app',
+    appStoreUrl: 'https://apps.apple.com/az/app/librokit-books-quotes-ai/id6472595860',
+    androidPackageName: 'app.librokit',
 );
 ```
 
