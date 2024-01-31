@@ -1,3 +1,6 @@
+## 0.9.2
+- Fixed App Store redirection by replacing `appleAppId` with `appStoreUrl` directly to be safe.
+
 ## 0.9.1
 - Upgrade dependencies: firebase_remote_config, http, package_info_plus, url_launcher
 
