@@ -115,7 +115,7 @@ class Versionarte {
   /// If launch the store for the platform is not supported returns `false`.
   ///
   /// Parameters:
-  ///   - `appleAppId` (int): The app ID of the app on the App Store (iOS).
+  ///   - `appStoreUrl` (String): The URL of the app on the App Store (iOS)
   ///     If the app is not published on the App Store, pass `null`.
   ///   - `androidPackageName` (String): The package name of the app (Android)
   ///     retrieved automatically from the device's `package_info` package
@@ -124,7 +124,7 @@ class Versionarte {
   ///   - A `Future<bool>` that indicates whether the URL was successfully
   ///     launched or not.
   static Future<bool> launchStore({
-    required int? appleAppId,
+    String? appStoreUrl,
     String? androidPackageName,
   }) async {
     const mode = LaunchMode.externalApplication;
@@ -138,16 +138,15 @@ class Versionarte {
         ),
         mode: mode,
       );
-    } else if (Platform.isIOS) {
+    } else if (Platform.isIOS && appStoreUrl != null) {
       return launchUrl(
-        Uri.parse(
-          'https://apps.apple.com/app/id$appleAppId',
-        ),
+        Uri.parse(appStoreUrl),
         mode: mode,
       );
     } else {
       logVersionarte(
-          'Opening store for ${Platform.operatingSystem} platform is not supported.');
+        'Opening store for ${Platform.operatingSystem} platform is not supported.',
+      );
       return false;
     }
   }
