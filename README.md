@@ -11,7 +11,22 @@ Features can be implemented with versionarte:
 - 🆕 Inform users about an optional update availability
 - 🔗 Launch the App Store on iOS and Play Store on Android
 
-## 📡 Getting status and availability information
+## 🚀 Getting Started
+
+Add the package to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  versionarte: <latest_version>
+```
+
+Import the package in your Dart code:
+
+```dart
+import 'package:versionarte/versionarte.dart';
+```
+
+## 📡 Obtain the status
 
 Call `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from a remote service) to get a `VersionarteResult` (an object containing app's versioning and availability information).
 
@@ -74,7 +89,7 @@ final result = await Versionarte.check(
 );
 ```
 
-## 🎯 Handle the result
+## 🎯 Handle the status
 
 Obtained `VersionarteResult` has 3 parameters:
 
