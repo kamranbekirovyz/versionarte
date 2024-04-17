@@ -4,13 +4,13 @@ enum VersionarteStatus {
   upToDate,
 
   /// There is a new version available, but it is not mandatory to update.
-  shouldUpdate,
+  outdated,
 
   /// There is a new version available and the user must update to continue using the app.
-  mustUpdate,
+  forcedUpdate,
 
   /// The app is not currently available, for example due to maintenance.
-  appInactive,
+  inactive,
 
   /// An error occurred while checking.
   ///

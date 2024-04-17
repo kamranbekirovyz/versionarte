@@ -82,9 +82,9 @@ final result = await Versionarte.check(
 Obtained `VersionarteResult` has 3 parameters:
 
 - `status`: (VersionarteResult) the status of the app. It can be one of the following values:
-    - `VersionarteStatus.appInactive`: the app is inactive for usage.
-    - `VersionarteStatus.mustUpdate`:  user must update before continuing.
-    - `VersionarteStatus.shouldUpdate`: user can continue with and without updating.
+    - `VersionarteStatus.inactive`: the app is inactive for usage.
+    - `VersionarteStatus.forcedUpdate`:  user must update before continuing.
+    - `VersionarteStatus.outdated`: user can continue with and without updating.
     - `VersionarteStatus.upToDate`: the user's version is up to date.
     - `VersionarteStatus.unknown`: error occured while checking status.
 - `details`: (StorePlatformDetails) Details for the current platform, including messages for when the app is inactive. 
