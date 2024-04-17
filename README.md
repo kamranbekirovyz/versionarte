@@ -1,24 +1,21 @@
 # versionarte
 
-Remotely manage your Flutter app's versioning and availability, with a variety of helpful, and in some cases life-saving features with total freedom over the UI allowing you to customize the user experience to fit your app's branding and style.
+Force update, show update indicator and disable the app for maintenance with total freedom over the UI.
 
 <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/cover.png" alt="cover_picture" />
 
 Features can be implemented with versionarte:
-- ✋ Force users to update to the latest version of your app before continuing
-- 💆🏻‍♂️ Have separate minimum, latest versions and availability status for platforms
-- 🚧 Disable your app for maintenance with custom information text
-- 🆕 Inform users when an optional update is available
+- ✋ Force users to update to the latest version
+- 💆🏻‍♂️ Have separate values for each platform
+- 🚧 Disable app for maintenance with custom informative text
+- 🆕 Inform users about an optional update availability
 - 🔗 Launch the App Store on iOS and Play Store on Android
 
-## 🏁 Getting started
+## 📡 Getting status and availability information
 
-How this works? Call `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from a remote service) which returns a `VersionarteResult` (an object containing app's versioning and availability information).
+Call `Versionarte.check` method by providing it a `VersionarteProvider` (an object responsible for fetching the versioning information from a remote service) to get a `VersionarteResult` (an object containing app's versioning and availability information).
 
 There are 2 built-in providers, [RemoteConfigVersionarteProvider](#1-using-firebase-remote-config) and [RestfulVersionarteProvider](#2-using-restful-api), which fetches the versioning information from Firebase Remote Config and RESTful API respectively. You can also create your own custom provider by extending the [VersionarteProvider](#3-using-custom-versionarteprovider) class.
-
-💡 No need to try-catch the `Versionarte.check` method, as it catches all the errors internally and if something goes wrong, an instance of `VersionarteResult` with status `VersionarteStatus.unknown` is still returned.  
-💡 Be sure to check the debug console to see insightful debug-only prints.
 
 ### 1. Using Firebase Remote Config
 
@@ -33,7 +30,7 @@ final result = await Versionarte.check(
 ```
 
 Optional parameters:
-- `keyName`: key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". Specify if you upload the [configuration JSON](#%EF%B8%8F-configuration-json) using a different key name.
+- `keyName`: key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". Specify if you upload the [configuration JSON](#-configuration-json) using a different key name.
 - `initializeInternally`: if your project already initializes and configures Firebase Remote Config, set this to `false`. By default, it's set to `true`.
 - `remoteConfigSettings`: settings for Firebase Remote Config if `initializeInternally` set to true. By default, `fetchTimeout` and `minimumFetchInterval` are set to `10 seconds`.
 
@@ -77,7 +74,7 @@ final result = await Versionarte.check(
 );
 ```
 
-## 🙌 Handle the result
+## 🎯 Handle the result
 
 Obtained `VersionarteResult` has 3 parameters:
 
@@ -92,19 +89,19 @@ Obtained `VersionarteResult` has 3 parameters:
 Then, based on `status` do the if-else checks:
 
 ```dart
-if (result.status == VersionarteResult.appInactive) {
+if (result.status == VersionarteResult.inactive) {
     final message = result.details.status.getMessageForLanguage('en');
     // TODO: Handle the case where the app is inactive
-} else if (result == VersionarteResult.mustUpdate) {
+} else if (result == VersionarteResult.forcedUpdate) {
     // TODO: Handle the case where an update is required
-} else if (result == VersionarteResult.shouldUpdate) {
+} else if (result == VersionarteResult.upToDate) {
     // TODO: Handle the case where an update is optional
 } 
 ```
 
 ## 🔗 Launching the stores
 
-To launch the App Store on iOS and Play Store on Android, use the `Versionarte.launchStore` method by providing it with `appStoreUrl` (String) for App Store and `androidPackageName` (String) for Play Store.
+To launch the App Store on iOS and Play Store on Android, use the `Versionarte.launchStore` method by providing it with `appStoreUrl` for App Store and `androidPackageName` for Play Store.
 
 ```dart
 Versionarte.launchStore(
@@ -114,7 +111,7 @@ Versionarte.launchStore(
 ```
 
 💡 `androidPackageName` is optional: if not provided corresponding value obtained from `package_info` will be used.
-💡 It's suggested to test launching store on a real device.
+💡 Launching store won't work on iOS simulator due to its limitations.
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
 
@@ -160,9 +157,9 @@ Each platform contains two objects:
     - `active`: A boolean that indicates whether the app is currently active or not.
     - `message`: A Map that contains the messages for different languages to be displayed to the user when app is inactive. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the message in that language.
 
-## 🐞 Bugs/Requests
+## 🐞 Faced issues?
 
-If you encounter any problems please open an issue. If you feel the library is missing a feature, please raise a ticket on GitHub and we'll look into it. Pull requests are welcome.
+If you encounter any problems or you feel the library is missing a feature, please <a href=https://github.com/kamranbekirovyz/versionarte/issues>raise a ticket on GitHub</a> and U'll look into it. 
 
 ## 📃 License
 
