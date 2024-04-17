@@ -159,7 +159,7 @@ Each platform contains two objects:
 
 ## 🐞 Faced issues?
 
-If you encounter any problems or you feel the library is missing a feature, please <a href=https://github.com/kamranbekirovyz/versionarte/issues>raise a ticket on GitHub</a> and U'll look into it. 
+If you encounter any problems or you feel the library is missing a feature, please raise a ticket on <a href=https://github.com/kamranbekirovyz/versionarte/issues>GitHub</a> and I'll look into it. 
 
 ## 📃 License
 
