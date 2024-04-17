@@ -51,7 +51,7 @@ Optional parameters:
 
 ### 2. Using RESTful API
 
-The `RestfulVersionarteProvider` fetches versioning and availability information by sending HTTP GET request to the specified URL with optional headers. The response body should be a JSON string that follows the [configuration JSON](#%EF%B8%8F-configuration-json) format.
+The `RestfulVersionarteProvider` fetches versioning and availability information by sending HTTP GET request to the specified URL with optional headers. The response body should be a JSON string that follows the [configuration JSON](#-configuration-json) format.
 
 Example:
 

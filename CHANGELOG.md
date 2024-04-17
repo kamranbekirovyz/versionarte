@@ -1,3 +1,9 @@
+## 1.0.0
+
+versionarte reaches its first stable version. 🎉
+
+- **BREAKING CHANGE**: Updated `VersionarteStatus` values: `upToDate`, `forcedUpdate`, `outdated`, `inactive`, `unknown`.
+
 ## 0.9.2
 - Fixed App Store redirection by replacing `appleAppId` with `appStoreUrl` directly to be safe.
 
