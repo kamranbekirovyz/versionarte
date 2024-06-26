@@ -4,6 +4,7 @@
             "minimum": "2.7.0",
             "latest": "2.8.0"
         },
+        "download_url": "https://play.google.com/store/apps/details?id=",
         "status": {
             "active": true,
             "message": {
@@ -17,6 +18,7 @@
             "minimum": "2.7.0",
             "latest": "2.8.1"
         },
+        "download_url": "https://itunes.apple.com/us/app/",
         "status": {
             "active": true,
             "message": {

@@ -144,6 +144,7 @@ For providing app's status and availability information, versionarte requires a 
             "minimum": "2.7.0",
             "latest": "2.8.0"
         },
+        "download_url": "https://play.google.com/store/apps/details?id=app.librokit",
         "status": {
             "active": true,
             "message": {

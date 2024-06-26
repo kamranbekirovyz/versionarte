@@ -20,19 +20,13 @@ class StoreVersioning {
   /// Creates an instance of [StoreVersioning] from a JSON [Map].
   StoreVersioning.fromJson(Map<String, dynamic> json)
       : android = json["android"] != null
-            ? StorePlatformDetails.fromJson(
-                json["android"],
-              )
+            ? StorePlatformDetails.fromJson(json["android"])
             : null,
         iOS = json["iOS"] != null
-            ? StorePlatformDetails.fromJson(
-                json["iOS"],
-              )
+            ? StorePlatformDetails.fromJson(json["iOS"])
             : null,
         macOS = json["macOS"] != null
-            ? StorePlatformDetails.fromJson(
-                json["macOS"],
-              )
+            ? StorePlatformDetails.fromJson(json["macOS"])
             : null;
 
   /// Returns the [PlatformStoreDetails] object corresponding to the current platform.
@@ -72,27 +66,29 @@ class StorePlatformDetails {
   /// The version details for this platform.
   final VersionDetails version;
 
+  /// The download URL for this platform.
+  final String? downloadUrl;
+
   /// The status details for this platform.
   final StatusDetails status;
 
   const StorePlatformDetails({
+    required this.downloadUrl,
     required this.version,
     required this.status,
   });
 
   /// Creates an instance of [StorePlatformDetails] from a JSON [Map].
   StorePlatformDetails.fromJson(Map<String, dynamic> json)
-      : version = VersionDetails.fromJson(
-          json["version"],
-        ),
-        status = StatusDetails.fromJson(
-          json["status"],
-        );
+      : version = VersionDetails.fromJson(json["version"]),
+        downloadUrl = json["download_url"],
+        status = StatusDetails.fromJson(json["status"]);
 
   /// Returns a JSON representation of this object.
   Map<String, dynamic> toJson() {
     return {
       "version": version.toJson(),
+      "download_url": downloadUrl,
       "status": status.toJson(),
     };
   }

@@ -1,46 +1,55 @@
 PODS:
-  - Firebase/CoreOnly (10.3.0):
-    - FirebaseCore (= 10.3.0)
-  - Firebase/RemoteConfig (10.3.0):
+  - Firebase/CoreOnly (10.27.0):
+    - FirebaseCore (= 10.27.0)
+  - Firebase/RemoteConfig (10.27.0):
     - Firebase/CoreOnly
-    - FirebaseRemoteConfig (~> 10.3.0)
-  - firebase_core (2.7.1):
-    - Firebase/CoreOnly (= 10.3.0)
+    - FirebaseRemoteConfig (~> 10.27.0)
+  - firebase_core (3.1.1):
+    - Firebase/CoreOnly (= 10.27.0)
     - Flutter
-  - firebase_remote_config (3.0.14):
-    - Firebase/RemoteConfig (= 10.3.0)
+  - firebase_remote_config (5.0.2):
+    - Firebase/RemoteConfig (= 10.27.0)
     - firebase_core
     - Flutter
-  - FirebaseABTesting (10.4.0):
+  - FirebaseABTesting (10.28.0):
     - FirebaseCore (~> 10.0)
-  - FirebaseCore (10.3.0):
+  - FirebaseCore (10.27.0):
     - FirebaseCoreInternal (~> 10.0)
-    - GoogleUtilities/Environment (~> 7.8)
-    - GoogleUtilities/Logger (~> 7.8)
-  - FirebaseCoreInternal (10.4.0):
+    - GoogleUtilities/Environment (~> 7.12)
+    - GoogleUtilities/Logger (~> 7.12)
+  - FirebaseCoreInternal (10.28.0):
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
-  - FirebaseInstallations (10.4.0):
+  - FirebaseInstallations (10.28.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
     - PromisesObjC (~> 2.1)
-  - FirebaseRemoteConfig (10.3.0):
+  - FirebaseRemoteConfig (10.27.0):
     - FirebaseABTesting (~> 10.0)
     - FirebaseCore (~> 10.0)
     - FirebaseInstallations (~> 10.0)
+    - FirebaseRemoteConfigInterop (~> 10.23)
+    - FirebaseSharedSwift (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - "GoogleUtilities/NSData+zlib (~> 7.8)"
+  - FirebaseRemoteConfigInterop (10.28.0)
+  - FirebaseSharedSwift (10.28.0)
   - Flutter (1.0.0)
-  - GoogleUtilities/Environment (7.11.0):
+  - GoogleUtilities/Environment (7.13.3):
+    - GoogleUtilities/Privacy
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.11.0):
+  - GoogleUtilities/Logger (7.13.3):
     - GoogleUtilities/Environment
-  - "GoogleUtilities/NSData+zlib (7.11.0)"
-  - GoogleUtilities/UserDefaults (7.11.0):
+    - GoogleUtilities/Privacy
+  - "GoogleUtilities/NSData+zlib (7.13.3)":
+    - GoogleUtilities/Privacy
+  - GoogleUtilities/Privacy (7.13.3)
+  - GoogleUtilities/UserDefaults (7.13.3):
     - GoogleUtilities/Logger
+    - GoogleUtilities/Privacy
   - package_info_plus (0.4.5):
     - Flutter
-  - PromisesObjC (2.1.1)
+  - PromisesObjC (2.4.0)
   - url_launcher_ios (0.0.1):
     - Flutter
 
@@ -59,6 +68,8 @@ SPEC REPOS:
     - FirebaseCoreInternal
     - FirebaseInstallations
     - FirebaseRemoteConfig
+    - FirebaseRemoteConfigInterop
+    - FirebaseSharedSwift
     - GoogleUtilities
     - PromisesObjC
 
@@ -75,20 +86,22 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
-  Firebase: f92fc551ead69c94168d36c2b26188263860acd9
-  firebase_core: 1ae9f9aa76e6e1edc14fb181637ad466fd6c6fa4
-  firebase_remote_config: 4788db7504c356174cbd09ffa3de344f928a8100
-  FirebaseABTesting: ae3b32fe26e761fd54c68e37a632a0097b599c87
-  FirebaseCore: 988754646ab3bd4bdcb740f1bfe26b9f6c0d5f2a
-  FirebaseCoreInternal: e301297f4c15a17489e48ed722d733b1578e0c02
-  FirebaseInstallations: 36b38c733fd37e50857e5e8d74138648f466f18c
-  FirebaseRemoteConfig: c24f767c17b0440ee63c7e93380d599173556113
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
-  package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
-  PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  url_launcher_ios: ae1517e5e344f5544fb090b079e11f399dfbe4d2
+  Firebase: 26b040b20866a55f55eb3611b9fcf3ae64816b86
+  firebase_core: f8d0424c45e0f1e596811085fc12c638d628457c
+  firebase_remote_config: 962876d64b52d7710d756ea85e27c768002dc628
+  FirebaseABTesting: 589bc28c0ab3e5554336895a34aa262e24276665
+  FirebaseCore: a2b95ae4ce7c83ceecfbbbe3b6f1cddc7415a808
+  FirebaseCoreInternal: 58d07f1362fddeb0feb6a857d1d1d1c5e558e698
+  FirebaseInstallations: 60c1d3bc1beef809fd1ad1189a8057a040c59f2e
+  FirebaseRemoteConfig: 37a2ba3c8c454be8553a41ba1a2f4a4f0b845670
+  FirebaseRemoteConfigInterop: 70d200c6956ef3b5c3592a95e824c1210682d785
+  FirebaseSharedSwift: 48de4aec81a6b79bb30404e5e6db43ea74848fed
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  GoogleUtilities: ea963c370a38a8069cc5f7ba4ca849a60b6d7d15
+  package_info_plus: 58f0028419748fad15bf008b270aaa8e54380b1c
+  PromisesObjC: f5707f49cb48b9636751c5b2e7d227e43fba9f47
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
-PODFILE CHECKSUM: ef19549a9bc3046e7bb7d2fab4d021637c0c58a3
+PODFILE CHECKSUM: cc1f88378b4bfcf93a6ce00d2c587857c6008d3b
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.15.2
