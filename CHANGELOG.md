@@ -1,3 +1,20 @@
+## 1.1.0
+
+- Add dynamic download url of each platform.
+- Upgrade dependencies.
+
+## 1.0.0
+
+versionarte reaches its first stable version. 🎉
+
+- **BREAKING CHANGE**: Updated `VersionarteStatus` values: `upToDate`, `forcedUpdate`, `outdated`, `inactive`, `unknown`.
+
+## 0.9.2
+- Fixed App Store redirection by replacing `appleAppId` with `appStoreUrl` directly to be safe.
+
+## 0.9.1
+- Upgrade dependencies: firebase_remote_config, http, package_info_plus, url_launcher
+
 ## 0.9.0
 - Upgrade dependencies: firebase_remote_config, http, package_info_plus, url_launcher
 - Update dependency constraints to `sdk: '>=3.0.0 <4.0.0'`

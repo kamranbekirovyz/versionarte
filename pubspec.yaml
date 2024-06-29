@@ -1,8 +1,7 @@
 name: versionarte
-description: Manage your Flutter app's versioning and availability remotely.
-version: 0.9.0
+description: Force update, show update indicator and disable the app for maintenance with total freedom over the UI.
+version: 1.1.0
 repository: https://github.com/kamranbekirovyz/versionarte
-home: https://github.com/kamranbekirovyz/versionarte
 issue_tracker: https://github.com/kamranbekirovyz/versionarte/issues
 
 environment:
@@ -12,13 +11,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_remote_config: ^4.2.5
-  http: ^1.1.0
-  package_info_plus: ^4.1.0
-  url_launcher: ^6.1.12
+  firebase_remote_config: ^5.0.2
+  http: ^1.2.1
+  package_info_plus: ^8.0.0
+  url_launcher: ^6.3.0
   pub_semver: ^2.1.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
+
+screenshots:
+  - description: versionarte package
+    path: assets/cover.png

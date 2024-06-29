@@ -10,18 +10,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Versionarte Demo',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        brightness: Brightness.dark,
-      ),
-      themeMode: ThemeMode.dark,
-      home: const MyHomePage(),
+      themeMode: ThemeMode.light,
+      home: MyHomePage(),
     );
   }
 }
@@ -38,6 +31,7 @@ class MockVersionarteProvider extends VersionarteProvider {
     /// Creating a mocked [StoreVersioning] object with the following values:
     const mockedStoreVersioning = StoreVersioning(
       android: StorePlatformDetails(
+        downloadUrl: 'https://play.google.com',
         version: VersionDetails(
           minimum: '1.5.0',
           latest: '2.5.0',
@@ -51,6 +45,7 @@ class MockVersionarteProvider extends VersionarteProvider {
         ),
       ),
       iOS: StorePlatformDetails(
+        downloadUrl: 'https://apps.apple.com/us/',
         version: VersionDetails(
           minimum: '1.5.0',
           latest: '2.5.0',
@@ -111,6 +106,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: CircularProgressIndicator(),
             )
           else ...[
+            ListTile(
+              title: const Text('Result'),
+              subtitle: Text(_versionarteResult.status.toString()),
+            ),
             const ListTile(
               title: Text('Local version'),
               subtitle: Text('1.0.0'),
@@ -119,6 +118,12 @@ class _MyHomePageState extends State<MyHomePage> {
               title: const Text('Store version'),
               subtitle: Text(
                 '${_versionarteResult.details?.version.toString()}',
+              ),
+            ),
+            ListTile(
+              title: const Text('Download URL'),
+              subtitle: Text(
+                '${_versionarteResult.details?.downloadUrl.toString()}',
               ),
             ),
             ListTile(
