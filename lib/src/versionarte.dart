@@ -116,9 +116,9 @@ class Versionarte {
                 platformBuildNumber.compareTo(latestBuildNumber);
 
             final status = minimumDifference.isNegative
-                ? VersionarteStatus.mustUpdate
+                ? VersionarteStatus.forcedUpdate
                 : latestDifference.isNegative
-                    ? VersionarteStatus.shouldUpdate
+                    ? VersionarteStatus.outdated
                     : VersionarteStatus.upToDate;
 
             return VersionarteResult(
