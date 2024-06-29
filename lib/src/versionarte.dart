@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:versionarte/src/models/versionarte_comparator.dart';
 import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/src/utilities/pretty_json.dart';
 import 'package:versionarte/versionarte.dart';
@@ -28,12 +29,14 @@ class Versionarte {
   /// Parameters:
   /// - versionarteProvider: A [VersionarteProvider] instance to retrieve
   /// [StoreVersioning] stored remotely.
+  /// - versionarteComparator: A [VersionarteComparator] instance to customize the comparison technique.
   ///
   /// Returns:
   /// - A [Future] that resolves to a [VersionarteResult] instance which contains
   /// the versioning and availability status of the app.
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
+    VersionarteComparator versionarteComparator = VersionarteComparator.version,
   }) async {
     try {
       final info = await packageInfo;
@@ -68,22 +71,61 @@ class Versionarte {
           details: storeDetails,
         );
       } else {
-        final minimumVersion = Version.parse(storeDetails.version.minimum);
-        final latestVersion = Version.parse(storeDetails.version.latest);
+        switch (versionarteComparator) {
+          case VersionarteComparator.version:
+            final minimumVersion = Version.parse(storeDetails.version.minimum);
+            final latestVersion = Version.parse(storeDetails.version.latest);
 
-        final minimumDifference = platformVersion.compareTo(minimumVersion);
-        final latestDifference = platformVersion.compareTo(latestVersion);
+            final minimumDifference = platformVersion.compareTo(minimumVersion);
+            final latestDifference = platformVersion.compareTo(latestVersion);
 
-        final status = minimumDifference.isNegative
-            ? VersionarteStatus.forcedUpdate
-            : latestDifference.isNegative
-                ? VersionarteStatus.outdated
-                : VersionarteStatus.upToDate;
+            final status = minimumDifference.isNegative
+                ? VersionarteStatus.forcedUpdate
+                : latestDifference.isNegative
+                    ? VersionarteStatus.outdated
+                    : VersionarteStatus.upToDate;
 
-        return VersionarteResult(
-          status,
-          details: storeDetails,
-        );
+            return VersionarteResult(
+              status,
+              details: storeDetails,
+            );
+          case VersionarteComparator.buildNumber:
+            final platformBuildNumber = int.tryParse(info.buildNumber);
+            final minimumBuildNumber =
+                int.tryParse(storeDetails.version.minimum);
+            final latestBuildNumber = int.tryParse(storeDetails.version.latest);
+
+            if (platformBuildNumber == null) {
+              throw const FormatException(
+                  'Failed to parse build number from platform version. the build number must be an integer.');
+            }
+
+            if (minimumBuildNumber == null) {
+              throw const FormatException(
+                  'Failed to parse build number from minimum version. the build number must be an integer.');
+            }
+
+            if (latestBuildNumber == null) {
+              throw const FormatException(
+                  'Failed to parse build number from latest version. the build number must be an integer.');
+            }
+
+            final minimumDifference =
+                platformBuildNumber.compareTo(minimumBuildNumber);
+            final latestDifference =
+                platformBuildNumber.compareTo(latestBuildNumber);
+
+            final status = minimumDifference.isNegative
+                ? VersionarteStatus.forcedUpdate
+                : latestDifference.isNegative
+                    ? VersionarteStatus.outdated
+                    : VersionarteStatus.upToDate;
+
+            return VersionarteResult(
+              status,
+              details: storeDetails,
+            );
+        }
       }
     } on FormatException catch (e) {
       final error = versionarteProvider is RemoteConfigVersionarteProvider

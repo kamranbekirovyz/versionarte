@@ -110,8 +110,8 @@ class VersionDetails {
   });
 
   VersionDetails.fromJson(Map<String, dynamic> json)
-      : minimum = json["minimum"],
-        latest = json["latest"];
+      : minimum = json["minimum"].toString(),
+        latest = json["latest"].toString();
 
   /// Returns a JSON representation of this object.
   Map<String, dynamic> toJson() {

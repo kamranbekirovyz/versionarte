@@ -155,7 +155,7 @@ For providing app's status and availability information, versionarte requires a 
     },
     "iOS": {
         // same data we used for "android"
-    }
+    },
     "macOS": {
         // same data we used for "android"
     }
@@ -172,6 +172,32 @@ Each platform contains two objects:
 - `status`:
     - `active`: A boolean that indicates whether the app is currently active or not.
     - `message`: A Map that contains the messages for different languages to be displayed to the user when app is inactive. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the message in that language.
+
+By default it compares using version (eg: 1.0.0) but you can change it to compare using build number (eg: 1) by setting `versionarteComparator` to `VersionarteComparator.buildNumber`:
+```dart
+final result = await Versionarte.check(
+    versionarteComparator: VersionarteComparator.buildNumber,
+);
+```
+It will to parse the version string to int and compare it.
+And also you should be making sure you provide build number in the JSON too:
+```js
+{
+    "android": {
+        "version": {
+            "minimum": 2, // <--- build number
+            "latest": 3 // <--- build number
+        }
+        // ...rest of the JSON
+    }
+    // ...rest of the JSON
+}
+```
+
+- `version`:
+  - `minimum`: The minimum build number of the app users can use.
+  - `latest`: The latest build number of the app available.
+
 
 ## 🐞 Faced issues?
 
