@@ -1,3 +1,8 @@
+## 1.1.0
+
+- Add dynamic download url of each platform.
+- Upgrade dependencies.
+
 ## 1.0.0
 
 versionarte reaches its first stable version. 🎉
