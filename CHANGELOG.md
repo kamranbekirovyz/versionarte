@@ -1,3 +1,10 @@
+## 1.2.0
+
+- Add Windows and Linux support.
+- Added `Versionarte.launchDownloadUrl` method to launch download page of the app.
+- Add a getter for download urls of each platform.
+- Update documentation.
+
 ## 1.1.0
 
 - Add dynamic download url of each platform.
