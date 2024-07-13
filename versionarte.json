@@ -26,5 +26,8 @@
                 "es": "La aplicación está en modo de mantenimiento, vuelva más tarde."
             }
         }
-    }
+    },
+    "macOS": {},
+    "windows": {},
+    "linux": {}
 }

@@ -45,13 +45,13 @@ final result = await Versionarte.check(
 ```
 
 Optional parameters:
-- `keyName`: key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". Specify if you upload the [configuration JSON](#-configuration-json) using a different key name.
+- `keyName`: key name for the Firebase Remote Config to fetch. By default, it's set to "versionarte". Specify if you upload the <a href="https://github.com/kamranbekirovyz/versionarte?tab=readme-ov-file#%EF%B8%8F-configuration-json">Configuration JSON</a> using a different key name.
 - `initializeInternally`: if your project already initializes and configures Firebase Remote Config, set this to `false`. By default, it's set to `true`.
 - `remoteConfigSettings`: settings for Firebase Remote Config if `initializeInternally` set to true. By default, `fetchTimeout` and `minimumFetchInterval` are set to `10 seconds`.
 
 ### 2. Using RESTful API
 
-The `RestfulVersionarteProvider` fetches versioning and availability information by sending HTTP GET request to the specified URL with optional headers. The response body should be a JSON string that follows the [configuration JSON](#-configuration-json) format.
+The `RestfulVersionarteProvider` fetches versioning and availability information by sending HTTP GET request to the specified URL with optional headers. The response body should be a JSON string that follows the <a href="https://github.com/kamranbekirovyz/versionarte?tab=readme-ov-file#%EF%B8%8F-configuration-json">Configuration JSON</a> format.
 
 Example:
 
@@ -114,18 +114,17 @@ if (result.status == VersionarteResult.inactive) {
 } 
 ```
 
-## 🔗 Launching the stores
+## 🔗 Launching the download stores
 
-To launch the App Store on iOS and Play Store on Android, use the `Versionarte.launchStore` method by providing it with `appStoreUrl` for App Store and `androidPackageName` for Play Store.
+To launch download page of the app use `Versionarte.launchDownloadUrl`: 
 
 ```dart
-Versionarte.launchStore(
-    appStoreUrl: 'https://apps.apple.com/az/app/librokit-books-quotes-ai/id6472595860',
-    androidPackageName: 'app.librokit',
-);
+final Map<TargetPlatform, String?> downloadUrls = result.storeVersioning!.downloadUrls;
+
+await Versionarte.launchDownloadUrl(downloadUrls);
 ```
 
-💡 `androidPackageName` is optional: if not provided corresponding value obtained from `package_info` will be used.
+💡 Don't forget to add "download_url" property to each platform that you support on <a href="https://github.com/kamranbekirovyz/versionarte?tab=readme-ov-file#%EF%B8%8F-configuration-json">Configuration JSON</a>
 💡 Launching store won't work on iOS simulator due to its limitations.
 
 See the <a href="https://github.com/kamranbekirovyz/versionarte/tree/main/example">example</a> directory for a complete sample app.
@@ -154,10 +153,16 @@ For providing app's status and availability information, versionarte requires a 
         }
     },
     "iOS": {
-        // same data we used for "android"
+        // Same stucture as above
     }
     "macOS": {
-        // same data we used for "android"
+        // Same stucture as above
+    },
+    "windows": {
+        // Same stucture as above
+    },
+    "linux": {
+        // Same stucture as above
     }
 }
 ```
@@ -169,6 +174,7 @@ Each platform contains two objects:
 - `version`:
     - `minimum`: The minimum version of the app users can use. 
     - `latest`: The latest version of the app available. 
+    - `download_url`: The URL to download the app from the store.
 - `status`:
     - `active`: A boolean that indicates whether the app is currently active or not.
     - `message`: A Map that contains the messages for different languages to be displayed to the user when app is inactive. The keys of the map represent the language codes (e.g., "en" for English, "es" for Spanish), and the values represent the message in that language.

@@ -17,10 +17,14 @@ class VersionarteResult {
   /// messages for when the app is inactive.
   final StorePlatformDetails? details;
 
+  /// The versioning information all platforms.
+  final StoreVersioning? storeVersioning;
+
   /// Creates a new [VersionarteResult] instance.
   VersionarteResult(
     this.status, {
     this.details,
+    this.storeVersioning,
   }) : super() {
     logVersionarte('VersionarteResult: $this');
   }

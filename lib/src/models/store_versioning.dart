@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
+
 /// A serverside representation model of the app versioning.
 class StoreVersioning {
   /// The versioning information for Android platform.
@@ -11,10 +13,18 @@ class StoreVersioning {
   /// The versioning information for macOS platform.
   final StorePlatformDetails? macOS;
 
+  /// The versioning information for the Windows platform.
+  final StorePlatformDetails? windows;
+
+  /// The versioning information for the Linux platform.
+  final StorePlatformDetails? linux;
+
   const StoreVersioning({
     this.android,
     this.iOS,
     this.macOS,
+    this.windows,
+    this.linux,
   });
 
   /// Creates an instance of [StoreVersioning] from a JSON [Map].
@@ -27,6 +37,12 @@ class StoreVersioning {
             : null,
         macOS = json["macOS"] != null
             ? StorePlatformDetails.fromJson(json["macOS"])
+            : null,
+        windows = json["windows"] != null
+            ? StorePlatformDetails.fromJson(json["windows"])
+            : null,
+        linux = json["linux"] != null
+            ? StorePlatformDetails.fromJson(json["linux"])
             : null;
 
   /// Returns the [PlatformStoreDetails] object corresponding to the current platform.
@@ -40,11 +56,30 @@ class StoreVersioning {
         return iOS;
       case 'macos':
         return macOS;
+      case 'windows':
+        return windows;
+      case 'linux':
+        return linux;
+
       default:
         throw UnsupportedError(
           '${Platform.operatingSystem} not supported',
         );
     }
+  }
+
+  String? get downloadUrlForPlatform {
+    return storeDetailsForPlatform?.downloadUrl;
+  }
+
+  Map<TargetPlatform, String?> get downloadUrls {
+    return {
+      TargetPlatform.android: android?.downloadUrl,
+      TargetPlatform.iOS: iOS?.downloadUrl,
+      TargetPlatform.macOS: macOS?.downloadUrl,
+      TargetPlatform.windows: windows?.downloadUrl,
+      TargetPlatform.linux: linux?.downloadUrl,
+    };
   }
 
   /// Returns a JSON representation of this object.
@@ -53,6 +88,8 @@ class StoreVersioning {
       "android": android?.toJson(),
       "iOS": iOS?.toJson(),
       "macOS": macOS?.toJson(),
+      "windows": windows?.toJson(),
+      "linux": linux?.toJson(),
     };
   }
 

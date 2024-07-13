@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pub_semver/pub_semver.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -66,6 +67,7 @@ class Versionarte {
         return VersionarteResult(
           VersionarteStatus.inactive,
           details: storeDetails,
+          storeVersioning: storeVersioning,
         );
       } else {
         final minimumVersion = Version.parse(storeDetails.version.minimum);
@@ -83,6 +85,7 @@ class Versionarte {
         return VersionarteResult(
           status,
           details: storeDetails,
+          storeVersioning: storeVersioning,
         );
       }
     } on FormatException catch (e) {
@@ -123,6 +126,7 @@ class Versionarte {
   /// Returns:
   ///   - A `Future<bool>` that indicates whether the URL was successfully
   ///     launched or not.
+  @Deprecated('Use launchDownloadUrl method instead.')
   static Future<bool> launchStore({
     String? appStoreUrl,
     String? androidPackageName,
@@ -149,5 +153,30 @@ class Versionarte {
       );
       return false;
     }
+  }
+
+  /// Launches the download URL for the app on the platform.
+  ///
+  /// Parameters:
+  ///  - `data` (Map<TargetPlatform, String>): A map of download URLs for each
+  ///   platform. The key is the platform and the value is the download URL.
+  static Future<void> launchDownloadUrl(
+    Map<TargetPlatform, String?> data,
+  ) async {
+    final TargetPlatform platform = defaultTargetPlatform;
+
+    final String? url = data[platform];
+
+    if (url == null) {
+      logVersionarte(
+        'No download URL found for platform $platform.',
+      );
+      return;
+    }
+
+    await launchUrl(
+      Uri.parse(url),
+      mode: LaunchMode.externalApplication,
+    );
   }
 }
