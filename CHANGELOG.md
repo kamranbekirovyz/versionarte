@@ -1,3 +1,7 @@
+## 1.2.1
+
+- Remove `dart:io` use, so that the package can be used in web.
+
 ## 1.2.0
 
 - Add Windows and Linux support.
