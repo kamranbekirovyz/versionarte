@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -39,7 +38,7 @@ class Versionarte {
     try {
       final info = await packageInfo;
       final platformVersion = Version.parse(info.version);
-      final platformName = Platform.operatingSystem;
+      final platformName = defaultTargetPlatform.name;
 
       logVersionarte('Platform: $platformName, version: $platformVersion');
       logVersionarte('Provider: ${versionarteProvider.runtimeType}');
@@ -133,7 +132,7 @@ class Versionarte {
   }) async {
     const mode = LaunchMode.externalApplication;
 
-    if (Platform.isAndroid) {
+    if (defaultTargetPlatform == TargetPlatform.android) {
       androidPackageName ??= (await packageInfo).packageName;
 
       return launchUrl(
@@ -142,14 +141,15 @@ class Versionarte {
         ),
         mode: mode,
       );
-    } else if (Platform.isIOS && appStoreUrl != null) {
+    } else if (defaultTargetPlatform == TargetPlatform.iOS &&
+        appStoreUrl != null) {
       return launchUrl(
         Uri.parse(appStoreUrl),
         mode: mode,
       );
     } else {
       logVersionarte(
-        'Opening store for ${Platform.operatingSystem} platform is not supported.',
+        'Opening store for ${defaultTargetPlatform.name} platform is not supported.',
       );
       return false;
     }

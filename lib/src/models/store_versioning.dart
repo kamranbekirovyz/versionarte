@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 
 /// A serverside representation model of the app versioning.
@@ -49,23 +47,16 @@ class StoreVersioning {
   ///
   /// Throws an [UnimplementedError] if the current platform is not supported by the package.
   StorePlatformDetails? get storeDetailsForPlatform {
-    switch (Platform.operatingSystem) {
-      case 'android':
-        return android;
-      case 'ios':
-        return iOS;
-      case 'macos':
-        return macOS;
-      case 'windows':
-        return windows;
-      case 'linux':
-        return linux;
-
-      default:
-        throw UnsupportedError(
-          '${Platform.operatingSystem} not supported',
-        );
-    }
+    return switch (defaultTargetPlatform) {
+      TargetPlatform.android => android,
+      TargetPlatform.iOS => iOS,
+      TargetPlatform.macOS => macOS,
+      TargetPlatform.windows => windows,
+      TargetPlatform.linux => linux,
+      _ => throw UnimplementedError(
+          'Platform ${defaultTargetPlatform.toString()} is not supported by the package.',
+        ),
+    };
   }
 
   String? get downloadUrlForPlatform {
