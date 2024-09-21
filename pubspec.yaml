@@ -1,6 +1,6 @@
 name: versionarte
 description: Force update, show update indicator and disable the app for maintenance with total freedom over the UI.
-version: 1.2.1
+version: 1.2.2
 repository: https://github.com/kamranbekirovyz/versionarte
 issue_tracker: https://github.com/kamranbekirovyz/versionarte/issues
 
@@ -11,9 +11,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_remote_config: ^5.0.2
-  http: ^1.2.1
-  package_info_plus: ^8.0.0
+  firebase_remote_config: ^5.1.2
+  http: ^1.2.2
+  package_info_plus: ^8.0.2
   url_launcher: ^6.3.0
   pub_semver: ^2.1.4
 

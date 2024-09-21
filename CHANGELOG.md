@@ -1,3 +1,7 @@
+## 1.2.2
+
+- Upgrade dependencies.
+
 ## 1.2.1
 
 - Remove `dart:io` use, so that the package can be used in web.
