@@ -105,7 +105,7 @@ Use the `status` value to determine what action to take:
 if (result.status == VersionarteStatus.inactive) {
     // App is in maintenance mode
     final String message = result.details.status.getMessageForLanguage('en');
-    
+
     showMaintenanceScreen(message);
 } else if (result.status == VersionarteStatus.forcedUpdate) {
     // User must update to continue
@@ -133,7 +133,7 @@ if (result.status == VersionarteStatus.inactive) {
 >       if (result.status == VersionarteStatus.outdated)
 >         NewVersionAvailableIndicator(
 >           onUpdate: () {
->             Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls)
+>             Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
 >           }
 >         ),
 >       // other widgets
