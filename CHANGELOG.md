@@ -1,3 +1,9 @@
+## 1.3.0
+- Improved documentation for better clarity.
+- Added sponsors section.
+- Added screenshots to show package in real use.
+- Upgraded dependencies.
+
 ## 1.2.3
 
 - Upgrade dependencies.
