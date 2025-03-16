@@ -2,8 +2,6 @@
 
 Force update, show update indicator and disable the app for maintenance with total freedom over the UI.
 
-<!-- <img src="https://raw.githubusercontent.com/kamranbekirovyz/versionarte/main/assets/cover.png" alt="cover_picture" /> -->
-
 ## 😎 Benefits
 
 - ✋ Force users to update to the latest version
@@ -44,7 +42,7 @@ Call `Versionarte.check` with a provider to get the app's versioning status:
 
 ```dart
 // Using Firebase Remote Config (most common)
-final result = await Versionarte.check(
+final VersionarteResult result = await Versionarte.check(
     versionarteProvider: RemoteConfigVersionarteProvider(),
 );
 ```
@@ -56,7 +54,7 @@ Choose from three provider types based on your backend:
 **Recommended for apps already using Firebase**
 
 ```dart
-final result = await Versionarte.check(
+final VersionarteResult result = await Versionarte.check(
     versionarteProvider: RemoteConfigVersionarteProvider(),
 );
 ```
@@ -73,7 +71,7 @@ See <a href="https://github.com/kamranbekirovyz/versionarte/blob/main/firebase_r
 **Recommended for apps with custom backends**
 
 ```dart
-final result = await Versionarte.check(
+final VersionarteResult result = await Versionarte.check(
     versionarteProvider: RestfulVersionarteProvider(
         url: 'https://myapi.com/getVersioning',
     ),
@@ -91,8 +89,9 @@ Optional parameters:
 class MyCustomVersionarteProvider extends VersionarteProvider {
   @override
   Future<StoreVersioning> getStoreVersioning() async {
-    final result = MyCustomService.fetchVersioning();
-    final decodedResult = jsonDecode(result);
+    final String result = MyCustomService.fetchVersioning();
+    final Map<String, dynamic> decodedResult = jsonDecode(result);
+    
     return StoreVersioning.fromJson(decodedResult);
   }
 }
@@ -105,12 +104,16 @@ Use the `status` value to determine what action to take:
 ```dart
 if (result.status == VersionarteStatus.inactive) {
     // App is in maintenance mode
-    final message = result.details.status.getMessageForLanguage('en');
+    final String message = result.details.status.getMessageForLanguage('en');
+    
     showMaintenanceScreen(message);
 } else if (result.status == VersionarteStatus.forcedUpdate) {
     // User must update to continue
-    showForceUpdateScreen();
-    await Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
+    showForceUpdateScreen(
+      onUpdate: () {
+        Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
+      },
+    );
 } else if (result.status == VersionarteStatus.outdated) {
     // Update available but optional
     showUpdateBanner();
@@ -119,6 +122,25 @@ if (result.status == VersionarteStatus.inactive) {
     continueToApp();
 }
 ```
+
+> **Tip**: You can also show different widgets based on status. For example, when the app is outdated, you might want to show an update indicator anywhere in your app (for example in home page):
+> 
+> ```dart
+> Widget build(BuildContext context) {
+>   return Column(
+>     children: [
+>       // other widgets   
+>       if (result.status == VersionarteStatus.outdated)
+>         NewVersionAvailableIndicator(
+>           onUpdate: () {
+>             Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls)
+>           }
+>         ),
+>       // other widgets
+>     ],
+>   );
+> }
+> ```
 
 ## 🔗 Launching the Store
 
