@@ -19,7 +19,11 @@ Force update, show update indicator and disable the app for maintenance with tot
 
 ## 💖 Sponsors
 
-<img src="https://www.userorient.com/assets/extras/sponsor.png">
+- <a href="https://userorient.com">UserOrient</a>: Feature Voting Board for Flutter
+
+<a href="https://userorient.com" target="_blank">
+  <img src="https://www.userorient.com/assets/extras/sponsor.png">
+</a>
 
 ## 🛫 Getting Started
 
