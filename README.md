@@ -81,6 +81,8 @@ final VersionarteResult result = await Versionarte.check(
 Optional parameters:
 - `headers`: Custom HTTP headers if needed
 
+> **Note**: Your RESTful endpoint must return the same JSON structure as shown in the [Configuration JSON](#-configuration-json) section below. 
+
 ### 3. Using Custom VersionarteProvider
 
 **For advanced use cases with custom data sources**
@@ -106,41 +108,39 @@ if (result.status == VersionarteStatus.inactive) {
     // App is in maintenance mode
     final String message = result.details.status.getMessageForLanguage('en');
 
-    showMaintenanceScreen(message);
+    showMaintenanceDialog(message);
 } else if (result.status == VersionarteStatus.forcedUpdate) {
     // User must update to continue
-    showForceUpdateScreen(
+    showForceUpdateDialog(
       onUpdate: () {
         Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
       },
     );
 } else if (result.status == VersionarteStatus.outdated) {
     // Update available but optional
-    showUpdateBanner();
-} else if (result.status == VersionarteStatus.upToDate) {
-    // App is up to date, continue as normal
-    continueToApp();
-}
+    showOptionalUpdateDialog();
+} 
 ```
 
-> **Tip**: You can also show different widgets based on status. For example, when the app is outdated, you might want to show an update indicator anywhere in your app (for example in home page):
-> 
-> ```dart
-> Widget build(BuildContext context) {
->   return Column(
->     children: [
->       // other widgets   
->       if (result.status == VersionarteStatus.outdated)
->         NewVersionAvailableIndicator(
->           onUpdate: () {
->             Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
->           }
->         ),
->       // other widgets
->     ],
->   );
-> }
-> ```
+**Tip**: You can also show different widgets based on status. For example, when the app is outdated, you might want to show an update indicator anywhere in your app (for example in home page):
+
+```dart
+Widget build(BuildContext context) {
+  return Column(
+    children: [
+      // other widgets   
+      if (result.status == VersionarteStatus.outdated)
+        // A custom widget to show "Update available"
+        NewVersionAvailableIndicator(
+          onUpdate: () {
+            Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
+          }
+        ),
+      // other widgets
+    ],
+  );
+}
+```
 
 ## 🔗 Launching the Store
 
