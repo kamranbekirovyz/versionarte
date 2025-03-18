@@ -1,3 +1,6 @@
+## 1.3.1
+- Improve docs for custom providers.
+
 ## 1.3.0
 - Improved documentation for better clarity.
 - Added sponsors section.
