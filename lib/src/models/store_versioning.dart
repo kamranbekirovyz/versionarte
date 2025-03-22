@@ -2,16 +2,16 @@ import 'package:flutter/foundation.dart';
 
 /// A serverside representation model of the app versioning.
 class StoreVersioning {
-  /// The versioning information for Android platform.
+  /// For Android platform.
   final StorePlatformDetails? android;
 
-  /// The versioning information for iOS platform.
+  /// For iOS platform.
   final StorePlatformDetails? iOS;
 
-  /// The versioning information for macOS platform.
+  /// For macOS platform.
   final StorePlatformDetails? macOS;
 
-  /// The versioning information for the Windows platform.
+  /// For Windows platform.
   final StorePlatformDetails? windows;
 
   /// The versioning information for the Linux platform.
@@ -46,7 +46,7 @@ class StoreVersioning {
   /// Returns the [PlatformStoreDetails] object corresponding to the current platform.
   ///
   /// Throws an [UnimplementedError] if the current platform is not supported by the package.
-  StorePlatformDetails? get storeDetailsForPlatform {
+  StorePlatformDetails? get current {
     return switch (defaultTargetPlatform) {
       TargetPlatform.android => android,
       TargetPlatform.iOS => iOS,
@@ -60,7 +60,11 @@ class StoreVersioning {
   }
 
   String? get downloadUrlForPlatform {
-    return storeDetailsForPlatform?.downloadUrl;
+    return current?.downloadUrl;
+  }
+
+  String? getMessageForLanguage(String code) {
+    return current?.status.getMessageForLanguage(code);
   }
 
   Map<TargetPlatform, String?> get downloadUrls {

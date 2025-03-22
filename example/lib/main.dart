@@ -117,13 +117,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Store version'),
               subtitle: Text(
-                '${_versionarteResult.details?.version.toString()}',
+                '${_versionarteResult.platforms?.current?.version.toString()}',
               ),
             ),
             ListTile(
               title: const Text('Download URL'),
               subtitle: Text(
-                '${_versionarteResult.details?.downloadUrl.toString()}',
+                '${_versionarteResult.platforms?.current?.downloadUrl}',
               ),
             ),
             ListTile(
@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Availability information'),
               subtitle: Text(
-                '${_versionarteResult.details?.status.toString()}',
+                '${_versionarteResult.platforms?.current?.status.toString()}',
               ),
             ),
 
@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Message for English'),
               subtitle: Text(
-                '${_versionarteResult.details?.status.getMessageForLanguage('en')}',
+                '${_versionarteResult.platforms?.current?.status.getMessageForLanguage('en')}',
               ),
             ),
           ],

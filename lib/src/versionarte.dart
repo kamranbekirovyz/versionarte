@@ -8,18 +8,15 @@ import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/src/utilities/pretty_json.dart';
 import 'package:versionarte/versionarte.dart';
 
-/// A utility class that helps to check the version of the app on the device
-/// against the version available on the store.
+/// Checks the version of the app on the device against the version on the store.
 class Versionarte {
-  /// The package information retrieved from the device. This is used to get the
-  /// current version of the app and stored in a static variable to avoid
-  /// multiple calls to the `package_info` package.
+  /// The package information. Stored in a static variable to avoid multiple calls
   static PackageInfo? _packageInfo;
 
-  /// Retrieves package information from the platform. This method uses the
-  /// `package_info_plus` package to get the package information.
+  /// Retrieves package information from the platform.
   static Future<PackageInfo> get packageInfo async {
     _packageInfo ??= await PackageInfo.fromPlatform();
+
     return _packageInfo!;
   }
 
@@ -36,9 +33,9 @@ class Versionarte {
     required VersionarteProvider versionarteProvider,
   }) async {
     try {
-      final info = await packageInfo;
-      final platformVersion = Version.parse(info.version);
-      final platformName = defaultTargetPlatform.name;
+      final PackageInfo info = await packageInfo;
+      final Version platformVersion = Version.parse(info.version);
+      final String platformName = defaultTargetPlatform.name;
 
       logVersionarte('Platform: $platformName, version: $platformVersion');
       logVersionarte('Provider: ${versionarteProvider.runtimeType}');
@@ -54,7 +51,7 @@ class Versionarte {
 
       logVersionarte('StoreVersioning: ${prettyJson(storeVersioning)}');
 
-      final storeDetails = storeVersioning.storeDetailsForPlatform;
+      final StorePlatformDetails? storeDetails = storeVersioning.current;
 
       if (storeDetails == null) {
         logVersionarte('No store details found for platform $platformName.');
@@ -65,17 +62,18 @@ class Versionarte {
       if (!storeDetails.status.active) {
         return VersionarteResult(
           VersionarteStatus.inactive,
-          details: storeDetails,
-          storeVersioning: storeVersioning,
+          platforms: storeVersioning,
         );
       } else {
-        final minimumVersion = Version.parse(storeDetails.version.minimum);
-        final latestVersion = Version.parse(storeDetails.version.latest);
+        final Version minimumVersion =
+            Version.parse(storeDetails.version.minimum);
+        final Version latestVersion =
+            Version.parse(storeDetails.version.latest);
 
-        final minimumDifference = platformVersion.compareTo(minimumVersion);
-        final latestDifference = platformVersion.compareTo(latestVersion);
+        final int minimumDifference = platformVersion.compareTo(minimumVersion);
+        final int latestDifference = platformVersion.compareTo(latestVersion);
 
-        final status = minimumDifference.isNegative
+        final VersionarteStatus status = minimumDifference.isNegative
             ? VersionarteStatus.forcedUpdate
             : latestDifference.isNegative
                 ? VersionarteStatus.outdated
@@ -83,8 +81,7 @@ class Versionarte {
 
         return VersionarteResult(
           status,
-          details: storeDetails,
-          storeVersioning: storeVersioning,
+          platforms: storeVersioning,
         );
       }
     } on FormatException catch (e) {
@@ -109,49 +106,6 @@ class Versionarte {
       );
 
       return VersionarteResult(VersionarteStatus.unknown);
-    }
-  }
-
-  /// Opens the app's page on the Play Store on Android and the App Store on iOS
-  ///
-  /// If launch the store for the platform is not supported returns `false`.
-  ///
-  /// Parameters:
-  ///   - `appStoreUrl` (String): The URL of the app on the App Store (iOS)
-  ///     If the app is not published on the App Store, pass `null`.
-  ///   - `androidPackageName` (String): The package name of the app (Android)
-  ///     retrieved automatically from the device's `package_info` package
-  ///
-  /// Returns:
-  ///   - A `Future<bool>` that indicates whether the URL was successfully
-  ///     launched or not.
-  @Deprecated('Use launchDownloadUrl method instead.')
-  static Future<bool> launchStore({
-    String? appStoreUrl,
-    String? androidPackageName,
-  }) async {
-    const mode = LaunchMode.externalApplication;
-
-    if (defaultTargetPlatform == TargetPlatform.android) {
-      androidPackageName ??= (await packageInfo).packageName;
-
-      return launchUrl(
-        Uri.parse(
-          'https://play.google.com/store/apps/details?id=$androidPackageName',
-        ),
-        mode: mode,
-      );
-    } else if (defaultTargetPlatform == TargetPlatform.iOS &&
-        appStoreUrl != null) {
-      return launchUrl(
-        Uri.parse(appStoreUrl),
-        mode: mode,
-      );
-    } else {
-      logVersionarte(
-        'Opening store for ${defaultTargetPlatform.name} platform is not supported.',
-      );
-      return false;
     }
   }
 
