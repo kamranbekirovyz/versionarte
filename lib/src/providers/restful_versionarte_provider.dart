@@ -5,10 +5,10 @@ import 'package:http/http.dart' as http;
 import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
-/// A [VersionarteProvider] that helps retrieve [StoreVersioning] information via
+/// A [VersionarteProvider] that helps retrieve [DistributionManifest] information via
 /// sending an HTTP GET request with the given headers to the given URL.
 class RestfulVersionarteProvider extends VersionarteProvider {
-  /// URL of the RESTful API that returns the [StoreVersioning] information.
+  /// URL of the RESTful API that returns the [DistributionManifest] information.
   final String url;
 
   /// Headers to be sent with the HTTP GET request.
@@ -16,7 +16,7 @@ class RestfulVersionarteProvider extends VersionarteProvider {
 
   /// Creates a new instance of [RestfulVersionarteProvider].
   ///
-  /// The [url] parameter is the URL of the RESTful API that returns the [StoreVersioning] information.
+  /// The [url] parameter is the URL of the RESTful API that returns the [DistributionManifest] information.
   ///
   /// The [headers] parameter allows you to set additional headers to be sent with the HTTP GET request.
   const RestfulVersionarteProvider({
@@ -24,12 +24,12 @@ class RestfulVersionarteProvider extends VersionarteProvider {
     this.headers,
   });
 
-  /// Sends an HTTP GET request to the RESTful API and decodes the response body into a [StoreVersioning] object.
+  /// Sends an HTTP GET request to the RESTful API and decodes the response body into a [DistributionManifest] object.
   ///
-  /// Returns a [Future] that resolves to a [StoreVersioning] object or `null` if there was an
+  /// Returns a [Future] that resolves to a [DistributionManifest] object or `null` if there was an
   /// error while sending the HTTP request or decoding the response body.
   @override
-  FutureOr<StoreVersioning?> getStoreVersioning() async {
+  FutureOr<DistributionManifest?> getDistributionManifest() async {
     final client = http.Client();
 
     logVersionarte('RESTful API URL: $url, Request headers: $headers');
@@ -44,8 +44,6 @@ class RestfulVersionarteProvider extends VersionarteProvider {
 
     final json = jsonDecode(response.body);
 
-    // TODO: pretty log response body
-
-    return StoreVersioning.fromJson(json);
+    return DistributionManifest.fromJson(json);
   }
 }

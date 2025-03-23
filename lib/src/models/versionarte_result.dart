@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
@@ -13,19 +14,23 @@ class VersionarteResult {
   ///   - [VersionarteStatus.unknown]: An error occurred while checking.
   final VersionarteStatus status;
 
-  /// The versioning information all platforms.
-  final StoreVersioning? platforms;
+  /// The versioning information for all platforms.
+  final DistributionManifest? manifest;
 
   /// Creates a new [VersionarteResult] instance.
   VersionarteResult(
     this.status, {
-    this.platforms,
+    this.manifest,
   }) : super() {
     logVersionarte('VersionarteResult: $this');
   }
 
   String? getMessageForLanguage(String code) {
-    return platforms?.current?.status.getMessageForLanguage(code);
+    return manifest?.currentPlatform?.status.getMessageForLanguage(code);
+  }
+
+  Map<TargetPlatform, String?>? get downloadUrls {
+    return manifest?.downloadUrls;
   }
 
   /// Returns a JSON representation of this object.

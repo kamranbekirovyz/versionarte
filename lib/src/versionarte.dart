@@ -24,7 +24,7 @@ class Versionarte {
   ///
   /// Parameters:
   /// - versionarteProvider: A [VersionarteProvider] instance to retrieve
-  /// [StoreVersioning] stored remotely.
+  /// [DistributionManifest] stored remotely.
   ///
   /// Returns:
   /// - A [Future] that resolves to a [VersionarteResult] instance which contains
@@ -40,7 +40,8 @@ class Versionarte {
       logVersionarte('Platform: $platformName, version: $platformVersion');
       logVersionarte('Provider: ${versionarteProvider.runtimeType}');
 
-      final storeVersioning = await versionarteProvider.getStoreVersioning();
+      final storeVersioning =
+          await versionarteProvider.getDistributionManifest();
 
       if (storeVersioning == null) {
         logVersionarte(
@@ -49,9 +50,10 @@ class Versionarte {
         return VersionarteResult(VersionarteStatus.unknown);
       }
 
-      logVersionarte('StoreVersioning: ${prettyJson(storeVersioning)}');
+      logVersionarte('DistributionManifest: ${prettyJson(storeVersioning)}');
 
-      final StorePlatformDetails? storeDetails = storeVersioning.current;
+      final PlatformDistributionInfo? storeDetails =
+          storeVersioning.currentPlatform;
 
       if (storeDetails == null) {
         logVersionarte('No store details found for platform $platformName.');
@@ -62,7 +64,7 @@ class Versionarte {
       if (!storeDetails.status.active) {
         return VersionarteResult(
           VersionarteStatus.inactive,
-          platforms: storeVersioning,
+          manifest: storeVersioning,
         );
       } else {
         final Version minimumVersion =
@@ -79,10 +81,7 @@ class Versionarte {
                 ? VersionarteStatus.outdated
                 : VersionarteStatus.upToDate;
 
-        return VersionarteResult(
-          status,
-          platforms: storeVersioning,
-        );
+        return VersionarteResult(status, manifest: storeVersioning);
       }
     } on FormatException catch (e) {
       final error = versionarteProvider is RemoteConfigVersionarteProvider
@@ -118,7 +117,6 @@ class Versionarte {
     Map<TargetPlatform, String?> data,
   ) async {
     final TargetPlatform platform = defaultTargetPlatform;
-
     final String? url = data[platform];
 
     if (url == null) {

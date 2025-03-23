@@ -2,11 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
-import 'package:versionarte/src/models/store_versioning.dart';
-import 'package:versionarte/src/providers/versionarte_provider.dart';
 import 'package:versionarte/src/utilities/logger.dart';
+import 'package:versionarte/versionarte.dart';
 
-/// A [VersionarteProvider] that retrieves [StoreVersioning] information stored in Firebase
+/// A [VersionarteProvider] that retrieves [DistributionManifest] information stored in Firebase
 /// Remote Config using the key name "versionarte" or a different key name specified through
 /// the `keyName` constructor parameter.
 class RemoteConfigVersionarteProvider extends VersionarteProvider {
@@ -38,10 +37,10 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   });
 
   /// Fetches the JSON uploaded to Firebase Remote Config and decodes it into an instance of
-  /// [StoreVersioning].
+  /// [DistributionManifest].
   @override
-  FutureOr<StoreVersioning?> getStoreVersioning() async {
-    StoreVersioning? storeVersioning;
+  FutureOr<DistributionManifest?> getDistributionManifest() async {
+    DistributionManifest? storeVersioning;
 
     try {
       if (initializeInternally) {
@@ -63,7 +62,7 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
           FirebaseRemoteConfig.instance.getString(keyName);
       final versionarteDecoded = jsonDecode(versionarteString);
 
-      storeVersioning = StoreVersioning.fromJson(versionarteDecoded);
+      storeVersioning = DistributionManifest.fromJson(versionarteDecoded);
     } catch (e, s) {
       logVersionarte('Exception: $e');
       logVersionarte('Stack Trace: $s');

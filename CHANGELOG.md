@@ -1,3 +1,13 @@
+## 2.0.0
+
+versionarte reaches its second major version! 🎉
+
+- **BREAKING CHANGE**: Renamed `VersionarteResult.details` to `VersionarteResult.manifest`.
+- **BREAKING CHANGE**: Details of current platform are now accessed via `VersionarteResult.manifest.currentPlatform`.
+- **BREAKING CHANGE**: Renamed models to be more intuitive: `StoreVersioning` to `DistributionManifest`, `PlatformStoreDetails` to `PlatformDistributionInfo`
+- Added `VersionarteResult.downloadUrls` getter to make it easier when calling `VersionarteResult.launchDownloadUrl`.
+- Improved documentation throughout the codebase.
+
 ## 1.3.1
 - Improve docs for custom providers.
 

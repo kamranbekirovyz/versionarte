@@ -90,11 +90,11 @@ Optional parameters:
 ```dart
 class MyCustomVersionarteProvider extends VersionarteProvider {
   @override
-  Future<StoreVersioning> getStoreVersioning() async {
+  Future<DistributionManifest> getDistributionManifest() async {
     final String result = MyCustomService.fetchVersioning();
     final Map<String, dynamic> decodedResult = jsonDecode(result);
     
-    return StoreVersioning.fromJson(decodedResult);
+    return DistributionManifest.fromJson(decodedResult);
   }
 }
 ```
@@ -106,19 +106,23 @@ Use the `status` value to determine what action to take:
 ```dart
 if (result.status == VersionarteStatus.inactive) {
     // App is in maintenance mode
-    final String message = result.details.status.getMessageForLanguage('en');
+    final String message = result.getMessageForLanguage('en');
 
     showMaintenanceDialog(message);
 } else if (result.status == VersionarteStatus.forcedUpdate) {
     // User must update to continue
     showForceUpdateDialog(
       onUpdate: () {
-        Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
+        Versionarte.launchDownloadUrl(result.downloadUrls);
       },
     );
 } else if (result.status == VersionarteStatus.outdated) {
     // Update available but optional
-    showOptionalUpdateDialog();
+    showOptionalUpdateDialog(
+      onUpdate: () {
+        Versionarte.launchDownloadUrl(result.downloadUrls);
+      },
+    );
 } 
 ```
 
@@ -147,7 +151,7 @@ Widget build(BuildContext context) {
 To open the appropriate store for the current platform:
 
 ```dart
-await Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
+await Versionarte.launchDownloadUrl(result.downloadUrls);
 ```
 
 > **Note**: Add "download_url" in your configuration JSON for each platform. The correct store opens automatically based on the current platform.

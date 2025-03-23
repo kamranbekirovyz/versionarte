@@ -1,23 +1,23 @@
 import 'package:flutter/foundation.dart';
 
 /// A serverside representation model of the app versioning.
-class StoreVersioning {
+class DistributionManifest {
   /// For Android platform.
-  final StorePlatformDetails? android;
+  final PlatformDistributionInfo? android;
 
   /// For iOS platform.
-  final StorePlatformDetails? iOS;
+  final PlatformDistributionInfo? iOS;
 
   /// For macOS platform.
-  final StorePlatformDetails? macOS;
+  final PlatformDistributionInfo? macOS;
 
   /// For Windows platform.
-  final StorePlatformDetails? windows;
+  final PlatformDistributionInfo? windows;
 
   /// The versioning information for the Linux platform.
-  final StorePlatformDetails? linux;
+  final PlatformDistributionInfo? linux;
 
-  const StoreVersioning({
+  const DistributionManifest({
     this.android,
     this.iOS,
     this.macOS,
@@ -25,28 +25,28 @@ class StoreVersioning {
     this.linux,
   });
 
-  /// Creates an instance of [StoreVersioning] from a JSON [Map].
-  StoreVersioning.fromJson(Map<String, dynamic> json)
+  /// Creates an instance of [DistributionManifest] from a JSON [Map].
+  DistributionManifest.fromJson(Map<String, dynamic> json)
       : android = json["android"] != null
-            ? StorePlatformDetails.fromJson(json["android"])
+            ? PlatformDistributionInfo.fromJson(json["android"])
             : null,
         iOS = json["iOS"] != null
-            ? StorePlatformDetails.fromJson(json["iOS"])
+            ? PlatformDistributionInfo.fromJson(json["iOS"])
             : null,
         macOS = json["macOS"] != null
-            ? StorePlatformDetails.fromJson(json["macOS"])
+            ? PlatformDistributionInfo.fromJson(json["macOS"])
             : null,
         windows = json["windows"] != null
-            ? StorePlatformDetails.fromJson(json["windows"])
+            ? PlatformDistributionInfo.fromJson(json["windows"])
             : null,
         linux = json["linux"] != null
-            ? StorePlatformDetails.fromJson(json["linux"])
+            ? PlatformDistributionInfo.fromJson(json["linux"])
             : null;
 
   /// Returns the [PlatformStoreDetails] object corresponding to the current platform.
   ///
   /// Throws an [UnimplementedError] if the current platform is not supported by the package.
-  StorePlatformDetails? get current {
+  PlatformDistributionInfo? get currentPlatform {
     return switch (defaultTargetPlatform) {
       TargetPlatform.android => android,
       TargetPlatform.iOS => iOS,
@@ -60,11 +60,11 @@ class StoreVersioning {
   }
 
   String? get downloadUrlForPlatform {
-    return current?.downloadUrl;
+    return currentPlatform?.downloadUrl;
   }
 
   String? getMessageForLanguage(String code) {
-    return current?.status.getMessageForLanguage(code);
+    return currentPlatform?.status.getMessageForLanguage(code);
   }
 
   Map<TargetPlatform, String?> get downloadUrls {
@@ -94,7 +94,7 @@ class StoreVersioning {
   }
 }
 
-class StorePlatformDetails {
+class PlatformDistributionInfo {
   /// The version details for this platform.
   final VersionDetails version;
 
@@ -104,14 +104,14 @@ class StorePlatformDetails {
   /// The status details for this platform.
   final StatusDetails status;
 
-  const StorePlatformDetails({
+  const PlatformDistributionInfo({
     required this.downloadUrl,
     required this.version,
     required this.status,
   });
 
-  /// Creates an instance of [StorePlatformDetails] from a JSON [Map].
-  StorePlatformDetails.fromJson(Map<String, dynamic> json)
+  /// Creates an instance of [PlatformDistributionInfo] from a JSON [Map].
+  PlatformDistributionInfo.fromJson(Map<String, dynamic> json)
       : version = VersionDetails.fromJson(json["version"]),
         downloadUrl = json["download_url"],
         status = StatusDetails.fromJson(json["status"]);

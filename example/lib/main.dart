@@ -25,12 +25,12 @@ class MyApp extends StatelessWidget {
 /// remotely stored dynamic values.
 class MockVersionarteProvider extends VersionarteProvider {
   @override
-  Future<StoreVersioning?> getStoreVersioning() async {
+  Future<DistributionManifest?> getDistributionManifest() async {
     await Future.delayed(const Duration(seconds: 2));
 
-    /// Creating a mocked [StoreVersioning] object with the following values:
-    const mockedStoreVersioning = StoreVersioning(
-      android: StorePlatformDetails(
+    /// Creating a mocked [DistributionManifest] object with the following values:
+    const mockedDistributionManifest = DistributionManifest(
+      android: PlatformDistributionInfo(
         downloadUrl: 'https://play.google.com',
         version: VersionDetails(
           minimum: '1.5.0',
@@ -44,7 +44,7 @@ class MockVersionarteProvider extends VersionarteProvider {
           },
         ),
       ),
-      iOS: StorePlatformDetails(
+      iOS: PlatformDistributionInfo(
         downloadUrl: 'https://apps.apple.com/us/',
         version: VersionDetails(
           minimum: '1.5.0',
@@ -60,7 +60,7 @@ class MockVersionarteProvider extends VersionarteProvider {
       ),
     );
 
-    return mockedStoreVersioning;
+    return mockedDistributionManifest;
   }
 }
 
@@ -117,13 +117,13 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Store version'),
               subtitle: Text(
-                '${_versionarteResult.platforms?.current?.version.toString()}',
+                '${_versionarteResult.manifest?.currentPlatform?.version.toString()}',
               ),
             ),
             ListTile(
               title: const Text('Download URL'),
               subtitle: Text(
-                '${_versionarteResult.platforms?.current?.downloadUrl}',
+                '${_versionarteResult.manifest?.currentPlatform?.downloadUrl}',
               ),
             ),
             ListTile(
@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Availability information'),
               subtitle: Text(
-                '${_versionarteResult.platforms?.current?.status.toString()}',
+                '${_versionarteResult.manifest?.currentPlatform?.status.toString()}',
               ),
             ),
 
@@ -141,7 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: const Text('Message for English'),
               subtitle: Text(
-                '${_versionarteResult.platforms?.current?.status.getMessageForLanguage('en')}',
+                '${_versionarteResult.manifest?.currentPlatform?.status.getMessageForLanguage('en')}',
               ),
             ),
           ],
