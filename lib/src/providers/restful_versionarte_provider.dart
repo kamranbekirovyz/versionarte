@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
@@ -42,8 +43,11 @@ class RestfulVersionarteProvider extends VersionarteProvider {
     logVersionarte('Status code: ${response.statusCode}');
     logVersionarte('Response body: ${response.body}');
 
-    final json = jsonDecode(response.body);
-
-    return DistributionManifest.fromJson(json);
+    return compute(parseDistributionManifest, response.body);
   }
+}
+
+DistributionManifest parseDistributionManifest(String data) {
+  final json = jsonDecode(data);
+  return DistributionManifest.fromJson(json);
 }
