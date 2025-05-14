@@ -33,10 +33,10 @@ class RestfulVersionarteProvider extends VersionarteProvider {
   FutureOr<DistributionManifest?> getDistributionManifest() async {
     final client = http.Client();
 
-    logVersionarte('RESTful API URL: $url, Request headers: $headers');
-
+    final urlNew = '$url?time=${DateTime.now().millisecond}';
+    logVersionarte('RESTful API URL: $urlNew, Request headers: $headers');
     final response = await client.get(
-      Uri.parse(url),
+      Uri.parse(urlNew),
       headers: headers,
     );
 
