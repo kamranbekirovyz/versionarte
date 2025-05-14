@@ -43,11 +43,11 @@ class RestfulVersionarteProvider extends VersionarteProvider {
     logVersionarte('Status code: ${response.statusCode}');
     logVersionarte('Response body: ${response.body}');
 
-    return compute(parseDistributionManifest, response.body);
+    return compute(_parseDistributionManifest, response.body);
   }
 }
 
-DistributionManifest parseDistributionManifest(String data) {
+DistributionManifest _parseDistributionManifest(String data) {
   final json = jsonDecode(data);
   return DistributionManifest.fromJson(json);
 }

@@ -21,10 +21,10 @@ class ManifestVersionarteProvider extends VersionarteProvider {
   /// Parses the given data into a [DistributionManifest] object.
   @override
   FutureOr<DistributionManifest?> getDistributionManifest() async {
-    return compute(parseDistributionManifest, data);
+    return compute(_parseDistributionManifest, data);
   }
 }
 
-DistributionManifest parseDistributionManifest(dynamic json) {
+DistributionManifest _parseDistributionManifest(dynamic json) {
   return DistributionManifest.fromJson(json);
 }
