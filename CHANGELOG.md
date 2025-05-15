@@ -1,3 +1,8 @@
+## 2.0.1
+
+- Small improvements to codebase.
+- Upgraded dependencies.
+
 ## 2.0.0
 
 versionarte reaches its second major version! 🎉

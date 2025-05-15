@@ -15,9 +15,7 @@ Force update, show update indicator and disable the app for maintenance with tot
 |<img width="200" src="https://github.com/kamranbekirovyz/versionarte/blob/main/assets/screenshots/forced-update.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/versionarte/blob/main/assets/screenshots/outdated.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/versionarte/blob/main/assets/screenshots/inactive.png?raw=true"/>
 
 
-## 💖 Sponsors
-
-- <a href="https://userorient.com">UserOrient</a>: Feature Voting Board for Flutter
+## 🩵 Sponsors
 
 <a href="https://userorient.com" target="_blank">
   <img src="https://www.userorient.com/assets/extras/sponsor.png">
@@ -137,7 +135,7 @@ Widget build(BuildContext context) {
         // A custom widget to show "Update available"
         NewVersionAvailableIndicator(
           onUpdate: () {
-            Versionarte.launchDownloadUrl(result.storeVersioning!.downloadUrls);
+            Versionarte.launchDownloadUrl(result.downloadUrls);
           }
         ),
       // other widgets

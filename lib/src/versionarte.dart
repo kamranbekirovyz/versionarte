@@ -40,20 +40,19 @@ class Versionarte {
       logVersionarte('Platform: $platformName, version: $platformVersion');
       logVersionarte('Provider: ${versionarteProvider.runtimeType}');
 
-      final storeVersioning =
+      final DistributionManifest? manifest =
           await versionarteProvider.getDistributionManifest();
 
-      if (storeVersioning == null) {
+      if (manifest == null) {
         logVersionarte(
-            'Failed to get store versioning information using ${versionarteProvider.runtimeType}.');
+            'Failed to get distribution manifest using ${versionarteProvider.runtimeType}.');
 
         return VersionarteResult(VersionarteStatus.unknown);
       }
 
-      logVersionarte('DistributionManifest: ${prettyJson(storeVersioning)}');
+      logVersionarte('DistributionManifest: ${prettyJson(manifest)}');
 
-      final PlatformDistributionInfo? storeDetails =
-          storeVersioning.currentPlatform;
+      final PlatformDistributionInfo? storeDetails = manifest.currentPlatform;
 
       if (storeDetails == null) {
         logVersionarte('No store details found for platform $platformName.');
@@ -64,7 +63,7 @@ class Versionarte {
       if (!storeDetails.status.active) {
         return VersionarteResult(
           VersionarteStatus.inactive,
-          manifest: storeVersioning,
+          manifest: manifest,
         );
       } else {
         final Version minimumVersion =
@@ -81,7 +80,7 @@ class Versionarte {
                 ? VersionarteStatus.outdated
                 : VersionarteStatus.upToDate;
 
-        return VersionarteResult(status, manifest: storeVersioning);
+        return VersionarteResult(status, manifest: manifest);
       }
     } on FormatException catch (e) {
       final error = versionarteProvider is RemoteConfigVersionarteProvider

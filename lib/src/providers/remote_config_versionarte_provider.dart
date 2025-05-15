@@ -40,7 +40,7 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
   /// [DistributionManifest].
   @override
   FutureOr<DistributionManifest?> getDistributionManifest() async {
-    DistributionManifest? storeVersioning;
+    DistributionManifest? manifest;
 
     try {
       if (initializeInternally) {
@@ -62,12 +62,12 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
           FirebaseRemoteConfig.instance.getString(keyName);
       final versionarteDecoded = jsonDecode(versionarteString);
 
-      storeVersioning = DistributionManifest.fromJson(versionarteDecoded);
+      manifest = DistributionManifest.fromJson(versionarteDecoded);
     } catch (e, s) {
       logVersionarte('Exception: $e');
       logVersionarte('Stack Trace: $s');
     }
 
-    return storeVersioning;
+    return manifest;
   }
 }
