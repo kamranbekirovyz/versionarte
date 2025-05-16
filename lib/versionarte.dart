@@ -1,4 +1,4 @@
-library versionarte;
+library;
 
 // Logic
 export 'src/versionarte.dart';
