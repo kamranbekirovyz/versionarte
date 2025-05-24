@@ -35,7 +35,6 @@ class RestfulVersionarteProvider extends VersionarteProvider {
 
     final cacheBustedUrl = _appendTimestamp(url);
     logVersionarte('RESTful API URL: $cacheBustedUrl, Request headers: $headers');
-    debugPrint('RESTful API URL: $cacheBustedUrl, Request headers: $headers');
     final response = await client.get(
       Uri.parse(cacheBustedUrl),
       headers: {
