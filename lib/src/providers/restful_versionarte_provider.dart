@@ -33,11 +33,16 @@ class RestfulVersionarteProvider extends VersionarteProvider {
   FutureOr<DistributionManifest?> getDistributionManifest() async {
     final client = http.Client();
 
-    final urlNew = '$url?time=${DateTime.now().millisecond}';
-    logVersionarte('RESTful API URL: $urlNew, Request headers: $headers');
+    final cacheBustedUrl = _appendTimestamp(url);
+    logVersionarte('RESTful API URL: $cacheBustedUrl, Request headers: $headers');
+    debugPrint('RESTful API URL: $cacheBustedUrl, Request headers: $headers');
     final response = await client.get(
-      Uri.parse(urlNew),
-      headers: headers,
+      Uri.parse(cacheBustedUrl),
+      headers: {
+        ...?headers,
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+      },
     );
 
     logVersionarte('Status code: ${response.statusCode}');
@@ -50,4 +55,11 @@ class RestfulVersionarteProvider extends VersionarteProvider {
 DistributionManifest _parseDistributionManifest(String data) {
   final json = jsonDecode(data);
   return DistributionManifest.fromJson(json);
+}
+/// Appends a timestamp query parameter to the given URL
+String _appendTimestamp(String baseUrl) {
+  final uri = Uri.parse(baseUrl);
+  final updatedParams = Map<String, String>.from(uri.queryParameters)
+    ..['t'] = DateTime.now().millisecondsSinceEpoch.toString();
+  return uri.replace(queryParameters: updatedParams).toString();
 }
