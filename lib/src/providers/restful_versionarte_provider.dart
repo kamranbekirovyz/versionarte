@@ -59,6 +59,6 @@ DistributionManifest _parseDistributionManifest(String data) {
 String _appendTimestamp(String baseUrl) {
   final uri = Uri.parse(baseUrl);
   final updatedParams = Map<String, String>.from(uri.queryParameters)
-    ..['t'] = DateTime.now().millisecondsSinceEpoch.toString();
+    ..['t_versionarte'] = DateTime.now().millisecondsSinceEpoch.toString();
   return uri.replace(queryParameters: updatedParams).toString();
 }
