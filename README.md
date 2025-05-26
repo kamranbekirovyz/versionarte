@@ -15,7 +15,7 @@ Force update, show update indicator and disable the app for maintenance with tot
 |---|---|---|
 |<img width="200" src="https://github.com/kamranbekirovyz/versionarte/blob/main/assets/screenshots/forced-update.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/versionarte/blob/main/assets/screenshots/outdated.png?raw=true"/>|<img width="200" src="https://github.com/kamranbekirovyz/versionarte/blob/main/assets/screenshots/inactive.png?raw=true"/>
 
-Read the [How to force users to update your Flutter app](https://flutterdeeper.com/blog/versionarte) article for detailed explanation.
+Read the [How to force users to update your Flutter app](https://flutterdeeper.com/blog/versionarte){:target="_blank"} article for detailed explanation.
 
 ## 🩵 Sponsors
 
