@@ -1,3 +1,7 @@
+## 2.0.2
+
+- Add article link to README.
+
 ## 2.0.1
 
 - Small improvements to codebase.
