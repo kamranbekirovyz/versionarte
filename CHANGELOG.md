@@ -1,3 +1,7 @@
+## 2.0.3
+
+- Upgrade dependencies.
+
 ## 2.0.2
 
 - Add article link to README.

@@ -2,7 +2,6 @@
 
 Force update, show update indicator and disable the app for maintenance with total freedom over the UI.
 
-
 ## 😎 Benefits
 
 - ✋ Force users to update to the latest version
