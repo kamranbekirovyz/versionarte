@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
@@ -32,18 +33,32 @@ class RestfulVersionarteProvider extends VersionarteProvider {
   FutureOr<DistributionManifest?> getDistributionManifest() async {
     final client = http.Client();
 
-    logVersionarte('RESTful API URL: $url, Request headers: $headers');
-
+    final cacheBustedUrl = _appendTimestamp(url);
+    logVersionarte('RESTful API URL: $cacheBustedUrl, Request headers: $headers');
     final response = await client.get(
-      Uri.parse(url),
-      headers: headers,
+      Uri.parse(cacheBustedUrl),
+      headers: {
+        ...?headers,
+        'Cache-Control': 'no-cache',
+        'Pragma': 'no-cache',
+      },
     );
 
     logVersionarte('Status code: ${response.statusCode}');
     logVersionarte('Response body: ${response.body}');
 
-    final json = jsonDecode(response.body);
-
-    return DistributionManifest.fromJson(json);
+    return compute(_parseDistributionManifest, response.body);
   }
+}
+
+DistributionManifest _parseDistributionManifest(String data) {
+  final json = jsonDecode(data);
+  return DistributionManifest.fromJson(json);
+}
+/// Appends a timestamp query parameter to the given URL
+String _appendTimestamp(String baseUrl) {
+  final uri = Uri.parse(baseUrl);
+  final updatedParams = Map<String, String>.from(uri.queryParameters)
+    ..['t_versionarte'] = DateTime.now().millisecondsSinceEpoch.toString();
+  return uri.replace(queryParameters: updatedParams).toString();
 }
