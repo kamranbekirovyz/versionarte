@@ -20,18 +20,27 @@ class Versionarte {
     return _packageInfo!;
   }
 
+  /// Internal flag to control logging. Set via [check] parameter.
+  static bool _enableLogging = true;
+
+  /// Whether logging is currently enabled.
+  static bool get enableLogging => _enableLogging;
+
   /// Checks app's versioning and availability status.
   ///
   /// Parameters:
   /// - versionarteProvider: A [VersionarteProvider] instance to retrieve
   /// [DistributionManifest] stored remotely.
+  /// - enableLogging: Whether to print debug logs. Defaults to `true`.
   ///
   /// Returns:
   /// - A [Future] that resolves to a [VersionarteResult] instance which contains
   /// the versioning and availability status of the app.
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
+    bool enableLogging = true,
   }) async {
+    _enableLogging = enableLogging;
     try {
       final PackageInfo info = await packageInfo;
       final Version platformVersion = Version.parse(info.version);
