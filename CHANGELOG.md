@@ -1,3 +1,7 @@
+## 2.1.0
+
+- Add `silent` parameter to `Versionarte.check()` to suppress debug console logs.
+
 ## 2.0.4
 
 - Upgrade dependencies.

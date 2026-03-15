@@ -20,18 +20,26 @@ class Versionarte {
     return _packageInfo!;
   }
 
+  static bool _silent = false;
+
+  /// Whether logging is suppressed.
+  static bool get silent => _silent;
+
   /// Checks app's versioning and availability status.
   ///
   /// Parameters:
   /// - versionarteProvider: A [VersionarteProvider] instance to retrieve
   /// [DistributionManifest] stored remotely.
+  /// - silent: If `true`, suppresses debug console logs. Defaults to `false`.
   ///
   /// Returns:
   /// - A [Future] that resolves to a [VersionarteResult] instance which contains
   /// the versioning and availability status of the app.
   static Future<VersionarteResult> check({
     required VersionarteProvider versionarteProvider,
+    bool silent = false,
   }) async {
+    _silent = silent;
     try {
       final PackageInfo info = await packageInfo;
       final Version platformVersion = Version.parse(info.version);

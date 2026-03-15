@@ -46,6 +46,8 @@ final VersionarteResult result = await Versionarte.check(
 );
 ```
 
+> **Tip**: Pass `silent: true` to suppress debug console logs.
+
 Choose from three provider types based on your backend:
 
 ### 1. Using Firebase Remote Config
