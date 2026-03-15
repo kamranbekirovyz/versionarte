@@ -1,3 +1,7 @@
+## 2.1.1
+
+- Fix doc comment markup to resolve pana static analysis warning.
+
 ## 2.1.0
 
 - Add `silent` parameter to `Versionarte.check()` to suppress debug console logs.
