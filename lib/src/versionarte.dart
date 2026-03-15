@@ -118,7 +118,7 @@ class Versionarte {
   /// Launches the download URL for the app on the platform.
   ///
   /// Parameters:
-  ///  - Map<TargetPlatform, String> `data`: A map of download URLs for each
+  ///  - `Map<TargetPlatform, String>` `data`: A map of download URLs for each
   ///   platform. The key is the platform and the value is the download URL.
   static Future<void> launchDownloadUrl(
     Map<TargetPlatform, String?> data,
