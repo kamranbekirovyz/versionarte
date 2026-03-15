@@ -1,5 +1,3 @@
-library versionarte;
-
 // Logic
 export 'src/versionarte.dart';
 export 'src/providers/remote_config_versionarte_provider.dart';
