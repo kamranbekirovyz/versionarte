@@ -1,3 +1,7 @@
+## 2.1.2
+
+- Upgrade dependencies.
+
 ## 2.1.1
 
 - Fix doc comment markup to resolve pana static analysis warning.
