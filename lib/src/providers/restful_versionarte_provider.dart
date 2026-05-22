@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:versionarte/src/models/versionarte_comparator.dart';
 import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
@@ -22,7 +23,12 @@ class RestfulVersionarteProvider extends VersionarteProvider {
   const RestfulVersionarteProvider({
     required this.url,
     this.headers,
-  });
+
+    /// The line `VersionarteComparator comparator = VersionarteComparator.versionOnly,` in the
+    /// `RestfulVersionarteProvider` class is defining a parameter `comparator` of type
+    /// `VersionarteComparator` with a default value of `VersionarteComparator.versionOnly`.
+    VersionarteComparator comparator = VersionarteComparator.versionOnly,
+  }) : super(comparator: comparator);
 
   /// Sends an HTTP GET request to the RESTful API and decodes the response body into a [DistributionManifest] object.
   ///

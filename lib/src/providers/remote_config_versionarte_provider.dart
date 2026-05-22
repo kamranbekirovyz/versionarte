@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:versionarte/src/models/versionarte_comparator.dart';
 import 'package:versionarte/src/utilities/logger.dart';
 import 'package:versionarte/versionarte.dart';
 
@@ -34,7 +35,12 @@ class RemoteConfigVersionarteProvider extends VersionarteProvider {
     this.keyName = 'versionarte',
     this.initializeInternally = true,
     this.remoteConfigSettings,
-  });
+
+    /// The line `VersionarteComparator comparator = VersionarteComparator.versionOnly` in the
+    /// `RemoteConfigVersionarteProvider` class is defining a parameter `comparator` with a default value
+    /// of `VersionarteComparator.versionOnly`.
+    VersionarteComparator comparator = VersionarteComparator.versionOnly,
+  }) : super(comparator: comparator);
 
   /// Fetches the JSON uploaded to Firebase Remote Config and decodes it into an instance of
   /// [DistributionManifest].
